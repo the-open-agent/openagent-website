@@ -1,0 +1,88 @@
+---
+title: Chat
+description: How conversation works in OpenAgent — request lifecycle, Message records, feedback, and suggestions.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Chat
+
+Every conversation in OpenAgent is a **Chat** session backed by a **Store**. The Store's configuration determines everything: which model responds, whether the knowledge base is searched, which tools are available, and what instructions the model operates under.
+
+## Request lifecycle
+
+When a user sends a message, OpenAgent runs this sequence:
+
+<Callout type="warn">
+  **Diagram placeholder (Request lifecycle):** Add a single flow diagram for the 5-step lifecycle:
+  Load history → Retrieve (optional) → Assemble context → Model/tool loop → Stream & save.
+  Include the “tool call loop” visually (model may call tools multiple times).
+</Callout>
+
+**1. Load history.** The conversation history is retrieved from the database, bounded by the Store's **Memory Limit**. Turns beyond the limit are dropped, oldest first. The system prompt is always included regardless of the limit.
+
+**2. Search the knowledge base.** If the Store has an Embedding Provider and indexed Files, the user's message is embedded and compared against the Store's Vectors. The top N chunks by cosine similarity are retrieved (N = **Knowledge Count**).
+
+**3. Assemble context.** The prompt is constructed: system prompt first, then the retrieved chunks (labeled as context), then the conversation history, then the user's message.
+
+**4. Call the model.** The assembled context is sent to the LLM. If the model calls a tool, OpenAgent executes the tool, appends the result to the context, and calls the model again. This loop repeats until the model produces a text response.
+
+**5. Stream and save.** Tokens stream to the client in real time. When the response is complete, a Message record is saved containing the text, tool calls, retrieval metadata (if any), token counts, and estimated cost.
+
+## Chat records
+
+Each Chat belongs to a Store and a user. It records:
+
+- **Message Count** — total turns in the conversation
+- **Token Count** — cumulative tokens across all messages
+- **Price** — cumulative estimated cost (if pricing is configured on the model provider)
+- **Is Hidden / Is Deleted** — soft-delete flags; admins can hide or delete chats without permanent removal
+
+Admins can browse all Chats across all users from **Chat** in the admin panel. Opening a Chat shows the full conversation history with Message detail.
+
+## Message records
+
+Every turn is saved as a Message. The admin UI can show the full technical detail for debugging (retrieval results, tool calls, which provider handled the request, and token/cost accounting).
+
+## Feedback and regeneration
+
+Users can leave feedback on AI responses:
+
+**Like / Dislike** — thumbs up or down on a message. Useful for collecting quality signals from users without any additional tooling.
+
+**Regenerate** — users can regenerate an AI response. Both the original and regenerated responses are retained.
+
+## Follow-up suggestions
+
+If **Suggestion Count** is set on the Store (to a number greater than 0), OpenAgent generates follow-up question suggestions after each AI response. These appear as clickable prompts in the chat UI. The count controls how many suggestions are generated — typically 2–4 works well.
+
+Setting Suggestion Count to 0 disables the feature entirely.
+
+## Streaming
+
+Responses stream token by token. The frontend renders each token as it arrives. Tool calls appear inline as they happen — the user can see what tool was called, with what arguments, and what it returned, before the final response is generated.
+
+If a provider doesn't support streaming, OpenAgent falls back to waiting for the full response. Streaming is the default for all providers that support it.
+
+## Multi-provider fallback
+
+A Store can have **Child Model Providers** as fallbacks. If the primary provider fails (network error, rate limit, API key issue), OpenAgent tries each fallback in order. No conversation is interrupted by a single provider outage.
+
+<Callout type="info">
+  The **Message** detail view in the admin panel shows the full technical record for each turn. It’s the best place to debug why an agent responded a certain way.
+</Callout>
+
+## Advanced: what’s in a Message record?
+
+If you’re integrating with the API or debugging deeply, Message records include structured fields for:
+
+- Retrieval metadata (which chunks were retrieved and their similarity scores)
+- Tool calls (tool name, arguments, and results)
+- Provider attribution (which model/embedding provider was used)
+- Token and cost accounting
+
+## Related
+
+- [Chat Configuration](/docs/chat/chat-configuration) — prompt, memory, rate limiting, content filtering
+- [Stores](/docs/basic/stores) — complete Store field reference
+- [Vectors](/docs/knowledge-base/vectors) — understanding vector retrieval and scores

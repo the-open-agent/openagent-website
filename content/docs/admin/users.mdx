@@ -1,0 +1,128 @@
+---
+title: Users
+description: Accounts, roles, access control, and organization management in OpenAgent.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Users
+
+User accounts and authentication are managed through [Casdoor](https://casdoor.org), the SSO service bundled in OpenAgent's stack. The OpenAgent admin panel exposes the controls you need day-to-day — roles, account status, permissions, and sessions — without requiring you to navigate Casdoor directly for most operations.
+
+<Callout type="warn">
+  **Screenshot placeholder:** Users list page + editing a user role (Admin / Chat Admin / Regular).
+  Keep it production-oriented: show how an operator would grant access safely.
+</Callout>
+
+## User roles
+
+OpenAgent has three roles:
+
+### Admin
+
+Full access to the admin panel and all resources. Admins can:
+
+- Create, edit, and delete Stores, Providers, and Files
+- View all Chats and Messages across all users
+- Browse Records and Usage data
+- Manage user accounts and permissions
+
+The built-in `admin` account is created during setup and cannot be deleted. You can create additional admin accounts for daily use.
+
+### Regular User
+
+Access to the chat interface only. Regular users can:
+
+- Chat with any Store that has been shared with them (or that allows public access)
+- View their own conversation history
+- Provide feedback on messages (like/dislike)
+
+Regular users cannot access the admin panel, view other users' conversations, or modify any configuration.
+
+### Chat Admin
+
+An intermediate role that grants access to conversation management without full admin access. Chat admins can:
+
+- View all Chats across all users
+- Read any conversation thread
+- Useful for support, moderation, or QA roles
+
+Chat admins cannot modify Stores, Providers, or user accounts.
+
+## Managing users
+
+Go to **Users** in the admin panel to see all accounts in the organization. From the user list you can:
+
+**Enable or disable accounts** — disable login for an account without deleting it. The user's conversations, Chats, and Messages are preserved. Re-enabling restores access.
+
+**Reset passwords** — generates a new password or sends a reset link, depending on the authentication configuration.
+
+**Grant or revoke admin status** — promote a user to Admin or remove admin privileges. Takes effect quickly; the user may need to refresh.
+
+**Set role** — change a user between Regular User and Chat Admin.
+
+<Callout type="info">
+  For SSO-connected deployments (LDAP, OIDC, SAML), user accounts are created automatically on first login. You can still manage roles and permissions in OpenAgent after the account is created.
+</Callout>
+
+## Permissions
+
+Fine-grained permission rules are configured in the **Permissions** section. A permission rule specifies:
+
+- **Who** — a specific user, a role, or a group
+- **What** — which resource type (Store, Provider, File, etc.)
+- **Action** — read, write, or admin
+
+Permissions layer on top of roles — they add restrictions or grants on top of what the role provides. An Admin always has full access regardless of permission rules. For regular users, permissions can restrict or expand what they see.
+
+**Example use cases:**
+
+- Give a specific user read access to a particular Store without making them a Chat Admin
+- Restrict access to a sensitive Store to a named list of users
+- Allow a team to manage their own Providers without accessing other teams' resources
+
+<Callout type="info">
+  For most deployments, the three-role model (Admin / Regular User / Chat Admin) is sufficient. Explicit permission rules are most useful when you're running a multi-team deployment where different groups own different Stores.
+</Callout>
+
+## Organizations
+
+Every resource in OpenAgent — Stores, Providers, Files, Vectors — has an `owner` field that stores the organization name. The default organization is `built-in`.
+
+Resources are scoped to their organization: a user in organization A cannot see or access resources owned by organization B. This enables multi-tenant deployments where multiple independent groups share the same OpenAgent instance without visibility into each other's data.
+
+To create or manage organizations, go to Casdoor directly (accessible at the Casdoor admin URL configured in your deployment). Once an organization exists, you can assign it as the owner when creating resources in OpenAgent.
+
+<Callout type="warn">
+  All resources created through the admin panel are assigned to the organization of the currently logged-in admin. If you're setting up a multi-tenant environment, make sure you're logged in as the correct organization's admin when creating resources.
+</Callout>
+
+## Authentication configuration
+
+OpenAgent supports multiple authentication methods through Casdoor:
+
+- **Local username/password** — default; accounts are stored in Casdoor's database
+- **OAuth 2.0 / OIDC** — connect to Google, GitHub, Microsoft, or any OIDC provider
+- **LDAP / Active Directory** — enterprise directory integration
+- **SAML 2.0** — enterprise SSO
+
+Configure authentication providers in Casdoor at the identity provider level. OpenAgent consumes Casdoor's auth layer without needing per-method configuration.
+
+## Sessions
+
+Active sessions are listed under **Sessions** in the admin panel. Each session shows the user, creation time, and last active time.
+
+Admins can revoke any session. Revocation takes effect immediately — the user's next API request will be rejected with a 401 and they will be redirected to the login page.
+
+Session expiry is configured in Casdoor. The default is typically 24 hours of inactivity.
+
+## Default admin account
+
+The first admin account is configured during setup via environment variables:
+
+```
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your-password
+```
+
+Change the default password immediately after first login. The built-in `admin` account cannot be deleted, but you can change its password and create additional admin accounts for daily use.

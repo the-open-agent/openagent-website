@@ -1,0 +1,123 @@
+---
+title: Model Providers
+description: Connect and orchestrate Large Language Models within the OpenAgent infrastructure.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Model Providers
+
+In OpenAgent, **Model Providers** represent the compute backbone of your agents. The platform abstracts the complexities of individual LLM APIs, providing a unified interface to manage intelligence, failover, and cost across your organization.
+
+## Supported Providers
+
+OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-based and local intelligence engines. All providers are normalized into a unified interface for system prompts and tool calling.
+
+| Provider | Notable Models / Notes |
+| :--- | :--- |
+| **OpenAI** | GPT-5.5 family, o-series (Reasoning), GPT-4o. |
+| **Claude** | Claude 4.7 (Opus/Sonnet/Haiku), Claude 3.5. |
+| **Gemini** | Gemini 3.1 Pro/Flash, 1.5 Pro/Flash. |
+| **DeepSeek** | DeepSeek V4 (Pro/Flash), DeepSeek-R1. |
+| **Mistral** | Mistral Large, Mixtral, Codestral. |
+| **Grok** | Grok-2, Grok-1.5. |
+| **Alibaba Cloud** | Qwen-Max, Qwen-Plus, Qwen-Turbo. |
+| **Baidu Cloud** | ERNIE 4.0, ERNIE 3.5. |
+| **Tencent Cloud** | Hunyuan-Pro, Hunyuan-Standard. |
+| **Volcano Engine**| Doubao-Pro, Doubao-Lite. |
+| **Moonshot** | Moonshot-v1 (Kimi). |
+| **iFlytek** | Spark-4.0 Ultra, Spark-3.5 Max. |
+| **Baichuan** | Baichuan2-Turbo. |
+| **StepFun** | Step-1, Step-2. |
+| **Yi (01.AI)** | Yi-Large, Yi-34B. |
+| **ChatGLM** | GLM-4, GLM-4V. |
+| **MiniMax** | MiniMax-Text-01, abab6.5. |
+| **OpenRouter** | Access to 200+ models via a single API key. |
+| **Silicon Flow** | High-performance inference for open-weight models. |
+| **GitHub Models** | Models via GitHub's serverless inference. |
+| **Hugging Face** | Models via the HF Inference API. |
+| **Azure OpenAI** | OpenAI models deployed on Azure infrastructure. |
+| **Amazon Bedrock**| Claude, Llama, and Titan models via AWS. |
+| **Ollama** | Local LLM execution (Llama, Mistral, Gemma). |
+| **Local** | Any OpenAI-compatible API (vLLM, llama.cpp, LM Studio). |
+| **Cohere** | Command R+, Command R. |
+
+---
+
+## Configuration
+
+OpenAgent provides a unified form to connect these services. While most providers only require an **API Key**, some enterprise and local types have additional field mappings.
+
+### Provider-Specific Settings
+
+<Tabs items={['Standard APIs', 'Azure OpenAI', 'Amazon Bedrock', 'Ollama / Local']}>
+  <Tab value="Standard APIs">
+    Most providers (OpenAI, Claude, DeepSeek, OpenRouter) follow this pattern:
+    
+    - **Type**: Select the provider name.
+    - **Sub Type**: The specific model ID (e.g., `gpt-5.5`).
+    - **API Key**: Your secret token.
+  </Tab>
+  
+  <Tab value="Azure OpenAI">
+    Azure requires specific endpoint and deployment details:
+    
+    - **Type**: `Azure`
+    - **API Key**: Your Azure OpenAI API key.
+    - **Provider URL**: Your resource endpoint (e.g., `https://your-name.openai.azure.com`).
+    - **Client ID**: Enter your **Deployment Name**.
+    - **API Version**: (Optional) e.g., `2024-02-15-preview`.
+  </Tab>
+  
+  <Tab value="Amazon Bedrock">
+    OpenAgent uses the AWS SDK to connect to Bedrock:
+    
+    - **Type**: `Amazon Bedrock`
+    - **Sub Type**: The Bedrock Model ID (e.g., `anthropic.claude-3-opus-20240229-v1:0`).
+    - **API Key**: Your AWS Secret Access Key (ensure AWS credentials are also available in your environment).
+  </Tab>
+  
+  <Tab value="Ollama / Local">
+    For local or OpenAI-compatible local engines:
+    
+    - **Type**: `Ollama` or `Local`
+    - **Provider URL**: The address of your local server (e.g., `http://localhost:11434` for Ollama).
+    - **Sub Type**: The model name (e.g., `llama3.2`).
+    - **Compatible Provider**: (Optional) If using `Local`, specify which API it mimics (e.g., `gpt-3.5-turbo`).
+  </Tab>
+</Tabs>
+
+<Callout type="warn">
+  **Screenshot Placeholder:** The Provider configuration page showing the "Type" dropdown and conditional fields.
+</Callout>
+
+---
+
+## Key Platform Features
+
+OpenAgent provides several infrastructure-level capabilities that go beyond simple API wrapping.
+
+### 1. Automated Failover (Child Models)
+To ensure high availability, OpenAgent allows you to configure **Child Model Providers** at the Store level. 
+- If the primary provider returns a rate limit or a 5xx error, OpenAgent automatically routes the request to the next available child provider in your list.
+- **Example**: Use `DeepSeek V4` for cost-efficiency, with `GPT-5.5` as a high-reliability fallback.
+
+### 2. Context Logic Abstraction
+OpenAgent handles the "dirty work" of different model families:
+- **Thinking Mode**: Native support for reasoning models (o1, DeepSeek-R1).
+- **Prompt Unification**: Automatically formats system, user, and tool-call roles based on the provider's specific requirements.
+
+### 3. Cost & Usage Tracking
+By filling in the pricing fields in the Provider configuration, OpenAgent tracks expenditures at the organization level:
+- **Input/Output Price**: Tracks cost per 1k tokens.
+- **Message Auditing**: Every message stores the actual provider used and the calculated cost in the database for billing or reporting.
+
+---
+
+## Sampling Parameters
+While OpenAgent exposes standard parameters (Temperature, Top-P, Min-P), the platform is designed to use **Provider Defaults** to ensure stable reasoning. Adjust these only if your specific agentic workflow requires high determinism or extreme creativity.
+
+<Callout type="info">
+  **Recommendation:** For agentic tool-use, always set Temperature to `0` to ensure strict adherence to JSON schemas.
+</Callout>

@@ -1,0 +1,115 @@
+---
+title: Build a Chat Assistant
+description: Create a basic chat assistant backed by any LLM provider.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+# Build a Chat Assistant
+
+This guide walks you through creating a simple assistant that can hold multi-turn conversations. This is the foundation for all other OpenAgent capabilities.
+
+**Outcome:** A functional chat UI where you can send messages and receive AI responses.
+
+## Prerequisites
+
+- OpenAgent is running and you have access to the Admin UI.
+- An API key for a model provider (OpenAI, Anthropic, Gemini, etc.) or a local Ollama instance.
+
+## Step 1: Connect a Model Provider
+
+First, you need to give OpenAgent access to an LLM "brain".
+
+<Steps>
+<Step>
+
+Navigate to **Providers → Add Provider**.
+
+<Callout type="warn">
+  **Screenshot Placeholder:** The "Add Provider" page with Category "Model" selected.
+</Callout>
+
+</Step>
+<Step>
+
+	Configure the provider:
+	- **Category**: Select `Model`.
+	- **Type**: Choose your provider (e.g., `OpenAI`).
+	- **Provider URL**: (Optional) For local models or proxies.
+	- **API Key**: Enter your secret key.
+	- **Sub Type**: Enter a model ID supported by the provider.
+Click **Save**. 
+
+
+<Callout type="warn">
+  **Screenshot Placeholder:** A completed Model Provider form.
+</Callout>
+
+</Step>
+</Steps>
+
+## Step 2: Initialize your Agent (Store)
+
+In OpenAgent, an agent's identity and configuration are stored in a **Store**.
+
+<Steps>
+<Step>
+
+Navigate to **Stores → Add Store**.
+
+<Callout type="warn">
+  **Screenshot Placeholder:** The "Add Store" page.
+</Callout>
+
+</Step>
+<Step>
+
+Configure the core settings:
+- **Name**: A unique internal ID (e.g., `my-assistant`).
+- **Display Name**: The name users will see in the chat header.
+- **Model Provider**: Select the provider you created in Step 1.
+- **System Prompt**: Define how your agent should behave.
+
+Example Prompt:
+```text
+You are a helpful assistant. Keep your answers concise and professional.
+```
+
+Click **Save**.
+
+<Callout type="warn">
+  **Screenshot Placeholder:** A completed Store form highlighting Name, Model Provider, and Prompt.
+</Callout>
+
+</Step>
+</Steps>
+
+## Step 3: Start Chatting
+
+<Steps>
+<Step>
+
+Click the **Chat** icon in the sidebar or the chat button next to your Store in the list.
+
+<Callout type="warn">
+  **Screenshot Placeholder:** The sidebar with the Chat icon highlighted.
+</Callout>
+
+</Step>
+<Step>
+
+Select your agent from the dropdown and send a test message.
+
+<Callout type="warn">
+  **Screenshot Placeholder:** The Chat interface showing a streaming response from the agent.
+</Callout>
+
+</Step>
+</Steps>
+
+## Next Steps
+
+- **Add Knowledge**: Make your agent answer from your own documents using [RAG](/docs/add-a-knowledge-base).
+- **Give it Tools**: Enable [Built-in Tools or MCP](/docs/add-tools-and-automation) to let your agent act.
+- **Configure Fallbacks**: Set up **Child Model Providers** in the Store settings for high availability.

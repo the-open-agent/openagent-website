@@ -1,0 +1,74 @@
+---
+title: Vectors
+description: How document chunks are embedded, stored, and searched for knowledge base retrieval.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Vectors
+
+A **Vector** is a single embedded chunk of text from a File. When OpenAgent processes an uploaded document, it splits the text into smaller pieces (using the Store's Split Provider), converts each piece into a numerical vector (using the Embedding Provider), and stores the result as a Vector record. These Vector records are what power semantic search.
+
+## How retrieval works
+
+At query time:
+
+1. The user's message is embedded using the same Embedding Provider as the Store's Vectors
+2. OpenAgent computes cosine similarity between the query vector and every Vector in the Store (plus any Child Stores)
+3. The top N most similar Vectors are returned (N = Store's **Knowledge Count**)
+4. Their text content is injected into the prompt context before the model call
+
+The similarity score is computed on the fly and appears in the Message's `vectorScores` field — you can see which chunks were retrieved and how similar they were.
+
+## What a Vector contains
+
+| Field | Description |
+|-------|-------------|
+| `store` | Which Store this Vector belongs to |
+| `file` | The source File |
+| `index` | Position within the File, used to reconstruct document order |
+| `text` | The raw chunk text |
+| `provider` | Which Embedding Provider generated this Vector |
+| `tokenCount` | Token count for this chunk |
+| `data` | The embedding coordinates — a float array, dimension varies by model |
+| `dimension` | Number of dimensions in the embedding |
+
+## Browsing Vectors
+
+Go to **Vectors** in the admin panel. Filter by Store or File. The list shows the chunk text, source file, position, and token count.
+
+Reading chunk text directly is often the fastest way to debug retrieval issues. If the agent is pulling irrelevant chunks, look at what text those Vectors actually contain — the problem is usually in how the document was split, not in the retrieval algorithm itself.
+
+**Common issues visible in the Vector list:**
+
+- Chunks that are too large (many tokens) and dilute relevance when retrieved
+- Chunks that split mid-sentence or mid-table, losing important context
+- Chunks from different sections merged together because of inconsistent formatting in the source document
+
+If you see these problems, try a different Split Provider and re-index.
+
+## Checking retrieval quality
+
+The Message detail view shows `vectorScores` — the list of Vectors that were retrieved for a specific message, along with their similarity scores. Scores range from 0 to 1; a score below 0.6 usually means the retrieved chunk isn't very relevant to the query.
+
+If relevant content exists in the knowledge base but isn't being retrieved:
+- Raise **Knowledge Count** to retrieve more candidates
+- Check if the chunk containing the answer is too large (the query might match a different chunk more closely)
+- Consider switching to the `Hierarchy` Search Provider for large knowledge bases
+
+## Re-indexing
+
+Vectors are generated once per File. Changing the Store's **Embedding Provider** invalidates all existing Vectors — they were embedded in a different vector space and are no longer comparable to new queries.
+
+To re-index after changing the Embedding Provider:
+1. Go to **Files** and delete all Files belonging to the Store
+2. Re-upload the Files
+3. Processing runs automatically with the new provider
+
+<Callout type="warn">
+  Deleting Files also deletes their Vectors immediately. There is no recovery — make sure you have the source documents before deleting.
+</Callout>
+
+## External vector stores
+
+If you have an external vector database (such as Pinecone, Weaviate, or Qdrant), you can link it to a Store via the **Vector Store ID** field. Retrieval will query the external store instead of OpenAgent's built-in Vector table. The external store must be pre-populated separately — OpenAgent does not write to external vector stores automatically.

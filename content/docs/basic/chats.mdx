@@ -1,0 +1,26 @@
+---
+title: Chats
+description: Conversation sessions in OpenAgent and how they relate to Stores and Messages.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Chats
+
+A **Chat** is a conversation session backed by a single **Store**. When users talk to OpenAgent, they are always talking through a Chat.
+
+Chats are where you:
+
+- Start a conversation with an assistant
+- Continue multi-turn history
+- Review what happened in a session
+
+<Callout type="info">
+  For the full request lifecycle, streaming behavior, and how retrieval and tool calls work, see [Chat](/docs/chat).
+</Callout>
+
+## What matters in practice
+
+- Use [Stores](/docs/basic/stores) to define the assistant
+- Use Chats to hold the conversation history
+- Use [Messages](/docs/basic/messages) to inspect each turn in detail

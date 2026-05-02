@@ -1,0 +1,69 @@
+---
+title: What is OpenAgent
+description: Understand the architectural layers and core philosophy behind OpenAgent.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# What is OpenAgent
+
+OpenAgent is an open-source platform designed to bridge the gap between **raw Large Language Models (LLMs)** and **production-ready AI systems**. It provides the essential orchestration, data indexing, and tool-calling infrastructure needed to build reliable, knowledge-backed AI agents.
+
+## The Core Philosophy
+
+Unlike simple chat interfaces, OpenAgent is built on the principle of **Decoupled Intelligence**. We believe that the agent's identity, its knowledge, and its capabilities should be independent of the underlying LLM provider. This allows you to swap models (e.g., from GPT-4 to a local Llama 3) without rebuilding your entire knowledge base or tool-set.
+
+---
+
+## Architectural Layers
+
+OpenAgent organizes AI complexity into four distinct functional layers:
+
+### 1. The Intelligence Layer (Providers)
+Connect to any AI backend. OpenAgent abstracts the differences between providers, giving you a unified interface for:
+- **Models**: Reasoning and chat (OpenAI, Anthropic, Ollama, etc.)
+- **Embeddings**: Turning data into searchable vectors.
+- **Tools**: Connecting to external APIs or MCP servers.
+
+### 2. The Identity Layer (Stores)
+The **Store** is the central unit of OpenAgent. It defines a specific agent's persona.
+- **System Instructions**: The core "rules" of the agent.
+- **Memory Management**: How much conversation history to retain.
+- **Fallback Logic**: Automatic routing to secondary models if the primary fails.
+
+### 3. The Context Layer (RAG)
+Turn static documents into a living knowledge base.
+- **Files**: Automatic parsing of PDF, Markdown, and Excel.
+- **Vectors**: Atomic, searchable chunks of your data.
+- **Retrieval**: Semantic search that finds the right info at the right time.
+
+### 4. The Action Layer (Tools)
+Empower agents to do more than just talk.
+- **Built-in Tools**: Web search, browser automation, and shell execution.
+- **A2A (Agent-to-Agent)**: Delegate tasks to specialized sub-agents.
+- **MCP**: Support for the industry-standard Model Context Protocol.
+
+---
+
+## The Request Lifecycle
+
+When a user sends a message, OpenAgent performs a coordinated "orchestration" dance:
+
+1. **Grounded Retrieval**: The query is embedded and matched against indexed Vectors.
+2. **Context Assembly**: The system prompt, history, and retrieved document snippets are merged into a high-density context.
+3. **Reasoning & Tool Call**: The LLM processes the request. If it needs external data, a Tool call is triggered and executed server-side.
+4. **Final Delivery**: The result is streamed back to the user and recorded for auditing.
+
+---
+
+## Why OpenAgent?
+
+- **Enterprise Readiness**: Out-of-the-box support for SSO (Casdoor), auditing, and token usage tracking.
+- **Vendor Neutrality**: No lock-in. Run on-premise with local models or in the cloud.
+- **Atomic Scaling**: Start with a single chat assistant and scale to a complex network of delegated agents.
+
+<Cards>
+  <Card title="Quick Start" description="Deploy OpenAgent and send your first message." href="/docs/quick-start" />
+  <Card title="Guides" description="Step-by-step tutorials for RAG and Tools." href="/docs/build-a-chat-assistant" />
+</Cards>

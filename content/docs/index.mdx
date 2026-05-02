@@ -1,53 +1,71 @@
 ---
 title: OpenAgent Documentation
-description: The open-source, enterprise-grade AI agent platform.
+description: The open-source infrastructure for production AI agents and knowledge bases.
 ---
 
 import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { MessageSquare, Library, Construction, ShieldCheck, Cpu, Zap } from 'lucide-react';
 
-# Welcome to OpenAgent
+# OpenAgent
 
-OpenAgent is an open-source, enterprise-grade AI cloud platform that helps you build and deploy intelligent AI agents. Connect 30+ model providers, create agents with MCP tool support, manage knowledge bases, and reach users across 20+ messaging channels.
+OpenAgent is the professional foundation for building **production-ready AI agents** backed by your own data. It provides the essential orchestration, data indexing, and tool-calling infrastructure to transform raw LLMs into specialized team assistants.
 
-## Quick Navigation
+---
 
 <Cards>
-  <Card
-    title="Getting Started"
-    description="Install OpenAgent and deploy your first AI agent in minutes."
-    href="/docs/getting-started"
+  <Card 
+    icon={<Zap className="text-blue-500" />} 
+    title="Architecture" 
+    description="Understand the four layers of OpenAgent: Intelligence, Identity, Context, and Action." 
+    href="/docs/what-is-openagent" 
   />
-  <Card
-    title="Core Concepts"
-    description="Understand agents, models, and knowledge bases."
-    href="/docs/core-concepts/agents"
-  />
-  <Card
-    title="Features"
-    description="Explore MCP tool use, multi-channel gateway, and the plugin system."
-    href="/docs/features/mcp"
-  />
-  <Card
-    title="Deployment"
-    description="Deploy to production with Docker and configure your instance."
-    href="/docs/deployment/docker"
+  <Card 
+    icon={<Construction className="text-green-500" />} 
+    title="Quick Start" 
+    description="Get OpenAgent running and send your first message in under 5 minutes." 
+    href="/docs/quick-start" 
   />
 </Cards>
 
-## What is OpenAgent?
+## Enterprise-Grade Features
 
-OpenAgent is a self-hosted platform built around three core capabilities:
+<Cards>
+  <Card 
+    icon={<MessageSquare className="text-purple-500" />}
+    title="Model Orchestration" 
+    description="Seamlessly switch between 20+ providers. Configure fallback models for high availability." 
+    href="/docs/build-a-chat-assistant" 
+  />
+  <Card 
+    icon={<Library className="text-orange-500" />}
+    title="Managed RAG" 
+    description="Professional document indexing and retrieval. Turn PDFs and wikis into grounded context." 
+    href="/docs/add-a-knowledge-base" 
+  />
+  <Card 
+    icon={<Cpu className="text-red-500" />}
+    title="Tool Integration" 
+    description="Extend agents with MCP servers, built-in automation tools, or A2A delegation." 
+    href="/docs/add-tools-and-automation" 
+  />
+  <Card 
+    icon={<ShieldCheck className="text-cyan-500" />}
+    title="Operational Security" 
+    description="Role-based access control (RBAC), SSO integration, and comprehensive audit logs." 
+    href="/docs/admin/users" 
+  />
+</Cards>
 
-**Intelligent Agents** — Agents powered by any supported LLM that can reason, use tools via MCP, search your knowledge base, and call external APIs to complete complex tasks.
+---
 
-**Knowledge Base** — Upload documents (PDF, Word, Excel, CSV, and more). OpenAgent chunks, embeds, and indexes them so agents can retrieve precise, grounded answers.
+## The OpenAgent Advantage
 
-**Multi-Channel Gateway** — One deployment reaches your users wherever they are: Telegram, Discord, Slack, WhatsApp, web chat, and more.
+- **Private & Local**: Host on your own infrastructure. Support for local LLMs via Ollama and LocalAI.
+- **Provider Agnostic**: Standardized abstraction for models, embeddings, and storage. No vendor lock-in.
+- **Scalable Workflows**: Build complex agent networks where a coordinator delegates to specialized sub-agents.
+- **Audit Ready**: Track every token, record every tool call, and monitor agent performance at scale.
 
-## Why OpenAgent?
-
-- **Open source** — Apache 2.0 licensed. Self-host on your own infrastructure.
-- **Model agnostic** — Switch between providers without changing your agent logic.
-- **Privacy first** — Your data never leaves your servers.
-- **Extensible** — Add custom tools, channels, and model providers via plugins.
-- **Enterprise features** — SSO, RBAC, multi-tenancy, and audit logs built in.
+<Callout type="info">
+  **Note on Migration:** This documentation covers the new Agent-first architecture. Legacy cloud and multimedia modules from previous versions are now deprecated.
+</Callout>

@@ -1,0 +1,129 @@
+---
+title: Logs
+description: Audit records, conversation history, and token/cost tracking for operational visibility.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Logs
+
+OpenAgent keeps two kinds of operational data: **Records** for tracking administrative actions, and **Usage** for tracking token consumption and cost. Both are read-only views — they accumulate automatically as the system runs.
+
+<Callout type="warn">
+  **Screenshot placeholder:** Records page (audit trail) showing filters and a single record detail.
+  Add a second screenshot for Usage showing token/cost trends over time.
+</Callout>
+
+## Records
+
+A **Record** is created for every write operation performed through the API. Each record captures:
+
+| Field | Description |
+|-------|-------------|
+| `user` | Which account triggered the action |
+| `method` | HTTP method — typically `POST` for writes |
+| `requestUri` | The API endpoint called (e.g. `/api/store`, `/api/file`) |
+| `action` | Human-readable description (e.g. "update Store: customer-support") |
+| `clientIp` | IP address of the requester |
+| `organization` | Organization context of the request |
+| `createdTime` | When the action occurred |
+
+Browse Records at **Records** in the admin panel. Filter by user, action keyword, or time range to narrow down specific events.
+
+### What Records capture
+
+Records are your audit trail for configuration changes:
+
+- Who created or edited a Store, and when
+- Who added or removed a Provider
+- Who uploaded or deleted a File
+- Who changed a user's role or permissions
+- Who triggered a file re-index
+
+Records do **not** capture conversation activity (chat messages, tool calls) — that data is in the Chat and Message records.
+
+### logPostOnly
+
+By default, Records focus on **changes** (writes) rather than read traffic. This keeps the audit trail useful instead of noisy.
+
+If you need to audit read access for compliance, OpenAgent can be configured to log all requests.
+
+<Callout type="info">
+  Records are append-only. They cannot be edited or deleted through the admin panel.
+</Callout>
+
+## Conversation history
+
+For understanding what the agent said, what tools it called, and what it retrieved, go to **Chat** in the admin panel.
+
+Admins can open any conversation across all users and see the full message thread. Each Message in the thread shows:
+
+- The user's input and the agent's response
+- Tool calls: the tool name, arguments sent, and result returned
+- Retrieved Vectors: which knowledge base chunks were used, and their similarity scores
+- Web search results, if `web_search` was used
+- Token counts (input tokens, output tokens)
+- The model's reasoning steps, if thinking mode was enabled
+
+This is separate from Records. Records track administrative actions ("who changed a Store"). The Chat view tracks what happened inside conversations ("what did the agent say and do in response to this user").
+
+### Finding a specific conversation
+
+Use the Chat filter to narrow by:
+
+- **Store** — see only conversations from a specific agent
+- **User** — see all conversations from a specific account
+- **Date range** — narrow to a time window
+
+Click into any Chat to see its full message history. Click into any Message to see the full detail view (retrieval results, tool calls, web search results, token/cost accounting).
+
+## Usage
+
+**Usage** aggregates token consumption over time. Each row represents one day's activity for one Store or provider:
+
+| Field | Description |
+|-------|-------------|
+| `date` | Calendar date (UTC) |
+| `userCount` | Distinct users who sent at least one message |
+| `chatCount` | Number of Chat sessions started |
+| `messageCount` | Total messages sent and received |
+| `tokenCount` | Total tokens consumed (input + output) |
+| `price` | Estimated cost, if pricing is configured on the provider |
+
+Browse Usage at **Usage** in the admin panel. Filter by Store or date range.
+
+### Cost tracking
+
+Cost tracking is opt-in. To enable it:
+
+1. Edit the Model Provider
+2. Set **Input Price per Thousand Tokens** and **Output Price per Thousand Tokens**
+3. Set **Currency** (e.g. `USD`, `CNY`)
+4. Save
+
+After this, every Message records an estimated cost alongside its token counts. The Usage table accumulates these into daily totals.
+
+Each provider tracks cost independently with its own currency and pricing. If you use multiple providers, their costs are tracked separately — no automatic currency conversion is performed.
+
+<Callout type="info">
+  Prices are estimates based on reported token counts. Actual billed amounts from the provider may differ due to minimum charges, rounding, or additional fees not reflected in token counts alone.
+</Callout>
+
+### Reading Usage data
+
+Usage data answers questions like:
+
+- Which Store is consuming the most tokens this month?
+- Has usage spiked unexpectedly in the last 48 hours?
+- How much did this deployment cost last week?
+- How many unique users interacted with the system today?
+
+If a Store shows unexpectedly high token usage, check the Store's **Memory Limit** setting — a high limit means more conversation history is included in every prompt, multiplying token usage for long conversations.
+
+If `messageCount` is high but `userCount` is low, a small number of users are generating most of the traffic — possibly automated clients or testers.
+
+### Token count accuracy
+
+Token counts in Usage are the values reported by the model provider API. They reflect actual tokens processed, including the system prompt, retrieved Vector text, tool results, and conversation history injected by Memory Limit — not just the visible user message and response.
+
+For accurate per-message token details, open the Message detail view inside a Chat thread.

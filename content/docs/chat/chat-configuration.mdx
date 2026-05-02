@@ -1,0 +1,132 @@
+---
+title: Chat Configuration
+description: Store fields that control conversation behavior — prompt, memory, rate limiting, suggestions, and content filtering.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Chat Configuration
+
+All chat behavior is controlled through the Store. There is no separate chat settings screen — every field that shapes a conversation lives on the Store that backs it. Changes take effect immediately for the next message sent to that Store.
+
+## System prompt
+
+**Prompt** is the single most important lever for agent behavior. It is sent as the system message at the start of every conversation, before any user input or retrieved context.
+
+Write it as direct instructions. Some effective patterns:
+
+**Define scope and persona:**
+```
+You are a technical support assistant for Acme Corp.
+Answer questions about our software products.
+For anything unrelated, politely redirect the user.
+```
+
+**Instruct on knowledge base use:**
+```
+Always search the provided context before answering.
+If the context contains a relevant answer, use it and reference the source.
+If not, say you don't have that information — do not guess.
+```
+
+**Control response format:**
+```
+Keep responses under 3 paragraphs. Use bullet points for steps.
+For code, always use fenced code blocks with the language specified.
+```
+
+The prompt is the first thing in the context, so it has the strongest influence on model behavior. Ambiguous prompts produce inconsistent results — be explicit.
+
+## Memory
+
+**Memory Limit** controls how many past turns to include in each context window. Each "turn" is one user message plus one AI response.
+
+Setting this too high uses more tokens per request (which costs more and can hit context window limits). Setting it too low means the agent loses earlier parts of the conversation.
+
+Typical values:
+- `10` — enough for most single-topic conversations
+- `20–30` — for longer, multi-topic sessions
+- `0` — no history is included (each message is treated as independent)
+
+When the limit is reached, the oldest turns are dropped. The system prompt and retrieved knowledge chunks are always included regardless of the limit.
+
+## Knowledge retrieval
+
+**Knowledge Count** sets how many Vector chunks are retrieved from the knowledge base per query. The default is 3.
+
+Raise this when:
+- Questions require synthesizing information from multiple sections of a document
+- Documents are dense and a single chunk often lacks full context
+- The agent frequently says "I don't have enough information" despite the content existing
+
+Lower this when:
+- Retrieved chunks are large and you need to stay within token budget
+- Questions are typically answered by a single, specific passage
+
+**Search Provider** determines the retrieval algorithm:
+- `Default` — standard cosine similarity search over all Vectors in the Store
+- `Hierarchy` — a hierarchical search that first identifies high-level document sections, then refines within them. Better for large knowledge bases with many documents where flat similarity search returns noisy results.
+
+## Rate limiting
+
+**Frequency** and **Limit Minutes** together control how many messages a user can send within a time window.
+
+- **Frequency** — maximum number of messages allowed per window
+- **Limit Minutes** — the length of the window in minutes
+
+For example: Frequency = `20`, Limit Minutes = `60` means each user can send 20 messages per hour to this Store. Once the limit is hit, further messages are rejected with a rate limit error until the window resets.
+
+Setting Frequency to `0` disables rate limiting entirely.
+
+<Callout type="info">
+  Rate limits are per-user, per-Store. Users who hit the limit on one Store can still use other Stores freely.
+</Callout>
+
+## Suggestions
+
+**Suggestion Count** — the number of follow-up question suggestions generated after each AI response. These appear as clickable prompts in the chat UI, inviting the user to continue the conversation.
+
+Setting this to `0` disables suggestions. Setting it to `3` generates three suggestions per response. The suggestions are produced by a separate model call using the conversation context, so they incur additional token usage.
+
+Use suggestions when you want to guide users toward topics the agent handles well, or when users tend to be unsure what to ask next.
+
+## Welcome message
+
+Three optional fields are shown when a user opens a fresh Chat session:
+
+- **Welcome Title** — bold heading at the top of the empty chat
+- **Welcome Text** — a paragraph below the heading, describing what the agent can do
+- **Welcome** — a brief greeting line
+
+Leave these empty and the chat opens directly to the input field with no preamble.
+
+## Example questions
+
+**Example Questions** — a list of suggested prompts shown as buttons in the chat UI. Each entry has:
+- **Title** — the button label
+- **Text** — the actual prompt sent when the button is clicked
+- **Image** (optional) — an icon or thumbnail shown alongside the button
+
+Use example questions to surface the most useful things users can ask. They also serve as an implicit FAQ — clicking a button immediately sends the question and gets an answer.
+
+## Content filtering
+
+**Forbidden Words** — a blocklist applied to incoming user messages before they reach the model. Any message containing a word from this list is rejected with an error response. The rejection happens before any LLM call, so no tokens are consumed.
+
+This is a simple exact-match filter, not a semantic classifier. Use it for obvious off-topic keywords or brand-safety terms, not as a comprehensive moderation system.
+
+## Display options
+
+**Hide Thinking** — some models (certain Claude and DeepSeek variants) return their chain-of-thought reasoning alongside the final answer. When this is enabled, the reasoning is stripped before the response reaches the user. Admins can still see it in the Message detail view.
+
+**Disable File Upload** — hides the file upload button in the chat UI, preventing users from attaching files to messages.
+
+**Show Auto Read** — adds a text-to-speech playback button to AI responses. Only meaningful if a Text-to-Speech provider is configured on the Store.
+
+**Enable Extra Options** — exposes additional configuration toggles in the chat UI for end users (such as enabling or disabling web search per-message). Off by default; only enable if you want users to have runtime control over these options.
+
+## Multi-provider fallback
+
+**Child Model Providers** — an ordered list of fallback providers. If the primary **Model Provider** fails, OpenAgent tries each in sequence and uses the first one that succeeds.
+
+This is transparent to the user. The Message record captures which provider actually handled the request in its `modelProvider` field.

@@ -1,0 +1,8 @@
+{
+  "title": "Providers",
+  "pages": [
+    "model-providers",
+    "embedding-providers",
+    "storage-providers"
+  ]
+}

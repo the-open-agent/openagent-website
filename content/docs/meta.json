@@ -3,13 +3,19 @@
   "root": true,
   "pages": [
     "index",
-    "---Getting Started---",
-    "getting-started",
-    "---Core Concepts---",
-    "core-concepts",
-    "---Features---",
-    "features",
-    "---Deployment---",
-    "deployment"
+    "---Introduction---",
+    "what-is-openagent",
+    "quick-start",
+    "---User Guides---",
+    "build-a-chat-assistant",
+    "add-a-knowledge-base",
+    "add-tools-and-automation",
+    "---References---",
+    "chat",
+    "basic",
+    "knowledge-base",
+    "connectors",
+    "auditing-logs",
+    "admin"
   ]
 }

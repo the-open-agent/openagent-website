@@ -1,0 +1,187 @@
+---
+title: Embedding Providers
+description: Vector embedding services for knowledge base retrieval — configuration, model selection, and consistency rules.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Embedding Providers
+
+An embedding provider converts text into numerical vectors. OpenAgent uses it at two moments: when a File is uploaded (each chunk is embedded and stored as a Vector), and when a user sends a message (the query is embedded so OpenAgent can find the most similar chunks). The same provider must be used for both — mixing providers produces meaningless similarity scores.
+
+## Recommended defaults
+
+If you're not sure what to pick:
+
+- **Most teams**: `text-embedding-3-small` (OpenAI) as a fast, affordable default
+- **Multilingual or highest accuracy**: `text-embedding-3-large` (OpenAI) or Cohere multilingual embeddings
+- **Offline / local**: `nomic-embed-text` via Ollama
+
+## Supported providers
+
+| Provider | Notable models |
+|----------|----------------|
+| **OpenAI** | `text-embedding-3-small`, `text-embedding-3-large`, `text-embedding-ada-002` |
+| **Gemini** (Google) | `text-embedding-004`, `embedding-001` |
+| **Cohere** | `embed-english-v3.0`, `embed-multilingual-v3.0` |
+| **Ollama** | `nomic-embed-text`, `mxbai-embed-large`, `all-minilm`, and others |
+| **Azure OpenAI** | OpenAI embedding models deployed to your Azure subscription |
+| **Alibaba Cloud** (Qwen) | `text-embedding-v1`, `text-embedding-v2`, `text-embedding-v3` |
+| **Baidu Cloud** (Ernie) | ERNIE embedding models |
+| **MiniMax** | MiniMax embedding models |
+| **Tencent Cloud** (Hunyuan) | Hunyuan embedding models |
+| **Jina** | `jina-embeddings-v3`, `jina-embeddings-v2-base-en` |
+| **Hugging Face** | Embedding models via the Inference API |
+| **Word2Vec** | Classic word vector models for legacy or offline use |
+| **Local** | Any OpenAI-compatible local embedding endpoint (LM Studio, Infinity, TEI) |
+
+## Adding a provider
+
+1. **Providers → Add Provider**, category **Embedding**
+2. Choose a **Type** from the table above
+3. Enter **API Key** (and **Provider URL** for Azure, Jina, or local servers)
+4. Set **Sub Type** to the model name (e.g. `text-embedding-3-small`)
+5. Save — the provider appears immediately in the **Embedding Provider** dropdown on Stores
+
+<Callout type="warn">
+  **Screenshot placeholder:** Providers → Add Provider (Embedding) form + Store edit page selecting Embedding Provider.
+  Make the “one embedding space per Store” rule visually obvious.
+</Callout>
+
+## Provider-specific configuration
+
+<Tabs items={['OpenAI', 'Azure OpenAI', 'Ollama', 'Jina', 'Local API']}>
+<Tab value="OpenAI">
+
+The simplest setup. OpenAI offers three generations of embedding models:
+
+- **Type**: OpenAI
+- **API Key**: your OpenAI API key
+- **Sub Type**: model name
+
+| Model | Dimensions | Best for |
+|-------|-----------|----------|
+| `text-embedding-3-small` | 1536 | General use, low cost |
+| `text-embedding-3-large` | 3072 | Higher accuracy, multilingual |
+| `text-embedding-ada-002` | 1536 | Legacy — prefer 3-small for new stores |
+
+`text-embedding-3-small` is the recommended default. It is fast, affordable, and outperforms `ada-002` on most benchmarks.
+
+Both `3-small` and `3-large` support **dimension reduction** — you can specify a lower dimension count to reduce storage requirements while retaining most accuracy. OpenAgent uses the model's default dimension unless you configure otherwise.
+
+</Tab>
+<Tab value="Azure OpenAI">
+
+Use when you need OpenAI embeddings through your Azure subscription (compliance, VNet access, cost management):
+
+- **Type**: Azure
+- **API Key**: your Azure OpenAI key
+- **Provider URL**: `https://your-resource.openai.azure.com`
+- **Sub Type**: your deployment name (the name you gave the model in Azure — not the model family name)
+
+The API version is handled automatically. Make sure the model deployed in Azure is an embedding model, not a chat completion model.
+
+</Tab>
+<Tab value="Ollama">
+
+Ollama lets you run embedding models locally with no external API calls:
+
+- **Type**: Ollama
+- **Provider URL**: `http://localhost:11434` (or wherever Ollama is running)
+- **Sub Type**: model name as it appears in `ollama list`
+- **API Key**: not required
+
+Pull the model before creating the provider:
+
+```bash
+ollama pull nomic-embed-text
+```
+
+Commonly used embedding models with Ollama:
+
+| Model | Dimensions | Notes |
+|-------|-----------|-------|
+| `nomic-embed-text` | 768 | Fast, good quality, recommended default |
+| `mxbai-embed-large` | 1024 | Higher quality, slower |
+| `all-minilm` | 384 | Lightweight, lower accuracy |
+
+Ollama embedding models work on CPU; GPU is not required for most sizes.
+
+</Tab>
+<Tab value="Jina">
+
+Jina provides high-quality embedding models with strong multilingual support:
+
+- **Type**: Jina
+- **API Key**: your Jina API key
+- **Sub Type**: model name (e.g. `jina-embeddings-v3`)
+
+`jina-embeddings-v3` supports 89 languages and late-interaction features useful for long documents. If your knowledge base contains documents in multiple languages and you're not using Cohere's multilingual model, Jina is a strong alternative.
+
+</Tab>
+<Tab value="Local API">
+
+Any server that implements the OpenAI embeddings API format works:
+
+- **Type**: Local
+- **Provider URL**: base URL of your server (e.g. `http://localhost:8080`)
+- **Sub Type**: model identifier your server expects
+- **API Key**: leave empty or set to `none`
+
+Compatible servers: [Infinity](https://github.com/michaelfeil/infinity), [TEI (Text Embeddings Inference)](https://github.com/huggingface/text-embeddings-inference), LM Studio (embedding mode).
+
+This is the fully offline option that doesn't depend on Ollama — useful if you already have an embedding inference stack.
+
+</Tab>
+</Tabs>
+
+## Choosing an embedding model
+
+**For most English-language knowledge bases:** `text-embedding-3-small` (OpenAI). Low cost, reliable, integrates in minutes.
+
+**For multilingual content:** Cohere `embed-multilingual-v3.0` or Jina `jina-embeddings-v3`. Both handle non-English documents and cross-language queries (English query matching a Chinese document, for example).
+
+**For fully offline or on-premise deployments:** Ollama with `nomic-embed-text` or `mxbai-embed-large`. No data leaves your server. Works on CPU.
+
+**For high-accuracy retrieval on large knowledge bases:** `text-embedding-3-large` or Cohere `embed-english-v3.0`. Higher dimensionality improves discrimination between similar chunks, at higher cost and slightly higher latency.
+
+**For legacy or research workflows:** Word2Vec is available for compatibility with pre-existing vector pipelines, but modern neural embedding models outperform it significantly on retrieval tasks.
+
+## The consistency rule
+
+<Callout type="warn">
+  All Vectors in a Store must be embedded by the same model. If you change the Store's Embedding Provider after Files have been uploaded, existing Vectors are no longer comparable to new query embeddings — retrieval will silently return wrong results.
+
+  After changing the Embedding Provider, delete all Files in the Store and re-upload them. Processing runs automatically with the new provider.
+</Callout>
+
+The reason: embedding models produce vectors in their own coordinate space. A vector from `text-embedding-3-small` and a vector from `nomic-embed-text` exist in completely different spaces — cosine similarity between them has no meaning.
+
+## Embedding provider vs. chat model
+
+The embedding provider is entirely independent of the chat model. You can freely mix:
+
+- OpenAI embeddings + Ollama chat model (send no data to OpenAI during conversations, only during indexing)
+- Ollama embeddings + Claude chat model (fully offline indexing, cloud-based reasoning)
+- Jina embeddings + a strong chat model (e.g. OpenAI `gpt-4.1`) for multilingual retrieval with high-quality generation
+
+The Store has separate fields for **Model Provider** (chat) and **Embedding Provider** — configure each independently.
+
+## Pricing and token counts
+
+Most embedding providers charge per token, but at rates far lower than chat models. For cost estimation:
+
+- `text-embedding-3-small` (OpenAI): about $0.02 / 1M tokens (about $0.01 / 1M via Batch API)
+- `text-embedding-3-large` (OpenAI): about $0.13 / 1M tokens (about $0.065 / 1M via Batch API)
+- Ollama and local: free (compute cost only)
+
+Embedding costs are incurred at upload time (once per chunk) and at query time (once per user message). Query-time costs are typically small compared to upload-time costs for large knowledge bases.
+
+<Callout type="info">
+  Prices change over time. The numbers above are a rough reference as of April 2026 — check your provider’s current pricing page for production budgeting (for OpenAI: https://platform.openai.com/pricing).
+</Callout>
+
+<Callout type="info">
+  The embedding provider does not need to be from the same vendor as your chat model. Mixing providers is normal — choose each independently based on your requirements for retrieval quality, language coverage, and cost.
+</Callout>

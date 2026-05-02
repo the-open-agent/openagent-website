@@ -1,0 +1,75 @@
+---
+title: Storage Providers
+description: Where uploaded file bytes are physically stored — local disk or OpenAI Files API.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Storage Providers
+
+A storage provider controls where the raw bytes of uploaded files are kept. It only affects the physical location of file data — not retrieval quality or agent behavior.
+
+## Recommended default
+
+Use **Local File System** unless you have a specific reason to offload file storage to another backend.
+
+## Supported types
+
+### Local File System
+
+Files are stored on the server's local disk. This is the default and requires no additional configuration.
+
+<Callout type="warn">
+  **Screenshot placeholder:** Providers → Add Provider (Storage) selection (Local vs OpenAI).
+  Keep it brief; storage should feel like a “set once and forget” setting.
+</Callout>
+
+- **Best for**: single-server deployments, development environments, on-premise installations where you manage your own disk
+- **No API key required**
+- **No extra cost** beyond disk space
+
+Files are written to the configured upload directory on the server running OpenAgent. If you're running behind a load balancer or across multiple nodes, all nodes must share the same filesystem (e.g. a network mount) or you will get inconsistent file access.
+
+### OpenAI File System
+
+Files are uploaded to the OpenAI Files API and stored there.
+
+- **Best for**: deployments already using OpenAI infrastructure that want file storage managed externally
+- **API Key required**: your OpenAI API key
+- **Cost**: OpenAI Files API pricing applies
+
+The original file bytes are sent to OpenAI during upload. Processing (text extraction, chunking, embedding) still happens within OpenAgent — the storage provider only determines where the file bytes land.
+
+## Adding a provider
+
+1. **Providers → Add Provider**, category **Storage**
+2. Choose **Local File System** or **OpenAI File System**
+3. For OpenAI File System, enter your OpenAI **API Key**
+4. Save
+
+Then edit the Store and set **Storage Provider** to the provider you created.
+
+## Setting a default
+
+If you have only one storage provider configured, all new Stores will default to it. If you have multiple providers, select the one you want in the **Storage Provider** field on each Store individually.
+
+## Changing the storage provider on an existing Store
+
+<Callout type="warn">
+  Changing the Storage Provider on a Store does **not** migrate existing files. Files already uploaded remain in their original storage location. Only new uploads after the change will go to the new provider.
+
+  If you need all files in the same storage backend, delete the existing Files and re-upload them after switching the provider.
+</Callout>
+
+## What the storage provider does not affect
+
+- **File metadata** — name, size, status (`Pending`, `Processing`, `Finished`, `Error`), and Store association are always in OpenAgent's database
+- **Vectors** — embeddings are always stored in OpenAgent's Vector table, regardless of storage provider
+- **File processing** — text extraction and chunking happen within OpenAgent after the file is stored, independently of where the bytes live
+- **Retrieval** — vector similarity search does not access the raw file bytes; it only uses Vectors
+
+In practice, most deployments use **Local File System** throughout. Switch to **OpenAI File System** only if you have a specific reason to offload storage to OpenAI's infrastructure.
+
+<Callout type="info">
+  The storage provider is a low-visibility setting. It doesn't affect retrieval quality, agent behavior, or conversation performance. Set it once when configuring a new Store and leave it alone.
+</Callout>

@@ -1,0 +1,74 @@
+---
+title: Add Tools & Automation
+description: Give your assistant the ability to act — browse the web, call APIs, or delegate to sub-agents.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+# Add Tools & Automation
+
+A standard LLM is limited to text generation. By adding **Tools**, you give your agent the ability to interact with the world: search the internet, browse live websites, execute code, or call external APIs.
+
+OpenAgent supports three primary ways to extend an agent's capabilities.
+
+---
+
+## 1. Built-in Tools (Fastest)
+
+The fastest way to add capabilities. These tools are pre-packaged with OpenAgent and require zero configuration.
+
+**How to enable:**
+1. Edit your **Store**.
+2. Go to the **Builtin Tools** field.
+3. Add tools like `Web Search`, `Browser`, or `Shell`.
+4. Save and test in Chat.
+
+*Example: "Search the latest news about OpenAgent and summarize it."*
+
+<Callout type="warn">
+  **Security Note:** Tools like `Shell` or `Browser` can perform actions on your host machine. Only enable them in trusted, sandboxed environments.
+</Callout>
+
+---
+
+## 2. Model Context Protocol (MCP)
+
+OpenAgent supports [MCP](/docs/connectors/tools/mcp), an open standard for connecting AI models to external data and tools. This is the recommended way to connect your own databases or APIs.
+
+**How to enable:**
+1. Create an **Agent Provider** (Category: Agent, Type: MCP).
+2. Point it at your MCP server's URL.
+3. Link this provider to your **Store**.
+
+---
+
+## 3. Agent-to-Agent (A2A) Delegation
+
+For complex workflows, one agent can delegate tasks to another. This allows you to build a "Coordinator" agent that manages several "Specialist" agents.
+
+**How to enable:**
+1. Create a specialized **Store** (e.g., "SQL Expert").
+2. Create an **Agent Provider** (Type: A2A) that points to that Store.
+3. Add that provider to your main "Coordinator" Store.
+
+<Callout type="warn">
+  **Diagram placeholder (A2A):** Coordinator Store → A2A sub-agent Store call graph.
+  Show “coordinator delegates subtask, sub-agent returns result” at a conceptual level.
+</Callout>
+
+---
+
+## Which one should I choose?
+
+| Method | Best for... | Setup Effort |
+|--------|-------------|--------------|
+| **Built-in** | General web search, simple browsing, or shell tasks. | Low |
+| **MCP** | Connecting your own proprietary APIs or databases. | Medium |
+| **A2A** | Complex, multi-step tasks requiring different specialized personas. | High |
+
+## Next Steps
+
+- [Built-in Tools Reference](/docs/connectors/tools/builtin-tools) — See the full list of available tools.
+- [Understanding MCP](/docs/connectors/tools/mcp) — Deep dive into the Model Context Protocol.
+- [Agent Providers Configuration](/docs/agent-providers) — Technical details for setup.

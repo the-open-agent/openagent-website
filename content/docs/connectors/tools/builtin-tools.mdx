@@ -1,0 +1,92 @@
+---
+title: Tools
+description: Tools that ship with OpenAgent and can be enabled per Store without any external server.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Tools
+
+OpenAgent includes tools that can be enabled on any Store without configuring an MCP server or external provider. Toggle them via the **Builtin Tools** field on the Store. The model sees each enabled tool's name and description alongside any other tools, and decides when to call them.
+
+## Available tools
+
+### web_search
+
+Searches the web and returns a list of results. The model receives result titles, URLs, and snippets and can decide which to fetch for more detail.
+
+Useful for: current events, topics not in the knowledge base, information that changes frequently.
+
+When `web_search` is used, the search results are saved in the Message's `searchResults` field. The `webSearchEnabled` flag on the Message is set to `true`.
+
+### web_fetch
+
+Fetches the full text content of a given URL. Returns the page's text after stripping HTML. Use after `web_search` when you want the model to read the full content of a specific page, not just the snippet.
+
+Limitation: cannot handle JavaScript-rendered pages or pages that require authentication. Use `web_browser` for those.
+
+### web_browser
+
+Opens a real browser session to navigate to a URL and extract content. Unlike `web_fetch`, this handles JavaScript-rendered pages, single-page apps, and dynamic content.
+
+Use `web_browser` when `web_fetch` returns incomplete or empty content for a page.
+
+### browser_use
+
+Higher-level browser automation. Beyond just reading page content, `browser_use` can interact with pages: click buttons, fill forms, navigate through multi-step flows, and extract structured data.
+
+Use cases: logging into services, submitting forms, extracting data from paginated tables, interacting with web applications.
+
+`browser_use` is built on `chromedp` under the hood.
+
+### shell
+
+Executes shell commands on the server running OpenAgent and returns the output.
+
+Use cases: running scripts, file system operations, querying local databases, calling local CLIs.
+
+<Callout type="warn">
+  `shell` gives the agent arbitrary command execution on the server. Only enable it in deployments where you control who can access the Store and you trust the model's judgment. Do not expose a Store with `shell` enabled to untrusted users.
+</Callout>
+
+### time
+
+Returns the current date and time in UTC and the server's local timezone. Use this when the model needs to know the current time to answer questions or construct time-based queries.
+
+Example: "What happened in the news today?" — the model can call `time` first to establish today's date, then call `web_search` with a date-qualified query.
+
+### office
+
+Reads and processes office document formats (DOCX, XLSX, PPTX). Useful when a user attaches a document to the chat and asks the agent to analyze it, without going through the Files/Vectors pipeline.
+
+### gui
+
+Interacts with a graphical interface running on the server. Primarily useful in automation workflows where the agent needs to control a desktop application.
+
+<Callout type="warn">
+  Like `shell`, `gui` gives the agent direct system access. Use only in controlled environments.
+</Callout>
+
+### video_download
+
+Downloads video content from a URL (YouTube, Vimeo, and other supported platforms). Returns the downloaded file path or the video metadata.
+
+## Enabling tools
+
+Edit the Store and add the tools you want to **Builtin Tools**. Save. All Chat sessions backed by this Store will have the enabled tools available from the next message.
+
+## Combining with MCP and A2A
+
+Built-in tools and an MCP/A2A Agent Provider can coexist on the same Store. The model sees them all in a single unified tool list. OpenAgent routes each call to the right backend — built-in implementation or MCP server — transparently.
+
+## Controlling tool use from the system prompt
+
+The model decides when to call a tool based on the tool description and the conversation context. You can influence this from the system prompt:
+
+```
+You have access to web_search and web_fetch.
+Before answering any question about current events, call web_search first.
+Only call web_fetch on URLs returned by web_search — do not fetch arbitrary URLs.
+```
+
+If you find the model over-using or under-using a particular tool, adjusting the system prompt is usually more effective than removing the tool entirely.

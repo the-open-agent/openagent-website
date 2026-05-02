@@ -1,0 +1,11 @@
+{
+  "title": "Admin",
+  "pages": [
+    "sites",
+    "usages",
+    "activities",
+    "system-info",
+    "swagger",
+    "users"
+  ]
+}

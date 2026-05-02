@@ -1,0 +1,98 @@
+---
+title: Stores
+description: Complete field reference for the Store — the central unit of AI orchestration in OpenAgent.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Stores
+
+A **Store** is the primary object in OpenAgent. It defines a complete, independent AI agent: its model, its knowledge base (Files), and its capabilities (Tools). 
+
+Every conversation in OpenAgent is scoped to a Store. By configuring different Stores, you can create multiple specialized assistants — like a "Legal Advisor" and a "Coding Helper" — on the same platform.
+
+---
+
+## Basic Information
+
+| Field | Description |
+|-------|-------------|
+| **Name** | Unique internal ID (e.g., `support-bot`). No spaces. |
+| **Display Name** | The name users see in the Chat UI. |
+| **Avatar** | URL to the agent's icon. |
+| **Title** | A short tagline shown under the agent's name. |
+| **Is Default** | If true, new chats will use this Store by default. |
+
+---
+
+## Intelligence & Reasoning
+
+**Model Provider**  
+The primary LLM that powers the agent's reasoning. You must select a provider configured under **Providers → Model**.
+
+**Child Model Providers**  
+A list of fallback models. If the primary model fails (e.g., rate limits or downtime), OpenAgent will automatically try these models in order.
+
+**System Prompt**  
+The most critical field. It defines the agent's persona, instructions, and constraints.  
+*Example: "You are a customer support agent. Answer questions only based on the provided documents."*
+
+---
+
+## Knowledge Base (RAG)
+
+These settings control how the agent retrieves information from your documents.
+
+**Embedding Provider**  
+The model used to turn text into searchable vectors. All files in this Store must be embedded using the same provider.
+
+**Knowledge Count**  
+The number of document "chunks" retrieved per user query. A higher number provides more context but can exceed the model's window. Recommended: `5`.
+
+**Split Provider**  
+Professional chunking strategies to optimize retrieval accuracy:
+- **Default**: Paragraph-based, ideal for general documentation.
+- **Markdown**: Heading-aware, preserves the structural context of technical docs.
+- **QA**: **(Professional Choice)** Specifically optimized for FAQ-style files, ensuring questions and answers stay together in a single vector.
+
+<Callout type="warn">
+  **Screenshot Placeholder:** The Store edit form highlighting the "Split Provider" dropdown with the QA option selected.
+</Callout>
+
+**Search Provider**  
+- **Default**: Standard vector similarity search.
+- **Hierarchy**: Advanced recursive retrieval; performs a high-level scan of document sections before drilling down into specific chunks. Best for massive libraries.
+
+---
+
+## Content Safety & Compliance
+
+OpenAgent includes built-in safeguards to ensure agent responses remain within corporate or community guidelines.
+
+**Forbidden Words**  
+A configurable list of blocked terms. If a user's query or the model's potential response contains these words, OpenAgent will intercept the request and return a standardized refusal.
+
+<Callout type="warn">
+  **Screenshot Placeholder:** The "Forbidden Words" configuration area in the Store settings.
+</Callout>
+
+---
+
+## Knowledge Modularity (Composition)
+
+One of OpenAgent's most powerful architectural features is its support for **Knowledge Composition**.
+
+**Child Stores**  
+Instead of creating one massive, unmanageable Store, you can link multiple specialized Stores together. When a user queries a "Master Store," OpenAgent performs a unified search across its own knowledge base and all associated **Child Stores**.
+
+*Example: A "Company Handbook" Store can link to a "Legal Store," an "HR Store," and a "Technical Specs Store" to provide a unified corporate brain while keeping data management decentralized.*
+
+<Callout type="warn">
+  **Screenshot Placeholder:** The Store configuration UI showing the "Child Stores" selection interface.
+</Callout>
+
+---
+
+<Callout type="info">
+  **Pro Tip:** If you change the **Embedding Provider** for an existing Store, you must re-upload its files. Existing vectors are not compatible with different embedding models.
+</Callout>

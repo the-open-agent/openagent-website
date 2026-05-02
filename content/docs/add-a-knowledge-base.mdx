@@ -1,0 +1,75 @@
+---
+title: Add a Knowledge Base
+description: Enable RAG for a Store so your assistant answers from your own documents.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+# Add a Knowledge Base
+
+Transform a standard chat assistant into a **Knowledge Assistant**. By indexing your documents (PDFs, Markdown, etc.), your agent can retrieve relevant passages at query time to provide grounded, accurate answers. 
+
+This technique is known as **RAG (Retrieval-Augmented Generation)**.
+
+## How it Works
+
+<Callout type="warn">
+  **Diagram placeholder (RAG Flow):** Add a sequence diagram or flow chart showing:
+  User Query → Embedding → Vector Search → Context Retrieval → Model Response.
+</Callout>
+
+## Steps to Enable RAG
+<Steps>
+<Step>
+
+### 1. Create an Embedding Provider
+Go to **Providers → Add Provider**.
+- **Category**: `Embedding`
+- **Type**: e.g., `OpenAI`
+- **Sub Type**: `text-embedding-3-small` (Recommended)
+
+Click **Save**. This provider will handle the "translation" of your text into mathematical vectors.
+
+</Step>
+<Step>
+
+### 2. Configure your Store
+Edit your existing Store and link the embedding provider:
+- **Embedding Provider**: Select the provider you just created.
+- **Knowledge Count**: Set to `3` (start here and adjust later).
+
+</Step>
+<Step>
+
+### 3. Upload and Index Documents
+Go to **Files → Upload**. 
+1. Select your files (PDF, Docx, MD, etc.).
+2. Assign them to your Store.
+3. Click **Upload**.
+
+Monitor the **Status** column. Once it says **Finished**, the content is indexed and ready for retrieval.
+
+</Step>
+<Step>
+
+### 4. Verify in Chat
+Open the Chat UI for your Store. Ask a question specifically about the uploaded content.
+
+**Example**: *"Based on the uploaded manual, what is the procedure for X?"*
+
+</Step>
+</Steps>
+
+## Tuning for Accuracy
+
+If the agent is missing information or giving vague answers, consider these adjustments:
+
+- **Increase Knowledge Count**: Try raising it to `5` or `7` to give the model more context.
+- **Adjust Split Strategy**: If your files are highly structured (like FAQs), switch the Store's **Split Provider** to `QA` and re-upload the files.
+- **Refine System Prompt**: Explicitly tell the agent: *"Always prioritize information from the knowledge base. If the answer is not in the documents, say you don't know."*
+
+## Next Steps
+
+- [Learn about Vectors](/docs/knowledge-base/vectors) — Understand the underlying data structure.
+- [Add Tools & Automation](/docs/add-tools-and-automation) — Give your agent the ability to act.

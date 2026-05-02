@@ -1,0 +1,91 @@
+---
+title: Files
+description: Uploading, managing, and troubleshooting document ingestion in a Store.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Files
+
+A **File** is a document uploaded to a Store. Once uploaded, it goes through an asynchronous processing pipeline: text extraction, chunking, embedding, and Vector storage. After processing completes, the File's content is searchable by any Chat backed by that Store.
+
+## Uploading
+
+Go to **Files → Upload**. Select one or more files and assign them to a Store. A File belongs to exactly one Store — retrieval is scoped to that Store's own Files plus any Child Stores.
+
+You can upload multiple files at once. Each file is processed independently, so one failed file doesn't affect others.
+
+## Supported formats
+
+| Format | Extension | Notes |
+|--------|-----------|-------|
+| PDF | `.pdf` | Text extraction from both digital and (where configured) scanned pages |
+| Word | `.docx` | Structure-aware: headings, paragraphs, and tables are preserved |
+| Excel | `.xlsx` | Each sheet is ingested row by row |
+| CSV / TSV | `.csv`, `.tsv` | Structured tabular data |
+| Plain text | `.txt` | Direct ingestion, no parsing |
+| Markdown | `.md`, `.mdx` | Best paired with the `Markdown` Split Provider |
+| PowerPoint | `.pptx` | Slide text and speaker notes |
+
+## Processing pipeline
+
+After upload, each file moves through:
+
+**Pending** — the file has been received and is queued. No processing has started yet.
+
+**Processing** — text is being extracted, split into chunks, and embedded. Each chunk becomes a Vector record. Duration depends on document size and embedding provider latency — a 20-page PDF typically takes 20–60 seconds.
+
+**Finished** — all chunks are embedded and indexed. The File is now searchable.
+
+**Error** — processing failed. The error message is shown in the file list.
+
+<Callout type="warn">
+  If a File shows `Error`, the most common causes are:
+  - **Embedding Provider not configured** on the Store — set one before uploading
+  - **Invalid API key** on the Embedding Provider — test the provider from its edit page
+  - **Password-protected file** — remove the password before uploading
+  - **Unsupported encoding** — convert to UTF-8 before uploading plain text files
+</Callout>
+
+## Chunking and the Split Provider
+
+The Store's **Split Provider** controls how the extracted text is divided before embedding. Choosing the right strategy affects retrieval quality:
+
+**Default** — paragraph-aware chunking, max ~210 tokens per chunk. Handles code blocks specially (keeps them intact). Splits on paragraph boundaries (4+ consecutive blank lines). Good for most document types.
+
+**Basic** — simpler line-based chunking, max ~210 tokens. Use for short, uniform content where paragraph detection isn't needed.
+
+**Markdown** — heading-aware. Splits at heading boundaries and keeps content under each heading together. Use this when uploading Markdown documentation — retrieval will correctly associate content with its section heading.
+
+**QA** — splits on `Q:` / `A:` lines. Use for FAQ-format documents. Each question-answer pair becomes its own chunk, so retrieval stays at the QA granularity.
+
+Change the Split Provider on the Store before uploading. Files uploaded with one strategy and then re-uploaded after changing the strategy are re-processed with the new strategy.
+
+## Viewing file content
+
+Navigate to **Files** and click a finished File to browse its Vector chunks. You can see the exact text of each chunk alongside its position in the document. This is useful for verifying that chunking produced sensible results — if chunks are cut in awkward places, try a different Split Provider.
+
+## Updating a file
+
+There is no in-place update. To replace a document:
+
+1. Delete the old File from the **Files** list — this immediately deletes all its Vectors
+2. Upload the new version
+
+## Deleting files
+
+Deleting a File removes it and all its Vector records from the database permanently. The raw file data is also deleted from the storage backend. This cannot be undone.
+
+## File fields
+
+| Field | Description |
+|-------|-------------|
+| `name` | Unique identifier (usually the original filename) |
+| `filename` | Display filename shown in the UI |
+| `size` | File size in bytes |
+| `store` | Which Store this File belongs to |
+| `storageProvider` | Which Storage Provider holds the raw file data |
+| `url` | URL to access or download the raw file |
+| `tokenCount` | Total tokens across all Vectors generated from this File |
+| `status` | `Pending`, `Processing`, `Finished`, or `Error` |
+| `errorText` | Error message if status is `Error` |

@@ -89,7 +89,7 @@ export default function HomePage() {
 
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
-            href="/docs/getting-started"
+            href="/docs/quick-start"
             className="inline-flex items-center gap-2 rounded-lg bg-fd-primary px-6 py-3 text-sm font-semibold text-fd-primary-foreground shadow-lg transition-all hover:bg-fd-primary/90 hover:shadow-fd-primary/25 hover:shadow-xl"
           >
             Get Started
@@ -154,18 +154,18 @@ export default function HomePage() {
                 Up and running in minutes
               </h2>
               <p className="mb-6 text-fd-muted-foreground">
-                Deploy OpenAgent with Docker Compose and have your first AI agent ready in under 5
+                Install OpenAgent with the one-line installer and have your first AI agent ready in
                 minutes. No complex configuration required.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
-                  href="/docs/getting-started/installation"
+                  href="/docs/quick-start"
                   className="inline-flex items-center gap-2 rounded-lg bg-fd-primary px-5 py-2.5 text-sm font-semibold text-fd-primary-foreground transition-colors hover:bg-fd-primary/90"
                 >
-                  Installation Guide
+                  Install OpenAgent
                 </Link>
                 <Link
-                  href="/docs/getting-started/quick-start"
+                  href="/docs/quick-start"
                   className="inline-flex items-center gap-2 rounded-lg border border-fd-border px-5 py-2.5 text-sm font-semibold text-fd-foreground transition-colors hover:bg-fd-muted"
                 >
                   Quick Start
@@ -178,16 +178,13 @@ export default function HomePage() {
                 <div className="size-3 rounded-full bg-red-500/70" />
                 <div className="size-3 rounded-full bg-yellow-500/70" />
                 <div className="size-3 rounded-full bg-green-500/70" />
-                <span className="ml-2 text-xs text-fd-muted-foreground">docker-compose.yml</span>
+                <span className="ml-2 text-xs text-fd-muted-foreground">install.sh</span>
               </div>
               <pre className="overflow-x-auto p-5 text-sm">
                 <code className="text-fd-foreground">
-                  <span className="text-fd-muted-foreground"># Clone the repository</span>{'\n'}
-                  {'git clone https://github.com/the-open-agent/openagent'}{'\n'}
-                  {'cd openagent'}{'\n'}
-                  {'\n'}
-                  <span className="text-fd-muted-foreground"># Start with Docker Compose</span>{'\n'}
-                  {'docker compose up -d'}{'\n'}
+                  <span className="text-fd-muted-foreground"># Install OpenAgent</span>{'\n'}
+                  {"curl -fsSL --proto '=https' --tlsv1.2 \\"}{'\n'}
+                  {'  https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.sh | bash'}{'\n'}
                   {'\n'}
                   <span className="text-fd-muted-foreground"># Open the dashboard</span>{'\n'}
                   {'open http://localhost:14000'}

@@ -1,0 +1,21 @@
+---
+title: Messages
+description: Per-turn records inside a Chat, including the response, retrieval context, and tool activity.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Messages
+
+A **Message** is a single turn inside a Chat. It captures the user input or assistant reply, along with technical detail that helps you understand how the answer was produced.
+
+In day-to-day use, Messages are the best place to inspect:
+
+- What the user asked
+- What the assistant replied
+- Which tools were called
+- Which knowledge chunks were retrieved
+
+<Callout type="info">
+  For a deeper explanation of message lifecycle and metadata, see [Chat](/docs/chat).
+</Callout>

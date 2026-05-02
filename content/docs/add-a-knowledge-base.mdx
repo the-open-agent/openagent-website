@@ -1,75 +1,80 @@
 ---
 title: Add a Knowledge Base
-description: Enable RAG for a Store so your assistant answers from your own documents.
+description: Enable RAG so your assistant answers from your own documents.
+summary: Enable RAG (Retrieval-Augmented Generation) so your agent answers from indexed documents.
+read_when:
+  - You want your agent to answer from your own documents
+  - You need grounded, accurate answers rather than hallucinated content
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Card, Cards } from 'fumadocs-ui/components/card';
 
 # Add a Knowledge Base
 
-Transform a standard chat assistant into a **Knowledge Assistant**. By indexing your documents (PDFs, Markdown, etc.), your agent can retrieve relevant passages at query time to provide grounded, accurate answers. 
+Transform a standard chat assistant into a **Knowledge Assistant**. By indexing your documents (PDFs, Markdown, etc.), your agent retrieves relevant passages at query time to provide grounded, accurate answers. This technique is known as **RAG (Retrieval-Augmented Generation)**.
 
-This technique is known as **RAG (Retrieval-Augmented Generation)**.
+## How RAG Works
 
-## How it Works
-
-<Callout type="warn">
-  **Diagram placeholder (RAG Flow):** Add a sequence diagram or flow chart showing:
-  User Query → Embedding → Vector Search → Context Retrieval → Model Response.
-</Callout>
+<Steps>
+  <Step>**Ingest** — Documents are parsed and split into atomic chunks.</Step>
+  <Step>**Embed** — Each chunk is turned into a mathematical vector by an embedding provider.</Step>
+  <Step>**Retrieve** — At query time, the user's question is embedded and matched against the most similar chunks.</Step>
+  <Step>**Generate** — The retrieved chunks are injected into the LLM's context for a grounded response.</Step>
+</Steps>
 
 ## Steps to Enable RAG
+
 <Steps>
-<Step>
+  <Step>
+    ### Create an Embedding Provider
 
-### 1. Create an Embedding Provider
-Go to **Providers → Add Provider**.
-- **Category**: `Embedding`
-- **Type**: e.g., `OpenAI`
-- **Sub Type**: `text-embedding-3-small` (Recommended)
+    Go to **Providers → Add Provider**.
+    - **Category**: `Embedding`
+    - **Type**: e.g., `OpenAI`, `DeepSeek`
+    - **Sub Type**: `text-embedding-3-small` (Recommended)
 
-Click **Save**. This provider will handle the "translation" of your text into mathematical vectors.
+    Click **Save**. This provider handles the "translation" of your text into mathematical vectors.
+  </Step>
+  <Step>
+    ### Configure your Store
 
-</Step>
-<Step>
+    Edit your existing Store and link the embedding provider:
+    - **Embedding Provider**: Select the provider you just created.
+    - **Knowledge Count**: Set to `3` initially (adjust later based on accuracy).
+  </Step>
+  <Step>
+    ### Upload and Index Documents
 
-### 2. Configure your Store
-Edit your existing Store and link the embedding provider:
-- **Embedding Provider**: Select the provider you just created.
-- **Knowledge Count**: Set to `3` (start here and adjust later).
+    Go to **Files → Upload**.
+    1. Select your files (PDF, Docx, MD, etc.).
+    2. Assign them to your Store.
+    3. Click **Upload**.
 
-</Step>
-<Step>
+    Monitor the **Status** column. Once it says **Finished**, the content is indexed and ready for retrieval.
+  </Step>
+  <Step>
+    ### Verify in Chat
 
-### 3. Upload and Index Documents
-Go to **Files → Upload**. 
-1. Select your files (PDF, Docx, MD, etc.).
-2. Assign them to your Store.
-3. Click **Upload**.
+    Open the Chat UI for your Store. Ask a question specifically about the uploaded content.
 
-Monitor the **Status** column. Once it says **Finished**, the content is indexed and ready for retrieval.
-
-</Step>
-<Step>
-
-### 4. Verify in Chat
-Open the Chat UI for your Store. Ask a question specifically about the uploaded content.
-
-**Example**: *"Based on the uploaded manual, what is the procedure for X?"*
-
-</Step>
+    _"Based on the uploaded manual, what is the procedure for X?"_
+  </Step>
 </Steps>
 
 ## Tuning for Accuracy
 
-If the agent is missing information or giving vague answers, consider these adjustments:
+If the agent is missing information or giving vague answers, try these adjustments:
 
 - **Increase Knowledge Count**: Try raising it to `5` or `7` to give the model more context.
-- **Adjust Split Strategy**: If your files are highly structured (like FAQs), switch the Store's **Split Provider** to `QA` and re-upload the files.
-- **Refine System Prompt**: Explicitly tell the agent: *"Always prioritize information from the knowledge base. If the answer is not in the documents, say you don't know."*
+- **Adjust Split Strategy**: If your files are highly structured (like FAQs), switch the Store's **Split Provider** to `QA` and re-upload.
+- **Refine System Prompt**: Tell the agent explicitly: _"Always prioritize information from the knowledge base. If the answer is not in the documents, say you don't know."_
 
 ## Next Steps
 
-- [Learn about Vectors](/docs/knowledge-base/vectors) — Understand the underlying data structure.
-- [Add Tools & Automation](/docs/add-tools-and-automation) — Give your agent the ability to act.
+<Cards>
+  <Card title="Understand Vectors" description="Learn about the underlying data structure powering semantic search." href="/docs/knowledge-base/vectors" />
+  <Card title="Tools & Automation" description="Give your agent the ability to act — browse the web, call APIs, or delegate to sub-agents." href="/docs/add-tools-and-automation" />
+  <Card title="Build a Chat Assistant" description="Create a chat assistant backed by any LLM provider." href="/docs/build-a-chat-assistant" />
+</Cards>

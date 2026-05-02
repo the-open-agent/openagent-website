@@ -1,70 +1,102 @@
 ---
-title: OpenAgent Documentation
+title: OpenAgent
 description: The open-source infrastructure for production AI agents and knowledge bases.
 ---
 
-import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
 import { MessageSquare, Library, Construction, ShieldCheck, Cpu, Zap } from 'lucide-react';
 
-# OpenAgent
+# OpenAgent 🦞
 
-OpenAgent is the professional foundation for building **production-ready AI agents** backed by your own data. It provides the essential orchestration, data indexing, and tool-calling infrastructure to transform raw LLMs into specialized team assistants.
+> _"Build once, deploy everywhere."_
 
----
-
-<Cards>
-  <Card 
-    icon={<Zap className="text-blue-500" />} 
-    title="Architecture" 
-    description="Understand the four layers of OpenAgent: Intelligence, Identity, Context, and Action." 
-    href="/docs/what-is-openagent" 
-  />
-  <Card 
-    icon={<Construction className="text-green-500" />} 
-    title="Quick Start" 
-    description="Get OpenAgent running and send your first message in under 5 minutes." 
-    href="/docs/quick-start" 
-  />
-</Cards>
-
-## Enterprise-Grade Features
+<p align="center">
+  <strong>OpenAgent is the professional foundation for building production-ready AI agents backed by your own data.</strong><br />
+  Orchestration, RAG, tool-calling, and multi-agent delegation — all in one self-hosted platform.
+</p>
 
 <Cards>
-  <Card 
-    icon={<MessageSquare className="text-purple-500" />}
-    title="Model Orchestration" 
-    description="Seamlessly switch between 20+ providers. Configure fallback models for high availability." 
-    href="/docs/build-a-chat-assistant" 
-  />
-  <Card 
-    icon={<Library className="text-orange-500" />}
-    title="Managed RAG" 
-    description="Professional document indexing and retrieval. Turn PDFs and wikis into grounded context." 
-    href="/docs/add-a-knowledge-base" 
-  />
-  <Card 
-    icon={<Cpu className="text-red-500" />}
-    title="Tool Integration" 
-    description="Extend agents with MCP servers, built-in automation tools, or A2A delegation." 
-    href="/docs/add-tools-and-automation" 
-  />
-  <Card 
-    icon={<ShieldCheck className="text-cyan-500" />}
-    title="Operational Security" 
-    description="Role-based access control (RBAC), SSO integration, and comprehensive audit logs." 
-    href="/docs/admin/users" 
-  />
+  <Card icon={<Zap className="text-blue-500" />} title="Quick Start" description="Get OpenAgent running and send your first AI-powered message in under 5 minutes." href="/docs/quick-start" />
+  <Card icon={<Construction className="text-green-500" />} title="Architecture" description="Understand the four layers of OpenAgent: Intelligence, Identity, Context, and Action." href="/docs/what-is-openagent" />
 </Cards>
 
----
+## What is OpenAgent?
 
-## The OpenAgent Advantage
+OpenAgent is a **self-hosted AI agent platform** that connects your data, tools, and models into a production-ready system. Unlike simple chat interfaces, OpenAgent provides:
 
-- **Private & Local**: Host on your own infrastructure. Support for local LLMs via Ollama and LocalAI.
-- **Provider Agnostic**: Standardized abstraction for models, embeddings, and storage. No vendor lock-in.
+- **Managed RAG**: Turn PDFs and wikis into grounded context with automatic parsing and semantic search.
+- **Model Orchestration**: Switch between 20+ providers with standardized abstractions for models, embeddings, and storage.
+- **Tool Integration**: Extend agents with MCP servers, built-in automation, or A2A delegation to sub-agents.
+- **Enterprise Security**: Role-based access control (RBAC), SSO integration, and comprehensive audit logs.
+
+**Who is it for?** Developers and teams who want a private, self-hosted AI assistant that can reason over their own data — without relying on hosted APIs.
+
+**What makes it different?**
+
+- **Self-hosted**: Runs on your own infrastructure. Full control, no vendor lock-in.
+- **Provider Agnostic**: Standardized abstraction for models, embeddings, and storage.
 - **Scalable Workflows**: Build complex agent networks where a coordinator delegates to specialized sub-agents.
 - **Audit Ready**: Track every token, record every tool call, and monitor agent performance at scale.
+
+<Cards>
+  <Card icon={<MessageSquare className="text-purple-500" />} title="Model Orchestration" description="Seamlessly switch between 20+ providers. Configure fallback models for high availability." href="/docs/build-a-chat-assistant" />
+  <Card icon={<Library className="text-orange-500" />} title="Managed RAG" description="Professional document indexing and retrieval. Turn PDFs and wikis into grounded context." href="/docs/add-a-knowledge-base" />
+  <Card icon={<Cpu className="text-red-500" />} title="Tool Integration" description="Extend agents with MCP servers, built-in automation tools, or A2A delegation." href="/docs/add-tools-and-automation" />
+  <Card icon={<ShieldCheck className="text-cyan-500" />} title="Operational Security" description="Role-based access control (RBAC), SSO integration, and comprehensive audit logs." href="/docs/admin/users" />
+</Cards>
+
+## Quick start
+
+<Steps>
+  <Step title="Deploy OpenAgent">
+    Choose the deployment method that fits your environment.
+
+    **One-Line Install (macOS / Linux / WSL)**
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.sh | bash
+    ```
+
+    **Docker**
+    ```bash
+    docker run -d -p 14000:14000 --name openagent casbin/openagent
+    ```
+
+    Once running, navigate to **`http://localhost:14000`**.
+  </Step>
+  <Step title="Configure a Provider">
+    Navigate to **Providers → Add Provider**.
+    - **Category**: `Model`
+    - **Type**: `DeepSeek` (Recommended for cost) or `OpenAI`
+    - **API Key**: Enter your credentials.
+    - **Model (Sub Type)**: Select a supported model ID.
+  </Step>
+  <Step title="Initialize an Agent (Store)">
+    Navigate to **Stores → Add Store**.
+    - **Name**: `primary-assistant`
+    - **Model Provider**: Select the provider from Step 2.
+    - **System Prompt**: _"You are a professional research assistant."_
+  </Step>
+  <Step title="Start Chatting">
+    Open the **Chat** interface from the sidebar. Select your agent and send a test message.
+
+    **Milestone Reached:** You now have a functional, self-hosted AI orchestration engine.
+  </Step>
+</Steps>
+
+Need a deeper walkthrough? See [Build a Chat Assistant](/docs/build-a-chat-assistant).
+
+## Start here
+
+<Cards>
+  <Card title="Architecture" description="Understand the four layers: Intelligence, Identity, Context, and Action." href="/docs/what-is-openagent" />
+  <Card title="Quick Start" description="Deploy OpenAgent and reach the First Message milestone." href="/docs/quick-start" />
+  <Card title="Chat Assistant" description="Create a chat assistant backed by any LLM provider." href="/docs/build-a-chat-assistant" />
+  <Card title="Knowledge Base" description="Enable RAG so your assistant answers from your own documents." href="/docs/add-a-knowledge-base" />
+  <Card title="Tools & Automation" description="Give your assistant the ability to browse, call APIs, or delegate to sub-agents." href="/docs/add-tools-and-automation" />
+  <Card title="Admin & Enterprise" description="Manage users, organizations, and SSO integration." href="/docs/admin/users" />
+</Cards>
 
 <Callout type="info">
   **Note on Migration:** This documentation covers the new Agent-first architecture. Legacy cloud and multimedia modules from previous versions are now deprecated.

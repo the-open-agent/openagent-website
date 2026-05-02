@@ -5,7 +5,6 @@ description: Understand the architectural layers and core philosophy behind Open
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Card, Cards } from 'fumadocs-ui/components/card';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 # Architecture
 
@@ -55,12 +54,10 @@ Empower agents to do more than just talk:
 
 When a user sends a message, OpenAgent performs a coordinated orchestration dance:
 
-<Steps>
-  <Step>**Grounded Retrieval** — The query is embedded and matched against indexed Vectors.</Step>
-  <Step>**Context Assembly** — The system prompt, history, and retrieved document snippets are merged into a high-density context.</Step>
-  <Step>**Reasoning & Tool Call** — The LLM processes the request. If it needs external data, a Tool call is triggered and executed server-side.</Step>
-  <Step>**Final Delivery** — The result is streamed back to the user and recorded for auditing.</Step>
-</Steps>
+1. **Grounded Retrieval** — The query is embedded and matched against indexed Vectors.
+2. **Context Assembly** — The system prompt, history, and retrieved document snippets are merged into a high-density context.
+3. **Reasoning & Tool Call** — The LLM processes the request. If it needs external data, a Tool call is triggered and executed server-side.
+4. **Final Delivery** — The result is streamed back to the user and recorded for auditing.
 
 ## Why OpenAgent?
 

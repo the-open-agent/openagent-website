@@ -10,3 +10,12 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+/* Override sidebar and background to pure white for visual consistency */
+:root {
+  --color-fd-background: hsl(0, 0%, 100%);
+  --color-fd-muted: hsl(0, 0%, 100%);
+  --color-fd-popover: hsl(0, 0%, 100%);
+  --color-fd-card: hsl(0, 0%, 100%);
+  --color-fd-secondary: hsl(0, 0%, 97%);
+}

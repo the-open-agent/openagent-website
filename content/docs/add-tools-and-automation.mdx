@@ -21,11 +21,12 @@ OpenAgent supports three primary ways to extend an agent's capabilities.
 
 The fastest way to add capabilities. These tools are pre-packaged with OpenAgent and require zero configuration.
 
-**How to enable:**
-1. Edit your **Store**.
-2. Go to the **Builtin Tools** field.
-3. Add tools like `Web Search`, `Browser`, or `Shell`.
-4. Save and test in Chat.
+<Steps>
+  <Step>Edit your **Store**.</Step>
+  <Step>Go to the **Builtin Tools** field.</Step>
+  <Step>Add tools like `Web Search`, `Browser`, or `Shell`.</Step>
+  <Step>Save and test in Chat.</Step>
+</Steps>
 
 _Example: "Search the latest news about OpenAgent and summarize it."_
 
@@ -37,19 +38,29 @@ _Example: "Search the latest news about OpenAgent and summarize it."_
 
 OpenAgent supports [MCP](/docs/connectors/tools/mcp), an open standard for connecting AI models to external data and tools. This is the recommended way to connect your own databases or APIs.
 
-**How to enable:**
-1. Create an **Agent Provider** (Category: Agent, Type: MCP).
-2. Point it at your MCP server's URL.
-3. Link this provider to your **Store**.
+## MCP (Model Context Protocol)
+
+OpenAgent supports [MCP](/docs/connectors/tools/mcp), an open standard for connecting AI models to external data and tools. This is the recommended way to connect your own databases or APIs.
+
+<Steps>
+  <Step>Create an **Agent Provider** (Category: Agent, Type: MCP).</Step>
+  <Step>Point it at your MCP server's URL.</Step>
+  <Step>Link this provider to your **Store**.</Step>
+</Steps>
 
 ## A2A (Agent-to-Agent) Delegation
 
 For complex workflows, one agent can delegate tasks to another. Build a "Coordinator" agent that manages several "Specialist" agents.
 
-**How to enable:**
-1. Create a specialized **Store** (e.g., "SQL Expert").
-2. Create an **Agent Provider** (Type: A2A) that points to that Store.
-3. Add that provider to your main "Coordinator" Store.
+## A2A (Agent-to-Agent) Delegation
+
+For complex workflows, one agent can delegate tasks to another. Build a "Coordinator" agent that manages several "Specialist" agents.
+
+<Steps>
+  <Step>Create a specialized **Store** (e.g., "SQL Expert").</Step>
+  <Step>Create an **Agent Provider** (Type: A2A) that points to that Store.</Step>
+  <Step>Add that provider to your main "Coordinator" Store.</Step>
+</Steps>
 
 ## Which one should I choose?
 

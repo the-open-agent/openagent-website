@@ -19,8 +19,11 @@ Transform a standard chat assistant into a **Knowledge Assistant**. By indexing 
 
 <Steps>
   <Step>**Ingest** — Documents are parsed and split into atomic chunks.</Step>
+
   <Step>**Embed** — Each chunk is turned into a mathematical vector by an embedding provider.</Step>
+
   <Step>**Retrieve** — At query time, the user's question is embedded and matched against the most similar chunks.</Step>
+
   <Step>**Generate** — The retrieved chunks are injected into the LLM's context for a grounded response.</Step>
 </Steps>
 

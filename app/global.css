@@ -19,3 +19,13 @@ html > body[data-scroll-locked] {
   --color-fd-card: hsl(0, 0%, 100%);
   --color-fd-secondary: hsl(0, 0%, 97%);
 }
+
+/* Sidebar active item highlight */
+#nd-sidebar [data-active="true"] {
+  background-color: #E8F2FF;
+  color: #007AFF;
+}
+
+#nd-sidebar [data-active="true"]::before {
+  background-color: #007AFF;
+}

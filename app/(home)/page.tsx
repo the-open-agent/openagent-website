@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { InstallTerminal } from './install-terminal';
 import {
@@ -471,7 +472,7 @@ export default function HomePage() {
           <div className="grid items-center gap-14 lg:grid-cols-2">
             <div>
               <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-fd-primary">
-                // quick start
+                {'// quick start'}
               </p>
               <h2 className="mb-4 text-3xl font-bold tracking-tight text-fd-foreground md:text-4xl">
                 From zero to agent<br />in under 5 minutes
@@ -504,7 +505,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl">
           <div className="mb-14 text-center">
             <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-fd-primary">
-              // capabilities
+              {'// capabilities'}
             </p>
             <h2 className="mb-4 text-3xl font-bold tracking-tight text-fd-foreground md:text-4xl">
               Everything you need to ship agents
@@ -543,7 +544,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl">
           <div className="mb-14 text-center">
             <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-fd-primary">
-              // ecosystem
+              {'// ecosystem'}
             </p>
             <h2 className="mb-4 text-3xl font-bold tracking-tight text-fd-foreground md:text-4xl">
               Plug into your existing stack
@@ -656,8 +657,8 @@ export default function HomePage() {
             {/* Brand column */}
             <div className="lg:col-span-2">
               <div className="mb-4 flex items-center gap-2.5">
-                <img src="https://cdn.openagentai.org/img/openagent-logo_1900x450.png" alt="OpenAgent" className="h-6 dark:hidden" />
-                <img src="https://cdn.openagentai.org/img/openagent-logo_1900x450_white.png" alt="OpenAgent" className="hidden h-6 dark:block" />
+                <Image src="https://cdn.openagentai.org/img/openagent-logo_1900x450.png" alt="OpenAgent" width={190} height={45} className="h-6 w-auto dark:hidden" />
+                <Image src="https://cdn.openagentai.org/img/openagent-logo_1900x450_white.png" alt="OpenAgent" width={190} height={45} className="hidden h-6 w-auto dark:block" />
               </div>
               <p className="mb-6 max-w-xs text-sm leading-relaxed text-fd-muted-foreground">
                 Open-source agent platform with full MCP support, 30+ model providers, and 20+ messaging channels. Self-hosted. No vendor lock-in.

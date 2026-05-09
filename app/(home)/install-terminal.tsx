@@ -70,13 +70,13 @@ export function InstallTerminal() {
   const [copied, setCopied] = useState(false);
   const selected = installOptions[selectedOS];
 
-  useEffect(() => {
-    setSelectedOS(detectOS());
-  }, []);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { setSelectedOS(detectOS()); }, []);
 
-  useEffect(() => {
+  function selectOS(os: InstallOS) {
+    setSelectedOS(os);
     setCopied(false);
-  }, [selectedOS]);
+  }
 
   async function copyInstallCommand() {
     await navigator.clipboard.writeText(selected.copyCommand);
@@ -102,7 +102,7 @@ export function InstallTerminal() {
                 <button
                   key={os}
                   type="button"
-                  onClick={() => setSelectedOS(os)}
+                  onClick={() => selectOS(os)}
                   className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
                     active
                       ? 'bg-fd-primary text-fd-primary-foreground shadow-sm'

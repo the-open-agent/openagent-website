@@ -95,10 +95,10 @@ function InitialsAvatar({ name, className }: { name: string; className?: string 
 
 const integrations = [
   'OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'Qwen', 'Mistral',
-  'Llama 3', 'Ollama', 'Azure OpenAI', 'AWS Bedrock', 'Groq', 'OpenRouter',
-  'Telegram', 'Discord', 'Slack', 'WhatsApp', 'Microsoft Teams', 'WeChat',
-  'LINE', 'Matrix', 'Signal', 'Feishu', 'PostgreSQL', 'Qdrant',
-  'Pinecone', 'Milvus', 'Redis', 'Kubernetes', 'Docker', 'Casdoor',
+  'Llama', 'Ollama', 'Azure OpenAI', 'AWS Bedrock', 'Grok', 'OpenRouter',
+  'Telegram', 'Discord', 'WeCom', 'MCP', 'Casdoor',
+  'MySQL', 'Docker', 'GitHub Models', 'Silicon Flow', 'Cohere',
+  'HuggingFace', 'Moonshot', 'ChatGLM', 'Baichuan', 'Volcano Engine',
 ];
 
 const communityStats = [
@@ -146,8 +146,8 @@ const features = [
     Icon: MessageSquareIcon,
     title: 'Multi-Channel Gateway',
     description:
-      'Deploy one agent across Telegram, Discord, Slack, WhatsApp, Teams, and 15+ more simultaneously. One deployment, every platform.',
-    label: '20+ Channels',
+      'Deploy one agent across Telegram, Discord, and WeCom simultaneously. One deployment, multiple platforms — with more channels on the roadmap.',
+    label: 'Multi-Platform',
     accent: 'text-slate-700 dark:text-slate-300',
     bg: 'bg-slate-500/10',
     border: 'hover:border-slate-500/40',
@@ -268,8 +268,8 @@ const press = [
   { logo: 'REG', logoColor: 'text-slate-400', logoBg: 'bg-slate-400/10', source: 'The Register', headline: '"Enterprise-Ready AI Agents"', sub: 'In-depth feature' },
 ];
 
-const providers = ['OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'Qwen', 'Mistral', 'Llama', 'Ollama', 'Azure', 'Bedrock', 'Groq', 'OpenRouter'];
-const channels  = ['Telegram', 'Discord', 'Slack', 'WhatsApp', 'Signal', 'WeChat', 'Teams', 'Matrix', 'LINE', 'Feishu'];
+const providers = ['OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'Qwen', 'Mistral', 'Llama', 'Ollama', 'Azure', 'Bedrock', 'Grok', 'OpenRouter'];
+const channels  = ['Telegram', 'Discord', 'WeCom'];
 
 const selfHostBenefits = [
   'Your data never leaves your infrastructure',
@@ -400,7 +400,7 @@ export default function HomePage() {
           Open-source agent platform with{' '}
           <strong className="font-semibold text-fd-foreground">full MCP support</strong>,{' '}
           <strong className="font-semibold text-fd-foreground">30+ model providers</strong>, and{' '}
-          <strong className="font-semibold text-fd-foreground">20+ messaging channels</strong>.
+          <strong className="font-semibold text-fd-foreground">Telegram, Discord & WeCom</strong>.
           Self-hosted. No vendor lock-in. Enterprise-grade from day one.
         </p>
 
@@ -603,7 +603,7 @@ export default function HomePage() {
                   <MessageSquareIcon className="size-4" />
                 </span>
                 <h3 className="font-semibold text-fd-foreground">Messaging Channels</h3>
-                <span className="ml-auto font-mono text-xs text-fd-muted-foreground">20+ total</span>
+                <span className="ml-auto font-mono text-xs text-fd-muted-foreground">3 channels</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {channels.map((c) => (
@@ -611,7 +611,6 @@ export default function HomePage() {
                     {c}
                   </span>
                 ))}
-                <span className="rounded-full border border-dashed border-fd-border px-3 py-1 text-sm text-fd-muted-foreground">+10 more</span>
               </div>
             </div>
           </div>
@@ -696,7 +695,7 @@ export default function HomePage() {
                 >
                   <GitHubSVG className="size-4" />
                 </a>
-                <a href="https://discord.gg/openagent" target="_blank" rel="noopener noreferrer"
+                <a href="https://discord.gg/5rPsrAzK7S" target="_blank" rel="noopener noreferrer"
                   className="flex size-9 items-center justify-center rounded-lg border border-fd-border bg-fd-card text-fd-muted-foreground transition-colors hover:border-indigo-400/40 hover:text-indigo-400"
                   aria-label="Discord"
                 >
@@ -740,7 +739,7 @@ export default function HomePage() {
                   <a href="https://github.com/the-open-agent/openagent" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-fd-foreground">GitHub</a>
                 </li>
                 <li>
-                  <a href="https://discord.gg/openagent" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-fd-foreground">Discord</a>
+                  <a href="https://discord.gg/5rPsrAzK7S" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-fd-foreground">Discord</a>
                 </li>
                 <li>
                   <a href="https://github.com/the-open-agent/openagent/issues" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-fd-foreground">Issues</a>
@@ -792,7 +791,7 @@ export default function HomePage() {
               >
                 <GitHubSVG className="size-4" />
               </a>
-              <a href="https://discord.gg/openagent" target="_blank" rel="noopener noreferrer"
+              <a href="https://discord.gg/5rPsrAzK7S" target="_blank" rel="noopener noreferrer"
                 className="text-fd-muted-foreground transition-colors hover:text-indigo-400" aria-label="Discord"
               >
                 <DiscordSVG className="size-4" />

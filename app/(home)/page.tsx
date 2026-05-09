@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { InstallTerminal } from './install-terminal';
 import {
   BotIcon,
   BrainIcon,
@@ -493,33 +494,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Terminal */}
-            <div className="overflow-hidden rounded-2xl border border-fd-border bg-fd-card shadow-2xl">
-              <div className="flex items-center gap-2 border-b border-fd-border bg-fd-muted/50 px-4 py-3">
-                <span className="size-3 rounded-full bg-red-400/80" />
-                <span className="size-3 rounded-full bg-yellow-400/80" />
-                <span className="size-3 rounded-full bg-green-400/80" />
-                <span className="ml-3 font-mono text-xs text-fd-muted-foreground">bash</span>
-              </div>
-              <div className="p-5 font-mono text-sm leading-7">
-                <p>
-                  <span className="select-none text-fd-muted-foreground">$ </span>
-                  <span className="text-fd-foreground">{"curl -fsSL \\"}</span>
-                </p>
-                <p className="pl-4 text-fd-muted-foreground/80 break-all">
-                  {'https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.sh | bash'}
-                </p>
-                <p className="mt-3 text-fd-muted-foreground"># Pulling OpenAgent...</p>
-                <p className="text-fd-muted-foreground"># Configuring services...</p>
-                <p className="text-fd-muted-foreground"># Running database migrations...</p>
-                <p className="mt-1 font-semibold" style={{ color: 'var(--green)' }}>✓ OpenAgent is ready!</p>
-                <p className="mt-3">
-                  <span className="select-none text-fd-muted-foreground">$ </span>
-                  <span className="text-fd-foreground">{'open http://localhost:14000'}</span>
-                </p>
-                <p className="mt-1 text-fd-muted-foreground"># Dashboard running 🚀</p>
-              </div>
-            </div>
+            <InstallTerminal />
           </div>
         </div>
       </section>

@@ -8,7 +8,7 @@ export function baseOptions(): BaseLayoutProps {
       title: (
         <>
           <Image
-            src="https://cdn.openagentai.org/img/openagent-logo_1600x276.png"
+            src="https://cdn.openagentai.org/img/openagent-logo_1900x450.png"
             alt={appName}
             width={140}
             height={24}
@@ -18,7 +18,7 @@ export function baseOptions(): BaseLayoutProps {
             className="dark:hidden"
           />
           <Image
-            src="https://cdn.openagentai.org/img/openagent-logo_1600x276_white.png"
+            src="https://cdn.openagentai.org/img/openagent-logo_1900x450.png"
             alt={appName}
             width={140}
             height={24}

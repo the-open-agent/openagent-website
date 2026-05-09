@@ -656,8 +656,8 @@ export default function HomePage() {
             {/* Brand column */}
             <div className="lg:col-span-2">
               <div className="mb-4 flex items-center gap-2.5">
-                <img src="https://cdn.openagentai.org/img/openagent-logo_1600x276.png" alt="OpenAgent" className="h-6 dark:hidden" />
-                <img src="https://cdn.openagentai.org/img/openagent-logo_1600x276_white.png" alt="OpenAgent" className="hidden h-6 dark:block" />
+                <img src="https://cdn.openagentai.org/img/openagent-logo_1900x450.png" alt="OpenAgent" className="h-6 dark:hidden" />
+                <img src="https://cdn.openagentai.org/img/openagent-logo_1900x450_white.png" alt="OpenAgent" className="hidden h-6 dark:block" />
               </div>
               <p className="mb-6 max-w-xs text-sm leading-relaxed text-fd-muted-foreground">
                 Open-source agent platform with full MCP support, 30+ model providers, and 20+ messaging channels. Self-hosted. No vendor lock-in.

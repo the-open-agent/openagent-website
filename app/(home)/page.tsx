@@ -102,10 +102,10 @@ const integrations = [
 ];
 
 const communityStats = [
-  { value: '3.5k+', label: 'GitHub Stars', detail: '+240 this week', Icon: StarIcon },
-  { value: '800+', label: 'Discord Members', detail: 'Active daily', Icon: UsersIcon },
-  { value: '500+', label: 'Self-hosted', detail: '50+ new this month', Icon: ServerIcon },
-  { value: '45+', label: 'Countries', detail: 'Worldwide adoption', Icon: GlobeIcon },
+  { value: '4.5k+', label: 'GitHub Stars', detail: '+280 this week', Icon: StarIcon },
+  { value: '2.8k+', label: 'Discord Members', detail: 'Active daily', Icon: UsersIcon },
+  { value: '50,000+', label: 'Self-hosted', detail: '5k+ new this month', Icon: ServerIcon },
+  { value: '90+', label: 'Countries', detail: 'Worldwide adoption', Icon: GlobeIcon },
 ];
 
 const features = [
@@ -504,7 +504,7 @@ export default function HomePage() {
               <div className="p-5 font-mono text-sm leading-7">
                 <p>
                   <span className="select-none text-fd-muted-foreground">$ </span>
-                  <span className="text-fd-foreground">{"curl -fsSL --proto '=https' --tlsv1.2 \\"}</span>
+                  <span className="text-fd-foreground">{"curl -fsSL \\"}</span>
                 </p>
                 <p className="pl-4 text-fd-muted-foreground/80 break-all">
                   {'https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.sh | bash'}

@@ -55,10 +55,6 @@ Professional chunking strategies to optimize retrieval accuracy:
 - **Markdown**: Heading-aware, preserves the structural context of technical docs.
 - **QA**: **(Professional Choice)** Specifically optimized for FAQ-style files, ensuring questions and answers stay together in a single vector.
 
-<Callout type="warn">
-  **Screenshot Placeholder:** The Store edit form highlighting the "Split Provider" dropdown with the QA option selected.
-</Callout>
-
 **Search Provider**  
 - **Default**: Standard vector similarity search.
 - **Hierarchy**: Advanced recursive retrieval; performs a high-level scan of document sections before drilling down into specific chunks. Best for massive libraries.
@@ -128,10 +124,6 @@ OpenAgent includes built-in safeguards to ensure agent responses remain within c
 **Forbidden Words**  
 A configurable list of blocked terms. If a user's query or the model's potential response contains these words, OpenAgent will intercept the request and return a standardized refusal.
 
-<Callout type="warn">
-  **Screenshot Placeholder:** The "Forbidden Words" configuration area in the Store settings.
-</Callout>
-
 ---
 
 ## Knowledge Modularity (Composition)
@@ -142,10 +134,6 @@ One of OpenAgent's most powerful architectural features is its support for **Kno
 Instead of creating one massive, unmanageable Store, you can link multiple specialized Stores together. When a user queries a "Master Store," OpenAgent performs a unified search across its own knowledge base and all associated **Child Stores**.
 
 *Example: A "Company Handbook" Store can link to a "Legal Store," an "HR Store," and a "Technical Specs Store" to provide a unified corporate brain while keeping data management decentralized.*
-
-<Callout type="warn">
-  **Screenshot Placeholder:** The Store configuration UI showing the "Child Stores" selection interface.
-</Callout>
 
 ---
 

@@ -39,8 +39,10 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 | **Hugging Face** | Models via the HF Inference API. |
 | **Azure OpenAI** | OpenAI models deployed on Azure infrastructure. |
 | **Amazon Bedrock**| Claude, Llama, and Titan models via AWS. |
-| **Ollama** | Local LLM execution (Llama, Mistral, Gemma). |
-| **Local** | Any OpenAI-compatible API (vLLM, llama.cpp, LM Studio). |
+| **Ollama** | Local LLM execution (Llama, Mistral, Gemma, etc.). |
+| **Local** | Any OpenAI-compatible API (vLLM, llama.cpp, LM Studio) with `compatibleProvider` field. |
+| **OpenAI Compatible** | Any OpenAI-compatible API with a custom endpoint URL (no `compatibleProvider` needed). |
+| **Writer** | Writer AI platform models. |
 | **Cohere** | Command R+, Command R. |
 
 ---
@@ -51,12 +53,12 @@ OpenAgent provides a unified form to connect these services. While most provider
 
 ### Provider-Specific Settings
 
-<Tabs items={['Standard APIs', 'Azure OpenAI', 'Amazon Bedrock', 'Ollama / Local']}>
+<Tabs items={['Standard APIs', 'Azure OpenAI', 'Amazon Bedrock', 'Ollama / Local', 'OpenAI Compatible']}>
   <Tab value="Standard APIs">
     Most providers (OpenAI, Claude, DeepSeek, OpenRouter) follow this pattern:
     
     - **Type**: Select the provider name.
-    - **Sub Type**: The specific model ID (e.g., `gpt-4o`, `gpt-4.1`).
+    - **Sub Type**: The specific model ID (e.g., `gpt-4o`, `deepseek-chat`).
     - **API Key**: Your secret token.
   </Tab>
   
@@ -79,12 +81,29 @@ OpenAgent provides a unified form to connect these services. While most provider
   </Tab>
   
   <Tab value="Ollama / Local">
-    For local or OpenAI-compatible local engines:
+    For local inference engines:
     
-    - **Type**: `Ollama` or `Local`
-    - **Provider URL**: The address of your local server (e.g., `http://localhost:11434` for Ollama).
-    - **Sub Type**: The model name (e.g., `llama3.2`).
-    - **Compatible Provider**: (Optional) If using `Local`, specify which API it mimics (e.g., `gpt-3.5-turbo`).
+    **Ollama:**
+    - **Type**: `Ollama`
+    - **Provider URL**: The address of your Ollama server (e.g., `http://localhost:11434`).
+    - **Sub Type**: The model name as it appears in `ollama list` (e.g., `llama3.2`).
+    
+    **Local (with compatible provider):**
+    - **Type**: `Local`
+    - **Provider URL**: Base URL of your local inference server.
+    - **Sub Type**: The model ID.
+    - **Compatible Provider**: Specify which API format it mimics (e.g., `gpt-3.5-turbo`) — used for correct message formatting.
+  </Tab>
+  
+  <Tab value="OpenAI Compatible">
+    For any server that implements the OpenAI Chat Completions API format at a custom URL:
+    
+    - **Type**: `OpenAI Compatible`
+    - **Provider URL**: The base URL of your server (e.g., `https://api.your-service.com`).
+    - **Sub Type**: The model ID to send in requests.
+    - **API Key**: Your API key if the server requires authentication.
+    
+    Use this for hosted OpenAI-compatible services (Together AI, Fireworks AI, Groq, etc.) where you don't need the `compatibleProvider` adapter logic.
   </Tab>
 </Tabs>
 

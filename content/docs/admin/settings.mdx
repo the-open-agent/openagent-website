@@ -1,21 +1,58 @@
 ---
 title: Settings
-description: Configure the built-in site experience, branding, and navigation exposure.
+description: Configure branding, authentication, navigation, and runtime options for the OpenAgent site.
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
 # Settings
 
-**Settings** controls the built-in site experience exposed by OpenAgent. This is where branding and navigation-facing settings are managed.
+**Settings** (configured via **Sites** in the admin panel) controls the entire built-in site experience: branding, authentication, navigation, and runtime behavior.
 
-Examples of what belongs here include:
+## Branding & Appearance
 
-- Site-level presentation
-- Footer content
-- Which product areas are visible in the built-in site navigation
+| Field | Description |
+|-------|-------------|
+| **Theme Color** | Primary accent color for the UI (hex code, e.g. `#4f46e5`). |
+| **HTML Title** | Browser tab title for the site (e.g. `"MyCompany AI"`). |
+| **Favicon URL** | URL to a `.ico` or `.png` favicon. |
+| **Logo URL** | URL to the logo image shown in the navigation bar. |
+| **Navbar HTML** | Custom HTML injected into the navigation bar. |
+| **Footer HTML** | Custom HTML for the page footer. |
+| **Static Base URL** | Base URL for serving static assets from a CDN or custom domain. |
+| **Nav Items** | List of navigation items to show in the site sidebar. Controls which product areas are visible. |
 
-<Callout type="warn">
-  **Screenshot placeholder:** The Settings page showing built-in site settings such as footer content and visible navigation items.
+## Authentication
+
+| Field | Description |
+|-------|-------------|
+| **Issuer** | OIDC issuer URL of the identity provider (e.g. Casdoor endpoint). |
+| **Client ID** | OAuth2 application client ID. |
+| **Client Secret** | OAuth2 application client secret. |
+| **Casdoor Endpoint** | Casdoor service URL (backward-compatible alias for Issuer). |
+| **Casdoor Organization** | The Casdoor organization name to authenticate against. |
+| **Casdoor Application** | The Casdoor application name. |
+
+<Callout type="info">
+  For standard Casdoor deployments, setting **Issuer**, **Client ID**, and **Client Secret** is sufficient. The Casdoor-specific fields are for backward compatibility.
 </Callout>
+
+## Runtime Configuration
+
+| Field | Description |
+|-------|-------------|
+| **IP Parsing Mode** | How client IPs are extracted from requests. Options: `""` (direct), `"X-Forwarded-For"`, `"X-Real-IP"`. Set appropriately when running behind a reverse proxy. |
+| **Parent DB Name** | Database name for a parent OpenAgent instance (multi-instance deployments). |
+| **Socks5 Proxy** | SOCKS5 proxy address (e.g. `127.0.0.1:1080`) for outbound requests. Used by tools that make external HTTP calls (web_search, web_fetch, etc.) when **Enable Proxy** is set on the Tool record. |
+| **Log Config** | Logging configuration string (BeeGo log config format). |
+
+## Feature Flags
+
+| Field | Description |
+|-------|-------------|
+| **Check User Balance** | When enabled, enforces token/credit balance checks before processing messages. Useful for metered deployments. |
+
+## Applying changes
+
+Settings changes take effect immediately for new sessions. Users who are currently logged in may need to refresh their browser to pick up branding changes.
 

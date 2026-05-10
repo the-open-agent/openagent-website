@@ -65,6 +65,62 @@ Professional chunking strategies to optimize retrieval accuracy:
 
 ---
 
+## Tools & Automation
+
+**MCP Server**  
+Connect an external MCP (Model Context Protocol) server to this Store. The agent will have access to all allowed tools from that server. Configure servers under **Servers → Add Server**.
+
+**Builtin Tools**  
+A list of built-in tool types to enable for this Store. Options include `web_search`, `web_browser`, `shell`, `local_file`, `office`, `web_fetch`, `gui`, `video_download`, `browser_use`, and `time`. See [Built-in Tools](/docs/connectors/tools/builtin-tools) for the full reference.
+
+---
+
+## Voice & Multimodal
+
+**Text-to-Speech Provider**  
+When set, the assistant's replies are read aloud using this provider. Enable **TTS Streaming** to stream audio as it is generated rather than waiting for the full reply.
+
+**Speech-to-Text Provider**  
+When set, users can send voice messages. The audio is transcribed before being passed to the model.
+
+---
+
+## Memory & Context
+
+**Memory Limit**  
+Maximum number of previous messages kept in the prompt context window. Setting this prevents context overflow on long conversations.
+
+**Hide Thinking**  
+When enabled, chain-of-thought reasoning (from models like DeepSeek-R1 or Claude 3.7 in extended thinking mode) is hidden from users — only the final answer is shown.
+
+---
+
+## Chat UI
+
+**Welcome Title / Welcome Text**  
+Greeting shown on the empty-state chat screen before the user's first message.
+
+**Example Questions**  
+Suggested prompts shown in the chat UI. Each entry has a **Title** (short label) and **Text** (the full question sent when clicked). Useful for onboarding users to the agent's capabilities.
+
+**Suggestion Count**  
+Number of follow-up question suggestions to generate after each assistant reply.
+
+**Show Auto Read**  
+Exposes an auto-read toggle in the chat UI so users can enable hands-free TTS playback.
+
+**Disable File Upload**  
+Hides the file upload button in the chat UI, preventing users from attaching files mid-conversation.
+
+---
+
+## Storage
+
+**Storage Provider**  
+Which storage backend is used for file uploads to this Store. Defaults to the system-level storage provider. Override here if this Store needs a specific bucket or path.
+
+---
+
 ## Content Safety & Compliance
 
 OpenAgent includes built-in safeguards to ensure agent responses remain within corporate or community guidelines.

@@ -1,146 +1,80 @@
 ---
-title: MCP Servers
-description: Connect any MCP-compatible tool server to your OpenAgent agents.
+title: Servers
+description: Manage MCP Server records — add, sync, and configure tool allowlists for your agents.
 ---
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Callout } from 'fumadocs-ui/components/callout';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-# MCP Servers
+# Servers
 
-MCP is an open standard for exposing tools to language models. An MCP server defines a set of tools — each with a name, description, and parameter schema — that the model can call during a conversation. OpenAgent connects as an MCP client: it queries the server's tool list when a conversation starts and routes tool calls to the server during the conversation.
+**Servers** is the admin panel section for managing MCP Server records. Each Server record stores the connection details for one external MCP server and controls which of its tools your agents are allowed to use.
 
-Any MCP-compatible server works with OpenAgent. No custom integration code is needed on the OpenAgent side.
+## Server record fields
 
-## How tool use works
+| Field | Description |
+|-------|-------------|
+| **Name** | Unique identifier for this server (e.g. `my-tools`). Used to reference the server from a Store. |
+| **URL** | The MCP server's StreamableHTTP endpoint (e.g. `https://tools.example.com/mcp`). |
+| **Token** | Optional Bearer token sent in the `Authorization` header for authenticated servers. |
+| **Tools** | The list of tools discovered via Sync, each with an **IsAllowed** toggle. |
+| **Is Default** | If enabled, this server is pre-selected when creating new Stores. |
 
-When a conversation starts, OpenAgent queries the MCP server for its tool list. Each tool's name and description are included in the context sent to the model. During the conversation:
-
-1. The model decides a tool is needed based on the user's request and the tool's description
-2. The model emits a structured tool call: `{ "tool": "get_weather", "args": { "city": "Tokyo" } }`
-3. OpenAgent sends the call to the MCP server and waits for the result
-4. The result is appended to the context: `{ "result": "Partly cloudy, 22°C" }`
-5. The model reasons again with the result in view and either calls another tool or produces a final response
-
-Tool calls and results are shown inline in the chat UI and saved in the Message's `toolCalls` field.
-
-## Connecting an MCP server
+## Adding a server
 
 <Steps>
 <Step>
 
-### Create an Agent provider
+### Create the record
 
-Go to **Providers → Add Provider**. Set category to **Agent**, type to **MCP**.
+Go to **Servers → Add Server**.
 
-<Tabs items={['HTTP / SSE', 'stdio']}>
-<Tab value="HTTP / SSE">
+Fill in **Name**, **URL**, and optionally **Token**. Save.
 
-For servers that expose an HTTP or Server-Sent Events endpoint, set **Provider URL**:
+</Step>
+<Step>
 
-```
-https://tools.example.com/mcp
-```
+### Sync tools
 
-OpenAgent connects to this URL to list tools and send tool calls.
+Click **Sync** on the server record. OpenAgent connects to the MCP server and fetches its tool list. Each discovered tool appears with an **IsAllowed** toggle.
 
-</Tab>
-<Tab value="stdio">
-
-For local processes that communicate over stdin/stdout, put the launch command in **Config Text**:
-
-```json
-{
-  "command": "npx",
-  "args": ["@modelcontextprotocol/server-filesystem", "/data/docs"]
-}
-```
-
-OpenAgent spawns the process and communicates via its standard streams.
-
-</Tab>
-</Tabs>
-
-Save the provider.
+Disable any tools you don't want the model to have access to. Only allowed tools are included in the model's context.
 
 </Step>
 <Step>
 
 ### Attach to a Store
 
-Edit the Store where you want tools available. Set **Agent Provider** to the MCP provider. Save.
+Edit the Store where you want these tools available. Set **MCP Server** to this server. Save.
 
 </Step>
 <Step>
 
 ### Test it
 
-Open a chat with the Store. Ask the agent to do something the tool handles. Watch the tool call appear inline — you'll see the tool name, the arguments passed, and the result returned.
-
-If the tool isn't called when you expect it to be, check the tool description (see below) and consider adding explicit instructions in the system prompt.
+Open a chat with the Store and ask the agent to do something the tool handles. The tool call, arguments, and result appear inline in the chat UI.
 
 </Step>
 </Steps>
 
-## Writing good tool descriptions
+## Tool allow-listing
 
-The model has no way to try a tool and see what happens. It relies entirely on the description to decide whether the tool is appropriate. Vague or generic descriptions lead to the wrong tool being called, the right tool not being called, or incorrect arguments being passed.
-
-Good descriptions answer three questions:
-1. What does this tool do?
-2. When should the model use it (and when shouldn't it)?
-3. What do the parameters mean?
-
-**Well-described tool:**
-```json
-{
-  "name": "lookup_order",
-  "description": "Look up the current status and details of a customer order by its order ID. Use this when the user asks about shipping, delivery, or order status. Do not use for billing or refund questions.",
-  "parameters": {
-    "order_id": {
-      "type": "string",
-      "description": "The order identifier. Format: ORD-XXXXXX (e.g. ORD-123456)"
-    }
-  }
-}
-```
-
-**Poorly described tool:**
-```json
-{
-  "name": "get_order",
-  "description": "Gets order info.",
-  "parameters": {
-    "id": { "type": "string" }
-  }
-}
-```
-
-The system prompt can also guide tool selection directly: "If the user asks about order status, always use `lookup_order` before responding."
+After syncing, each tool has an **IsAllowed** toggle. This lets you expose only a subset of the server's tools to the model — useful when a server provides many tools but you only want the agent to use specific ones.
 
 <Callout type="info">
-  OpenAgent queries the MCP server's tool list at conversation start, not at startup. Changes to the server's exposed tools are reflected immediately in new conversations without restarting OpenAgent.
+  Sync again whenever the MCP server adds or removes tools. New tools default to **IsAllowed = false** until you explicitly enable them.
 </Callout>
 
-## Combining MCP with built-in tools
+## One server per Store
 
-An MCP Agent Provider and the Store's **Builtin Tools** can coexist. The model sees all tools in one unified list and decides which to call. OpenAgent routes each call to the appropriate backend — MCP server or built-in implementation — transparently.
+A Store can only have one MCP Server attached at a time. If you need tools from multiple servers, either:
 
-A Store can only have one Agent Provider at a time. If you need tools from multiple MCP servers, either:
 - Combine the tools into a single MCP server
 - Use an MCP server that proxies multiple upstreams
 
-## MCP ecosystem
+Built-in tools and the MCP Server can coexist on the same Store — the model sees all tools in one unified list.
 
-The [MCP documentation](https://modelcontextprotocol.io) maintains a directory of open-source servers and SDKs. Commonly used servers include:
+## Related
 
-| Server | What it does |
-|--------|-------------|
-| `@modelcontextprotocol/server-filesystem` | Read and write local files |
-| `@modelcontextprotocol/server-github` | Search repos, read files, create issues |
-| `@modelcontextprotocol/server-postgres` | Query PostgreSQL with natural language |
-| `@modelcontextprotocol/server-slack` | Send messages, read channel history |
-| `@modelcontextprotocol/server-fetch` | Fetch and extract content from URLs |
-
-SDKs are available for TypeScript, Python, and other languages for building custom servers.
+- [Understanding MCP](/docs/connectors/tools/mcp) — how the MCP protocol works and how to write good tool descriptions
+- [Built-in Tools](/docs/connectors/tools/builtin-tools) — tools bundled with OpenAgent that need no external server

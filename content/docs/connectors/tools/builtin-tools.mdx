@@ -17,6 +17,8 @@ Searches the web and returns a list of results. The model receives result titles
 
 Useful for: current events, topics not in the knowledge base, information that changes frequently.
 
+Supported search engines: **DuckDuckGo** (default, no key required), **Bing**, **Google** (requires API key and Search Engine ID), **Baidu** (requires API key). Configure the engine in the Tool record's **Sub Type** field.
+
 When `web_search` is used, the search results are saved in the Message's `searchResults` field. The `webSearchEnabled` flag on the Message is set to `true`.
 
 ### web_fetch
@@ -27,23 +29,36 @@ Limitation: cannot handle JavaScript-rendered pages or pages that require authen
 
 ### web_browser
 
-Opens a real browser session to navigate to a URL and extract content. Unlike `web_fetch`, this handles JavaScript-rendered pages, single-page apps, and dynamic content.
+Opens a real headless Chrome browser session (via chromedp). Enabling this tool type exposes **four** sub-tools to the model:
 
-Use `web_browser` when `web_fetch` returns incomplete or empty content for a page.
+| Sub-tool | What it does |
+|----------|-------------|
+| `web_browser` | Navigate to a URL, wait for the page to render, return visible text content. Handles JavaScript SPAs and dynamic pages. |
+| `browser_screenshot` | Navigate to a URL and capture a full-page screenshot, returned as base64-encoded PNG. |
+| `browser_evaluate` | Navigate to a URL, evaluate a JavaScript expression in the page context, return the result. |
+| `browser_click` | Navigate to a URL, click an element identified by a CSS selector, return the updated page content. |
+
+Use `web_browser` when `web_fetch` returns incomplete or empty content for a page (JavaScript-rendered apps, login redirects, etc.).
 
 ### browser_use
 
-Higher-level browser automation. Beyond just reading page content, `browser_use` can interact with pages: click buttons, fill forms, navigate through multi-step flows, and extract structured data.
+Higher-level browser automation backed by the Claude-in-Chrome extension. Beyond reading page content, `browser_use` can interact with pages: click buttons, fill forms, navigate through multi-step flows, and extract structured data.
 
 Use cases: logging into services, submitting forms, extracting data from paginated tables, interacting with web applications.
 
-`browser_use` is built on `chromedp` under the hood.
+<Callout type="warn">
+  `browser_use` requires the Claude-in-Chrome browser extension to be installed and connected. It gives the agent direct control of a browser session.
+</Callout>
 
 ### shell
 
-Executes shell commands on the server running OpenAgent and returns the output.
+Executes shell commands on the server running OpenAgent and returns the output. Supports both one-shot foreground commands and long-running background sessions.
 
-Use cases: running scripts, file system operations, querying local databases, calling local CLIs.
+**Foreground mode**: runs a command and returns when it finishes. Configurable timeout (default 30s, max 300s).
+
+**Background session mode** (set `background: true` or use `action` parameter): starts a persistent shell session and returns a `session_id`. Subsequent calls with `action: poll` read output, `action: write` or `action: submit` send input, `action: send_keys` sends key sequences (Enter, Ctrl+C, etc.), `action: resize` resizes the PTY, and `action: stop` terminates the session.
+
+**PTY mode** (`pty: true`): allocates a pseudo-terminal for interactive CLI programs (vim, python REPL, npm interactive prompts, etc.).
 
 <Callout type="warn">
   `shell` gives the agent arbitrary command execution on the server. Only enable it in deployments where you control who can access the Store and you trust the model's judgment. Do not expose a Store with `shell` enabled to untrusted users.
@@ -59,12 +74,28 @@ Example: "What happened in the news today?" — the model can call `time` first 
 
 Reads and processes office document formats (DOCX, XLSX, PPTX). Useful when a user attaches a document to the chat and asks the agent to analyze it, without going through the Files/Vectors pipeline.
 
-### gui
+### local_file
 
-Interacts with a graphical interface running on the server. Primarily useful in automation workflows where the agent needs to control a desktop application.
+Provides access to files on the local filesystem of the server running OpenAgent. Enabling this tool type exposes **five** sub-tools:
+
+| Sub-tool | What it does |
+|----------|-------------|
+| `local_special_dirs` | Returns common OS directories (Desktop, Documents, Downloads) with their absolute paths. Call this first when the user says "my Desktop" or "Downloads" without giving a full path. |
+| `local_documents_scan` | Scans a directory recursively for supported documents (PDF, DOCX, XLSX, PPTX, TXT, MD, etc.) and returns a manifest with metadata and text previews. |
+| `local_document_read` | Reads the full extracted text of a single supported document by absolute path. Supports offset and limit for large files. |
+| `local_text_write` | Writes Markdown or plain text to a local file. Requires an absolute path. Safe by default — will not overwrite unless `overwrite: true`. |
+| `local_file_move` | Moves a file from one absolute path to another. Requires `confirmed: true` — the model must get explicit user confirmation before moving. |
 
 <Callout type="warn">
-  Like `shell`, `gui` gives the agent direct system access. Use only in controlled environments.
+  `local_file` gives the agent read and write access to the server's filesystem. Only enable in deployments where you trust the model's access scope.
+</Callout>
+
+### gui
+
+Controls Windows desktop applications using the Windows UI Automation (UIA) API. Primarily useful in automation workflows on Windows servers where the agent needs to interact with a native desktop application.
+
+<Callout type="warn">
+  `gui` is Windows-only and gives the agent direct control of the desktop UI. Use only in controlled Windows environments.
 </Callout>
 
 ### video_download
@@ -75,9 +106,11 @@ Downloads video content from a URL (YouTube, Vimeo, and other supported platform
 
 Edit the Store and add the tools you want to **Builtin Tools**. Save. All Chat sessions backed by this Store will have the enabled tools available from the next message.
 
+For tools that require credentials (e.g., `web_search` with Google, `web_browser` with a proxy), create a **Tool record** under the Tools menu, configure the credentials there, then add the Tool record to the Store's **Tools** field instead of (or in addition to) using Builtin Tools.
+
 ## Combining with MCP
 
-Built-in tools and an MCP Agent Provider can coexist on the same Store. The model sees them all in a single unified tool list. OpenAgent routes each call to the right backend - built-in implementation or MCP server - transparently.
+Built-in tools and an MCP Server can coexist on the same Store. The model sees them all in a single unified tool list. OpenAgent routes each call to the right backend — built-in implementation or MCP server — transparently.
 
 ## Controlling tool use from the system prompt
 

@@ -5,7 +5,6 @@ description: Connect any MCP-compatible tool server to your OpenAgent agents.
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Callout } from 'fumadocs-ui/components/callout';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # MCP Servers
 
@@ -30,46 +29,34 @@ Tool calls and results are shown inline in the chat UI and saved in the Message'
 <Steps>
 <Step>
 
-### Create an Agent provider
+### Create a Server record
 
-Go to **Providers → Add Provider**. Set category to **Agent**, type to **MCP**.
+Go to **Servers → Add Server**.
 
-<Tabs items={['HTTP / SSE', 'stdio']}>
-<Tab value="HTTP / SSE">
+- **Name**: a unique identifier for the server (e.g., `my-tools`)
+- **Display Name**: human-readable label shown in the UI
+- **URL**: the MCP server's StreamableHTTP endpoint (e.g., `https://tools.example.com/mcp`)
+- **Token**: optional Bearer token sent as `Authorization: Bearer <token>` for authenticated servers
 
-For servers that expose an HTTP or Server-Sent Events endpoint, set **Provider URL**:
+OpenAgent uses the **StreamableHTTP** transport to connect to MCP servers. The server must expose an HTTP endpoint that implements the MCP protocol.
 
-```
-https://tools.example.com/mcp
-```
+Save the server record.
 
-OpenAgent connects to this URL to list tools and send tool calls.
+</Step>
+<Step>
 
-</Tab>
-<Tab value="stdio">
+### Sync tools
 
-For local processes that communicate over stdin/stdout, put the launch command in **Config Text**:
+After saving, click **Sync** on the server record. OpenAgent connects to the URL and fetches the server's tool list. Each discovered tool appears in the tool list with an **IsAllowed** toggle.
 
-```json
-{
-  "command": "npx",
-  "args": ["@modelcontextprotocol/server-filesystem", "/data/docs"]
-}
-```
-
-OpenAgent spawns the process and communicates via its standard streams.
-
-</Tab>
-</Tabs>
-
-Save the provider.
+By default all tools are allowed. Disable individual tools to prevent the model from calling them.
 
 </Step>
 <Step>
 
 ### Attach to a Store
 
-Edit the Store where you want tools available. Set **Agent Provider** to the MCP provider. Save.
+Edit the Store where you want the MCP tools available. Set **MCP Server** to the server you created. Save.
 
 </Step>
 <Step>
@@ -120,14 +107,20 @@ Good descriptions answer three questions:
 The system prompt can also guide tool selection directly: "If the user asks about order status, always use `lookup_order` before responding."
 
 <Callout type="info">
-  OpenAgent queries the MCP server's tool list at conversation start, not at startup. Changes to the server's exposed tools are reflected immediately in new conversations without restarting OpenAgent.
+  OpenAgent queries the MCP server's tool list at conversation start. Changes to the server's exposed tools are reflected immediately in new conversations without restarting OpenAgent. Use **Sync** after modifying the server's tool list to refresh OpenAgent's cached tool allowlist.
 </Callout>
+
+## Tool allow-listing
+
+After syncing, the server record shows each discovered tool with an **IsAllowed** toggle. Disabling a tool removes it from the model's tool list for all chats using this server — the model never sees it and cannot call it.
+
+Use this to restrict a server to only the tools relevant to a particular Store's purpose, or to disable dangerous tools that the server exposes but you don't want available in your deployment.
 
 ## Combining MCP with built-in tools
 
-An MCP Agent Provider and the Store's **Builtin Tools** can coexist. The model sees all tools in one unified list and decides which to call. OpenAgent routes each call to the appropriate backend — MCP server or built-in implementation — transparently.
+An MCP Server and the Store's **Builtin Tools** can coexist. The model sees all tools in one unified list and decides which to call. OpenAgent routes each call to the appropriate backend — MCP server or built-in implementation — transparently.
 
-A Store can only have one Agent Provider at a time. If you need tools from multiple MCP servers, either:
+A Store can only have one MCP Server at a time. If you need tools from multiple MCP servers, either:
 - Combine the tools into a single MCP server
 - Use an MCP server that proxies multiple upstreams
 

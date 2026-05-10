@@ -123,7 +123,7 @@ The system prompt can also guide tool selection directly: "If the user asks abou
   OpenAgent queries the MCP server's tool list at conversation start, not at startup. Changes to the server's exposed tools are reflected immediately in new conversations without restarting OpenAgent.
 </Callout>
 
-## Combining MCP with built-in tools and A2A
+## Combining MCP with built-in tools
 
 An MCP Agent Provider and the Store's **Builtin Tools** can coexist. The model sees all tools in one unified list and decides which to call. OpenAgent routes each call to the appropriate backend — MCP server or built-in implementation — transparently.
 

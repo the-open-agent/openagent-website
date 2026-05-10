@@ -1,7 +1,7 @@
 ---
 title: Tools & Automation
-description: Give your assistant the ability to act — browse the web, call APIs, or delegate to sub-agents.
-summary: Learn how to extend OpenAgent with built-in tools, MCP servers, and A2A delegation.
+description: Give your assistant the ability to act - browse the web, call APIs, or run automations.
+summary: Learn how to extend OpenAgent with built-in tools and MCP servers.
 read_when:
   - You want your agent to perform actions beyond text generation
   - You need to connect external APIs or databases
@@ -15,7 +15,7 @@ import { Card, Cards } from 'fumadocs-ui/components/card';
 
 A standard LLM is limited to text generation. By adding **Tools**, you give your agent the ability to interact with the world: search the internet, browse live websites, execute code, or call external APIs.
 
-OpenAgent supports three primary ways to extend an agent's capabilities.
+OpenAgent supports two primary ways to extend an agent's capabilities.
 
 ## Built-in Tools (Fastest)
 
@@ -44,28 +44,17 @@ OpenAgent supports [MCP](/docs/connectors/tools/mcp), an open standard for conne
   <Step>Link this provider to your **Store**.</Step>
 </Steps>
 
-## A2A (Agent-to-Agent) Delegation
-
-For complex workflows, one agent can delegate tasks to another. Build a "Coordinator" agent that manages several "Specialist" agents.
-
-<Steps>
-  <Step>Create a specialized **Store** (e.g., "SQL Expert").</Step>
-  <Step>Create an **Agent Provider** (Type: A2A) that points to that Store.</Step>
-  <Step>Add that provider to your main "Coordinator" Store.</Step>
-</Steps>
-
 ## Which one should I choose?
 
 | Method | Best for | Setup Effort |
 |--------|----------|--------------|
 | **Built-in** | General web search, simple browsing, or shell tasks | Low |
 | **MCP** | Connecting your own proprietary APIs or databases | Medium |
-| **A2A** | Complex, multi-step tasks requiring different specialized personas | High |
 
 ## Next Steps
 
 <Cards>
   <Card title="Built-in Tools Reference" description="See the full list of available tools." href="/docs/connectors/tools/builtin-tools" />
   <Card title="Understanding MCP" description="Deep dive into the Model Context Protocol." href="/docs/connectors/tools/mcp" />
-  <Card title="Agent Providers" description="Technical details for A2A and MCP setup." href="/docs/agent-providers" />
+  <Card title="Agent Providers" description="Technical details for MCP setup." href="/docs/agent-providers" />
 </Cards>

@@ -1,6 +1,6 @@
 ---
 title: Agent Providers
-description: Configure MCP tool servers and A2A sub-agents as providers attached to a Store.
+description: Configure MCP tool servers as providers attached to a Store.
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
@@ -8,16 +8,13 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Agent Providers
 
-An agent provider connects a Store to an external tool backend. OpenAgent supports two protocols:
+An agent provider connects a Store to an external tool backend. OpenAgent supports MCP (Model Context Protocol) providers for exposing tools defined on an external server. The model calls these tools the same way it calls built-in tools.
 
-- **MCP (Model Context Protocol)** — exposes a set of tools defined on an external server. The model calls these tools the same way it calls built-in tools.
-- **A2A (Agent-to-Agent)** — exposes another OpenAgent Store as a callable sub-agent. The coordinator calls it like a tool; the sub-agent reasons independently and returns a result.
-
-Both types are created the same way and attached to a Store via the **Agent Provider** field.
+Agent providers are created from the **Providers** area and attached to a Store via the **Agent Provider** field.
 
 ## Creating an agent provider
 
-Go to **Providers → Add Provider**, category **Agent**.
+Go to **Providers -> Add Provider**, category **Agent**.
 
 ### MCP provider
 
@@ -29,13 +26,14 @@ For MCP servers that expose an HTTP or Server-Sent Events endpoint:
 - **Type**: MCP
 - **Provider URL**: the server's MCP endpoint
 
-```
+```txt
 https://tools.example.com/mcp
 ```
 
 OpenAgent connects to this URL when a conversation starts, fetches the tool list, and routes tool calls to the same URL during the conversation. No persistent connection is maintained between messages.
 
 HTTP/SSE is the right choice for:
+
 - Remotely hosted MCP servers
 - Servers you don't control directly
 - Multi-tenant or shared tool infrastructure
@@ -54,7 +52,7 @@ For MCP servers that communicate over stdin/stdout, provide the launch command i
 
 OpenAgent spawns this process when a conversation starts and communicates through its standard streams. The process runs on the same server as OpenAgent.
 
-Additional example — Python-based MCP server:
+Additional example - Python-based MCP server:
 
 ```json
 {
@@ -67,6 +65,7 @@ Additional example — Python-based MCP server:
 ```
 
 stdio is the right choice for:
+
 - Local tools that shouldn't expose a network port
 - Scripts and CLIs on the same server
 - Development and testing of custom MCP servers
@@ -74,43 +73,26 @@ stdio is the right choice for:
 </Tab>
 </Tabs>
 
-### A2A provider
-
-For an A2A sub-agent, set the **Provider URL** to the target Store's A2A endpoint:
-
-- **Type**: A2A
-- **Provider URL**: the sub-agent's A2A endpoint
-
-```
-https://your-openagent-host/api/v1/stores/store-name/a2a
-```
-
-The sub-agent is a normal OpenAgent Store — it has its own model, system prompt, knowledge base, and tools. It does not need any special configuration to act as a sub-agent. The coordinator calls it during conversations; the sub-agent reasons independently and returns a response string.
-
-<Callout type="info">
-  If you need the coordinator to route to multiple sub-agents, create one MCP server that wraps multiple A2A endpoints. Each sub-agent becomes a separately named tool. A Store supports only one Agent Provider at a time.
-</Callout>
-
 ## Attaching a provider to a Store
 
 1. Edit the Store
 2. Set **Agent Provider** to the provider you created
 3. Save
 
-The agent provider takes effect on the next message — existing in-progress conversations are not affected.
+The agent provider takes effect on the next message. Existing in-progress conversations are not affected.
 
 ## One agent provider per Store
 
-A Store can have exactly one Agent Provider at a time. This applies to both MCP and A2A providers.
+A Store can have exactly one Agent Provider at a time.
 
 If you need multiple MCP servers on the same Store, you have two options:
 
-1. **Combine tools into one server** — create an MCP server that aggregates tools from multiple upstreams and exposes them as a single endpoint
-2. **Proxy through a single MCP server** — use a routing MCP server that delegates to multiple backends
+1. **Combine tools into one server** - create an MCP server that aggregates tools from multiple upstreams and exposes them as a single endpoint
+2. **Proxy through a single MCP server** - use a routing MCP server that delegates to multiple backends
 
 ## Agent provider vs. built-in tools
 
-An agent provider and the Store's **Builtin Tools** can coexist. The model sees all tools — from the MCP server and from the built-in tool list — in one unified list. OpenAgent routes each tool call to the appropriate backend transparently.
+An agent provider and the Store's **Builtin Tools** can coexist. The model sees all tools from the MCP server and from the built-in tool list in one unified list. OpenAgent routes each tool call to the appropriate backend transparently.
 
 Built-in tools (web_search, shell, time, etc.) do not count as an Agent Provider. They are always available alongside whichever Agent Provider is configured.
 
@@ -120,12 +102,11 @@ After attaching an MCP provider, open a chat with the Store and ask the agent to
 
 If tools aren't being called:
 
-1. Check that the MCP server is reachable from OpenAgent's server (not just from your local machine)
-2. Look at tool descriptions — vague descriptions lead to the model not calling tools when it should
+1. Check that the MCP server is reachable from OpenAgent's server, not just from your local machine
+2. Look at tool descriptions; vague descriptions lead to the model not calling tools when it should
 3. Add an explicit instruction in the system prompt: "When the user asks about X, always use the `tool_name` tool"
 
 ## Related pages
 
-- [MCP](/docs/connectors/tools/mcp) — how MCP tool-use works, writing good tool descriptions, the MCP ecosystem
-- [A2A](/docs/connectors/tools/a2a) — multi-agent patterns, observability, when to use A2A vs MCP
-- [Built-in Tools](/docs/connectors/tools/builtin-tools) — tools that ship with OpenAgent and need no external server
+- [MCP](/docs/connectors/tools/mcp) - how MCP tool-use works, writing good tool descriptions, and the MCP ecosystem
+- [Built-in Tools](/docs/connectors/tools/builtin-tools) - tools that ship with OpenAgent and need no external server

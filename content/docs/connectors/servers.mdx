@@ -62,7 +62,7 @@ Open a chat with the Store and ask the agent to do something the tool handles. T
 After syncing, each tool has an **IsAllowed** toggle. This lets you expose only a subset of the server's tools to the model — useful when a server provides many tools but you only want the agent to use specific ones.
 
 <Callout type="info">
-  Sync again whenever the MCP server adds or removes tools. New tools default to **IsAllowed = false** until you explicitly enable them.
+  Sync again whenever the MCP server adds or removes tools. New tools discovered during sync default to **IsAllowed = true**. Toggle off any tools you want to block before attaching the server to a Store.
 </Callout>
 
 ## One server per Store

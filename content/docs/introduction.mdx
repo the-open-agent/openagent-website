@@ -54,11 +54,16 @@ OpenAgent is a **self-hosted AI agent platform** that connects your data, tools,
   <Step title="Deploy OpenAgent">
     The simplest way to run OpenAgent is to **download the binary** from the [Releases page](https://github.com/the-open-agent/openagent/releases) and double-click it. No installation required — it works natively on Windows, macOS, and Linux.
 
-    **Windows** — download `openagent-windows-x86.exe` and run it directly. No WSL, no Docker needed.
+    **Windows** — download `openagent_windows_x86.exe` and run it directly. No WSL, no Docker needed.
 
-    **macOS / Linux** — download the binary and make it executable:
+    **Linux** — download the binary and make it executable:
     ```bash
-    chmod +x openagent-linux-x86 && ./openagent-linux-x86
+    chmod +x openagent_linux_x86 && ./openagent_linux_x86
+    ```
+
+    **macOS** — download the binary for your chip (`openagent_darwin_arm64` for Apple Silicon, `openagent_darwin_x86` for Intel) and run:
+    ```bash
+    chmod +x openagent_darwin_arm64 && ./openagent_darwin_arm64
     ```
 
     Once running, navigate to **`http://localhost:14000`**.

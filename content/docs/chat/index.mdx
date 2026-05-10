@@ -13,12 +13,6 @@ Every conversation in OpenAgent is a **Chat** session backed by a **Store**. The
 
 When a user sends a message, OpenAgent runs this sequence:
 
-<Callout type="warn">
-  **Diagram placeholder (Request lifecycle):** Add a single flow diagram for the 5-step lifecycle:
-  Load history → Retrieve (optional) → Assemble context → Model/tool loop → Stream & save.
-  Include the “tool call loop” visually (model may call tools multiple times).
-</Callout>
-
 **1. Load history.** The conversation history is retrieved from the database, bounded by the Store's **Memory Limit**. Turns beyond the limit are dropped, oldest first. The system prompt is always included regardless of the limit.
 
 **2. Search the knowledge base.** If the Store has an Embedding Provider and indexed Files, the user's message is embedded and compared against the Store's Vectors. The top N chunks by cosine similarity are retrieved (N = **Knowledge Count**).

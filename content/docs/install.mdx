@@ -33,8 +33,21 @@ Before you begin, make sure you have:
   <Step>
     ### Choose Your Deployment Method
 
-    <Tabs items={['Binary (Recommended)', 'Docker', 'Development']}>
-    <Tab value="Binary (Recommended)">
+    <Tabs items={['One-Line Install (Recommended)', 'GitHub Releases', 'Docker', 'Source Code']}>
+    <Tab value="One-Line Install (Recommended)">
+
+    **macOS / Linux / WSL**
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.sh | bash
+    ```
+
+    **Windows (PowerShell)**
+    ```powershell
+    irm https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.ps1 | iex
+    ```
+
+    </Tab>
+    <Tab value="GitHub Releases">
 
     Download the latest binary from the [GitHub Releases page](https://github.com/the-open-agent/openagent/releases).
 
@@ -58,7 +71,7 @@ Before you begin, make sure you have:
     ```
 
     </Tab>
-    <Tab value="Development">
+    <Tab value="Source Code">
 
     Requires Go 1.25+, Node.js 18+, and MySQL 8.0+.
 

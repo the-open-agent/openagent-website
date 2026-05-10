@@ -168,10 +168,10 @@ const features = [
   },
   {
     Icon: ShieldIcon,
-    title: 'Enterprise Security',
+    title: 'Privacy First',
     description:
-      'SSO via Casdoor, role-based access control, complete audit logs, multi-tenant isolation, and air-gap deployable for regulated industries.',
-    label: 'SOC2 Ready',
+      'Your data never leaves your machine. SSO via Casdoor, role-based access control, complete audit logs, and fully air-gap deployable.',
+    label: 'Self-Hosted',
     accent: 'text-slate-700 dark:text-slate-300',
     bg: 'bg-slate-500/10',
     border: 'hover:border-slate-500/40',
@@ -197,7 +197,7 @@ const testimonials = [
   },
   {
     name: 'Rakesh Sharma', handle: 'rakesh_solutionarch',
-    content: 'Deployed OpenAgent on-prem for our banking client. Compliance team approved first review. Audit logs, RBAC, SSO all just work. Enterprise-grade isn\'t marketing fluff here.',
+    content: 'Set up OpenAgent for our internal team on a spare server. Had it running in 20 minutes, connected to our Notion docs. The whole team uses it daily now.',
     likes: 934, reposts: 201, date: 'Apr 5', role: 'Solutions Architect',
   },
   {
@@ -207,7 +207,7 @@ const testimonials = [
   },
   {
     name: 'Alex Park', handle: 'alex_platform_eng',
-    content: 'Finally an agent platform that doesn\'t need to own my data. Self-hosted on k8s, air-gapped. This is what enterprise-ready actually looks like.',
+    content: 'Finally an agent platform that doesn\'t need to own my data. Self-hosted on a home server, runs offline. My conversations stay mine, always.',
     likes: 2140, reposts: 534, date: 'Apr 9', role: 'Platform Engineer',
   },
   {
@@ -222,7 +222,7 @@ const testimonials = [
   },
   {
     name: 'Nadia Okonkwo', handle: 'nadia_data_eng',
-    content: 'Running 200+ concurrent agent sessions across 15 enterprise clients from one deployment. OpenAgent just handles it. The observability built in is chef\'s kiss 🤌',
+    content: 'Running multiple agent assistants for different projects from one deployment. OpenAgent just handles it. The observability built in is chef\'s kiss 🤌',
     likes: 1456, reposts: 342, date: 'Apr 15', role: 'Agency Founder',
   },
   {
@@ -252,7 +252,7 @@ const events = [
   {
     badge: 'UPCOMING', dotClass: 'bg-cyan-400', badgeClass: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/30',
     title: 'Workshop: Multi-Agent Pipelines',
-    description: 'Live hands-on: orchestrate 10+ specialized agents to solve complex enterprise workflows. Build, test, deploy in 90 minutes.',
+    description: 'Live hands-on: orchestrate 10+ specialized agents to solve complex personal and team workflows. Build, test, deploy in 90 minutes.',
     date: 'May 8, 2026', location: 'Online · Free', type: 'Workshop', cta: 'Join Free →',
   },
   {
@@ -266,8 +266,8 @@ const events = [
 const press = [
   { logo: 'HN', logoColor: 'text-orange-400', logoBg: 'bg-orange-400/10', source: 'Hacker News', headline: '#1 Show HN of the Week', sub: '500+ upvotes · 200+ comments' },
   { logo: 'PH', logoColor: 'text-orange-300', logoBg: 'bg-orange-300/10', source: 'Product Hunt', headline: '🥇 Product of the Day', sub: '1.2k upvotes' },
-  { logo: 'IQ', logoColor: 'text-blue-400', logoBg: 'bg-blue-400/10', source: 'InfoQ', headline: '"MCP Framework of the Year"', sub: 'Enterprise AI Edition 2026' },
-  { logo: 'REG', logoColor: 'text-slate-400', logoBg: 'bg-slate-400/10', source: 'The Register', headline: '"Enterprise-Ready AI Agents"', sub: 'In-depth feature' },
+  { logo: 'IQ', logoColor: 'text-blue-400', logoBg: 'bg-blue-400/10', source: 'InfoQ', headline: '"MCP Framework of the Year"', sub: 'Open Source AI Edition 2026' },
+  { logo: 'REG', logoColor: 'text-slate-400', logoBg: 'bg-slate-400/10', source: 'The Register', headline: '"Best Self-Hosted AI Agent"', sub: 'In-depth feature' },
 ];
 
 const providers = ['OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'Qwen', 'Mistral', 'Llama', 'Ollama', 'Azure', 'Bedrock', 'Grok', 'OpenRouter'];
@@ -394,7 +394,7 @@ export default function HomePage() {
             OpenAgent
           </span>
           <span className="block bg-gradient-to-r from-fd-foreground to-fd-foreground bg-clip-text text-transparent text-4xl md:text-5xl lg:text-6xl font-bold mt-2 pb-4">
-            Build agents that actually do things
+            Your personal AI assistant,<br className="hidden md:block" /> self-hosted
           </span>
         </h1>
 
@@ -402,11 +402,11 @@ export default function HomePage() {
         <p className="animate-fade-up animate-fade-up-2 mb-10 max-w-2xl text-lg leading-relaxed text-fd-muted-foreground md:text-xl">
           A{' '}
           <strong className="font-semibold text-fd-foreground">single-binary</strong>{' '}
-          open-source agent platform — just download and run. Full{' '}
+          personal AI assistant — just download and run. Full{' '}
           <strong className="font-semibold text-fd-foreground">MCP support</strong>,{' '}
           <strong className="font-semibold text-fd-foreground">30+ model providers</strong>, and{' '}
           <strong className="font-semibold text-fd-foreground">Telegram, Discord & WeCom</strong>.
-          Self-hosted. No vendor lock-in. Enterprise-grade from day one.
+          Self-hosted. No vendor lock-in. Your data stays yours, always.
         </p>
 
         {/* CTA row */}
@@ -417,11 +417,11 @@ export default function HomePage() {
             Get Started
             <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
-          <Link href="/docs"
+          <a href="https://github.com/the-open-agent/openagent/releases" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl border border-fd-border bg-fd-card/80 px-7 py-3.5 text-sm font-semibold text-fd-foreground backdrop-blur-sm transition-colors hover:bg-fd-accent"
           >
-            Docs
-          </Link>
+            Download
+          </a>
           <a href="https://github.com/the-open-agent/openagent" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl border border-fd-border bg-fd-card/80 px-7 py-3.5 text-sm font-semibold text-fd-foreground backdrop-blur-sm transition-colors hover:bg-fd-accent"
           >
@@ -516,7 +516,7 @@ export default function HomePage() {
             </h2>
             <p className="mx-auto max-w-xl text-fd-muted-foreground">
               Not a toy framework. A complete, batteries-included platform trusted by
-              engineering teams at startups and Fortune 500s alike.
+              developers and builders worldwide.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

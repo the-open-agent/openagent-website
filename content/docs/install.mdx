@@ -25,21 +25,29 @@ Before you begin, make sure you have:
 
 ## Deploy the Infrastructure
 
+<Callout type="info">
+  **Zero installation required.** OpenAgent ships as a single self-contained binary. Download it, double-click (or run from the terminal), and it's live — no package managers, no runtimes, no Docker.
+</Callout>
+
 <Steps>
   <Step>
     ### Choose Your Deployment Method
 
-    <Tabs items={['One-Line Install', 'Docker', 'Development']}>
-    <Tab value="One-Line Install">
+    <Tabs items={['Binary (Recommended)', 'Docker', 'Development']}>
+    <Tab value="Binary (Recommended)">
 
-    **macOS / Linux / WSL**
-    ```bash
-    curl -fsSL https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.sh | bash
-    ```
+    Download the latest binary from the [GitHub Releases page](https://github.com/the-open-agent/openagent/releases).
 
-    **Windows (PowerShell)**
+    **Windows** — download `openagent-windows-amd64.exe` and double-click it, or run from PowerShell:
     ```powershell
-    irm https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.ps1 | iex
+    .\openagent-windows-amd64.exe
+    ```
+    No WSL, no Docker, no additional dependencies. Runs natively on Windows 10/11.
+
+    **macOS / Linux** — download the binary for your platform and run:
+    ```bash
+    chmod +x openagent-linux-amd64
+    ./openagent-linux-amd64
     ```
 
     </Tab>

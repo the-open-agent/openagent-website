@@ -13,8 +13,8 @@ import { MessageSquare, Library, Construction, ShieldCheck, Cpu, Zap } from 'luc
 > _"Build once, deploy everywhere."_
 
 <div style={{textAlign: 'center'}}>
-  <strong>OpenAgent is the professional foundation for building production-ready AI agents backed by your own data.</strong><br />
-  Orchestration, RAG, and tool-calling - all in one self-hosted platform.
+  <strong>OpenAgent is a single-binary AI agent platform — download, run, and your first agent is live in minutes.</strong><br />
+  Orchestration, RAG, MCP, and tool-calling — all self-hosted, backed by your own data.
 </div>
 
 <Cards>
@@ -35,6 +35,7 @@ OpenAgent is a **self-hosted AI agent platform** that connects your data, tools,
 
 **What makes it different?**
 
+- **Single Binary**: Ships as one executable — download and double-click to run. No installation wizard, no dependencies to manage.
 - **Self-hosted**: Runs on your own infrastructure. Full control, no vendor lock-in.
 - **Provider Agnostic**: Standardized abstraction for models, embeddings, and storage.
 - **Scalable Workflows**: Connect agents to external tools, data, and automation through a consistent provider model.
@@ -51,16 +52,13 @@ OpenAgent is a **self-hosted AI agent platform** that connects your data, tools,
 
 <Steps>
   <Step title="Deploy OpenAgent">
-    Choose the deployment method that fits your environment.
+    The simplest way to run OpenAgent is to **download the binary** from the [Releases page](https://github.com/the-open-agent/openagent/releases) and double-click it. No installation required — it works natively on Windows, macOS, and Linux.
 
-    **One-Line Install (macOS / Linux / WSL)**
-    ```bash
-    curl -fsSL https://raw.githubusercontent.com/the-open-agent/openagent/master/scripts/install.sh | bash
-    ```
+    **Windows** — download `openagent-windows-amd64.exe` and run it directly. No WSL, no Docker needed.
 
-    **Docker**
+    **macOS / Linux** — download the binary and make it executable:
     ```bash
-    docker run -d -p 14000:14000 --name openagent casbin/openagent
+    chmod +x openagent-linux-amd64 && ./openagent-linux-amd64
     ```
 
     Once running, navigate to **`http://localhost:14000`**.

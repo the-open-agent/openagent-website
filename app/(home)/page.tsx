@@ -274,6 +274,7 @@ const providers = ['OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'Qwen', 'Mistral', 
 const channels  = ['Telegram', 'Discord', 'WeCom'];
 
 const selfHostBenefits = [
+  'Single binary — no installation, just download and run',
   'Your data never leaves your infrastructure',
   'No usage limits or rate throttling',
   'Full control over upgrades and rollbacks',
@@ -399,8 +400,10 @@ export default function HomePage() {
 
         {/* Sub */}
         <p className="animate-fade-up animate-fade-up-2 mb-10 max-w-2xl text-lg leading-relaxed text-fd-muted-foreground md:text-xl">
-          Open-source agent platform with{' '}
-          <strong className="font-semibold text-fd-foreground">full MCP support</strong>,{' '}
+          A{' '}
+          <strong className="font-semibold text-fd-foreground">single-binary</strong>{' '}
+          open-source agent platform — just download and run. Full{' '}
+          <strong className="font-semibold text-fd-foreground">MCP support</strong>,{' '}
           <strong className="font-semibold text-fd-foreground">30+ model providers</strong>, and{' '}
           <strong className="font-semibold text-fd-foreground">Telegram, Discord & WeCom</strong>.
           Self-hosted. No vendor lock-in. Enterprise-grade from day one.
@@ -478,8 +481,9 @@ export default function HomePage() {
                 From zero to agent<br />in under 5 minutes
               </h2>
               <p className="mb-6 text-fd-muted-foreground">
-                One installer script. No Docker compose wrestling. No config file archaeology.
-                OpenAgent sets itself up — you focus on building agents.
+                One binary. No installer, no Docker, no WSL required.
+                Download, double-click, and OpenAgent is running — natively on Windows, macOS, or Linux.
+                You focus on building agents.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link href="/docs/install"

@@ -10,9 +10,9 @@ export function baseOptions(): BaseLayoutProps {
           <Image
             src="https://cdn.openagentai.org/img/openagent-logo_1900x450.png"
             alt={appName}
-            width={140}
-            height={24}
-            style={{ height: '22px', width: 'auto' }}
+            width={190}
+            height={45}
+            style={{ height: '30px', width: 'auto' }}
             priority
             unoptimized
             className="dark:hidden"
@@ -20,9 +20,9 @@ export function baseOptions(): BaseLayoutProps {
           <Image
             src="https://cdn.openagentai.org/img/openagent-logo_1900x450.png"
             alt={appName}
-            width={140}
-            height={24}
-            style={{ height: '22px', width: 'auto' }}
+            width={190}
+            height={45}
+            style={{ height: '30px', width: 'auto' }}
             priority
             unoptimized
             className="hidden dark:block"

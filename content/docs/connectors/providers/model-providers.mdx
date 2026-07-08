@@ -32,7 +32,7 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 | **StepFun** | Step-1, Step-2. |
 | **Yi (01.AI)** | Yi-Large, Yi-34B. |
 | **ChatGLM** | GLM-4, GLM-4V. |
-| **MiniMax** | MiniMax-Text-01, abab6.5. |
+| **MiniMax** | MiniMax-M3, MiniMax-M2.7, MiniMax-M2.5, MiniMax-M2.1, MiniMax-M2. |
 | **OpenRouter** | Access to 200+ models via a single API key. |
 | **Silicon Flow** | High-performance inference for open-weight models. |
 | **GitHub Models** | Models via GitHub's serverless inference. |
@@ -42,6 +42,7 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 | **Ollama** | Local LLM execution (Llama, Mistral, Gemma, etc.). |
 | **Local** | Any OpenAI-compatible API (vLLM, llama.cpp, LM Studio) with `compatibleProvider` field. |
 | **OpenAI Compatible** | Any OpenAI-compatible API with a custom endpoint URL (no `compatibleProvider` needed). |
+| **OpenCode** | Delegate coding tasks to an OpenCode-compatible agent endpoint. |
 | **Writer** | Writer AI platform models. |
 | **Cohere** | Command R+, Command R. |
 
@@ -55,7 +56,7 @@ OpenAgent provides a unified form to connect these services. While most provider
 
 <Tabs items={['Standard APIs', 'Azure OpenAI', 'Amazon Bedrock', 'Ollama / Local', 'OpenAI Compatible']}>
   <Tab value="Standard APIs">
-    Most providers (OpenAI, Claude, DeepSeek, OpenRouter) follow this pattern:
+    Most providers (OpenAI, Claude, DeepSeek, OpenRouter, MiniMax) follow this pattern:
     
     - **Type**: Select the provider name.
     - **Sub Type**: The specific model ID (e.g., `gpt-4o`, `deepseek-chat`).
@@ -106,6 +107,12 @@ OpenAgent provides a unified form to connect these services. While most provider
     Use this for hosted OpenAI-compatible services (Together AI, Fireworks AI, Groq, etc.) where you don't need the `compatibleProvider` adapter logic.
   </Tab>
 </Tabs>
+
+## Quick Setup
+
+The Provider page includes a **Quick Setup** flow for common model providers. It pre-fills the provider type, default model, and provider-specific fields so you can add a working model with fewer manual choices.
+
+Quick Setup supports providers including OpenAI, Claude, Gemini, DeepSeek, Grok, Ollama, OpenRouter, Mistral, MiniMax, Azure, OpenAI Compatible, Alibaba Cloud, Moonshot, Silicon Flow, Volcano Engine, Baidu Cloud, Amazon Bedrock, Hugging Face, iFlytek, ChatGLM, Cohere, Baichuan, StepFun, Tencent Cloud, Yi, GitHub Models, Writer, Local, and OpenCode.
 
 ---
 

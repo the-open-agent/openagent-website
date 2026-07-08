@@ -2,6 +2,7 @@
   "title": "Auditing Logs",
   "pages": [
     "logs",
+    "notifications",
     "sessions"
   ]
 }

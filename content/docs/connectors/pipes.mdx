@@ -1,0 +1,45 @@
+---
+title: Pipes
+description: Connect external messaging channels to OpenAgent agents.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Pipes
+
+Pipes connect external messaging channels to OpenAgent Stores. A Pipe receives messages from a channel, forwards them to the selected agent, and sends the agent's reply back through the same channel.
+
+## Pipe Fields
+
+| Field | Description |
+|-------|-------------|
+| **Name** | Unique Pipe identifier. |
+| **Type** | Messaging channel type, such as WhatsApp, Slack, Facebook Messenger, Threads, WeChat, Weixin Claw, Snapchat, or X Direct Messages. |
+| **Store** | Agent that handles incoming messages for this Pipe. |
+| **Token / secrets** | Channel credentials. The required meaning depends on the Pipe type. |
+| **Domain** | Public host used for webhook callback URLs when the channel uses webhooks. |
+| **State** | Operational state for the Pipe. |
+
+## Webhook-Based Channels
+
+Most Pipe types use webhooks. After saving the Pipe, use **Set Webhook** or copy the displayed callback URL into the provider console for that channel. The Pipe page shows channel-specific hints for fields such as signing secret, app secret, verify token, phone number ID, or OAuth access token.
+
+## Weixin Claw
+
+The **Weixin Claw** Pipe uses QR login and long polling instead of webhook setup.
+
+1. Create or edit a Pipe and set **Type** to `Weixin Claw`.
+2. Select the Store that should answer incoming messages.
+3. Click **Login with Weixin QR**.
+4. Scan the QR code with Weixin and confirm on the phone.
+5. After login succeeds, the Pipe stores the bot token and starts monitoring messages while the Pipe is active.
+
+Weixin Claw tracks the login server, polling cursor, account ID, per-user context token, and last error as runtime values. If login expires or verification is blocked, start the QR login flow again.
+
+## Chat Test
+
+Use **Chat Test** to send a test message through a Pipe configuration before exposing it to users. Enter the channel-specific chat ID or user ID and a test message, then click **Send**.
+
+<Callout type="warn">
+  Pipes connect external users to an agent. Review the selected Store's tools, file upload settings, and access controls before enabling a Pipe on a public or high-trust channel.
+</Callout>

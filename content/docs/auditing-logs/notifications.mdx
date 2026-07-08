@@ -1,0 +1,48 @@
+---
+title: Notifications
+description: User inbox notifications and admin delivery records.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Notifications
+
+OpenAgent has a notification system for agent collaboration events. When users watch a published agent, OpenAgent can notify them about new comments, new issues, issue updates, and agent updates.
+
+## User Inbox
+
+Signed-in users can open the notification inbox from the top navigation bar. The inbox shows notifications for the current user and supports:
+
+- **All / Unread / Read** filters
+- unread counts in the navigation badge
+- click-through links to the related agent, issue, or comment
+- marking one notification as read when it is opened
+- **Mark all as read** for clearing the inbox
+
+Notifications are scoped to the recipient. Users only see notifications addressed to their own account.
+
+## Admin Delivery Records
+
+Admins can review delivery records under **Auditing Logs → Notifications**. This table is useful for troubleshooting notification delivery because it shows:
+
+| Field | Description |
+|-------|-------------|
+| **Created time** | When the notification was queued. |
+| **Recipient** | The user who should receive the notification. |
+| **Actor** | The user who triggered the event. |
+| **Store** | The related agent. |
+| **Event** | Event type such as `comment-added`, `issue-created`, `issue-updated`, or `store-updated`. |
+| **Title** | Short notification title. |
+| **Status** | Delivery state: `Pending`, `Sending`, `Sent`, or `Failed`. |
+| **Retry count** | Number of delivery attempts. |
+| **Sent time** | When delivery succeeded. |
+| **Url** | Link opened when the user follows the notification. |
+| **Error** | Last delivery error, if any. |
+
+## Delivery Behavior
+
+Notifications are queued first, then sent asynchronously. Failed notifications are retried up to the configured retry limit. Delivery records are retained for a limited period so admins can audit recent notification behavior without keeping the table forever.
+
+<Callout type="info">
+  Notifications are generated for published agents and their watchers. If no users are watching an agent, collaboration events do not create recipient notifications.
+</Callout>

@@ -25,6 +25,8 @@ Files are stored on the server's local disk. This is the default and requires no
 
 Files are written to the configured upload directory on the server running OpenAgent. If you're running behind a load balancer or across multiple nodes, all nodes must share the same filesystem (e.g. a network mount) or you will get inconsistent file access.
 
+When OpenAgent creates a local storage folder, folder creation errors are returned to the caller instead of crashing the process. If upload setup fails, check the returned error message and verify that the OpenAgent process can create and write to the configured path.
+
 ### Alibaba Cloud OSS
 
 Files are uploaded to Alibaba Cloud Object Storage Service (OSS).

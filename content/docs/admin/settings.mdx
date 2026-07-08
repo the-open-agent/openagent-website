@@ -44,7 +44,7 @@ Custom **Navbar HTML** is rendered in the management shell after settings are lo
 | Field | Description |
 |-------|-------------|
 | **IP Parsing Mode** | How client IPs are extracted from requests. Options: `""` (direct), `"X-Forwarded-For"`, `"X-Real-IP"`. Set appropriately when running behind a reverse proxy. |
-| **Parent DB Name** | Database name for a parent OpenAgent instance (multi-instance deployments). |
+| **Parent DB Name** | Database name for a parent OpenAgent instance. Use it when this site should read or sync shared parent-instance data in a multi-instance deployment. |
 | **Socks5 Proxy** | SOCKS5 proxy address (e.g. `127.0.0.1:1080`) for outbound requests. Used by tools that make external HTTP calls (web_search, web_fetch, etc.) when **Enable Proxy** is set on the Tool record. |
 | **Log Config** | Logging configuration string (BeeGo log config format). |
 

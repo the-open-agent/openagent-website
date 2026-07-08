@@ -17,6 +17,8 @@ OpenAgent can use Pipes for channels such as Discord, Slack, Telegram, WhatsApp,
 
 Discord, Slack, and Telegram Pipes support streaming replies. When the selected model streams tokens, OpenAgent can update the channel response as text is generated instead of waiting for the full answer to finish.
 
+For Discord interactions, OpenAgent edits the original deferred interaction response during streaming. For gateway messages, Slack messages, and Telegram chats, OpenAgent creates or updates the channel message through the channel API.
+
 If a channel or provider does not support streaming for a specific request, OpenAgent falls back to sending the completed response.
 
 ## Store Selection

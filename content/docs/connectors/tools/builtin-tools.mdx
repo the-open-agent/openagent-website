@@ -81,13 +81,17 @@ Provides access to files on the local filesystem of the server running OpenAgent
 | Sub-tool | What it does |
 |----------|-------------|
 | `local_special_dirs` | Returns common OS directories (Desktop, Documents, Downloads) with their absolute paths. Call this first when the user says "my Desktop" or "Downloads" without giving a full path. |
-| `local_documents_scan` | Scans a directory recursively for supported documents (PDF, DOCX, XLSX, PPTX, TXT, MD, etc.) and returns a manifest with metadata and text previews. |
-| `local_document_read` | Reads the full extracted text of a single supported document by absolute path. Supports offset and limit for large files. |
-| `local_text_write` | Writes Markdown or plain text to a local file. Requires an absolute path. Safe by default — will not overwrite unless `overwrite: true`. |
+| `local_file_scan` | Scans a directory recursively and returns descendant files/directories with type, name, path, size, modified time, and optional text previews. Use `preview_chars` to control preview length or set it to `0` to skip previews. |
+| `local_file_read` | Reads text from a local file by absolute path. Supported document types are parsed; other files are read as UTF-8 text. Supports offset and limit for large files. |
+| `local_file_write` | Writes text content to a local file. Requires an absolute path. Safe by default — will not overwrite unless `overwrite: true`. |
 | `local_file_move` | Moves a file from one absolute path to another. Requires `confirmed: true` — the model must get explicit user confirmation before moving. |
 
 <Callout type="warn">
   `local_file` gives the agent read and write access to the server's filesystem. Only enable in deployments where you trust the model's access scope.
+</Callout>
+
+<Callout type="info">
+  Older deployments may refer to `local_documents_scan`, `local_document_read`, or `local_text_write`. Current OpenAgent exposes the generic `local_file_scan`, `local_file_read`, and `local_file_write` APIs instead.
 </Callout>
 
 ### gui

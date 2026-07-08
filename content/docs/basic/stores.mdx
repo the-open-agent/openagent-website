@@ -69,8 +69,12 @@ Connect an external MCP (Model Context Protocol) server to this Store. The agent
 **Tools**  
 Tool records attached to this Store. Built-in tools are configured from the **Tools** area first, then selected here alongside any other tool records the agent should be allowed to call. See [Built-in Tools](/docs/connectors/tools/builtin-tools) for the full reference.
 
+Select `All` to expose every Tool record owned by the Store's organization. Use this only for trusted internal agents; for public or high-risk agents, select the exact tools the agent needs.
+
 **Skills**  
 Reusable skill instructions attached to this Store. Skills can be loaded from the local skills folder or installed from the Skill Marketplace, then selected on the Store so the agent can use those task-specific instructions.
+
+Select `All` to include every available Skill for the Store's organization. This is useful for broad internal assistants, but targeted agents should usually use a smaller skill set.
 
 ---
 

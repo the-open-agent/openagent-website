@@ -66,8 +66,11 @@ Professional chunking strategies to optimize retrieval accuracy:
 **MCP Server**  
 Connect an external MCP (Model Context Protocol) server to this Store. The agent will have access to all allowed tools from that server. Configure servers under **Servers → Add Server**.
 
-**Builtin Tools**  
-A list of built-in tool types to enable for this Store. Options include `web_search`, `web_browser`, `shell`, `local_file`, `office`, `web_fetch`, `gui`, `video_download`, `browser_use`, and `time`. See [Built-in Tools](/docs/connectors/tools/builtin-tools) for the full reference.
+**Tools**  
+Tool records attached to this Store. Built-in tools are configured from the **Tools** area first, then selected here alongside any other tool records the agent should be allowed to call. See [Built-in Tools](/docs/connectors/tools/builtin-tools) for the full reference.
+
+**Skills**  
+Reusable skill instructions attached to this Store. Skills can be loaded from the local skills folder or installed from the Skill Marketplace, then selected on the Store so the agent can use those task-specific instructions.
 
 ---
 

@@ -7,7 +7,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 # Tools
 
-OpenAgent includes tools that can be enabled on any Store without configuring an MCP server or external provider. Toggle them via the **Builtin Tools** field on the Store. The model sees each enabled tool's name and description alongside any other tools, and decides when to call them.
+OpenAgent includes built-in tool implementations that can be exposed through Tool records without running an external MCP server. Create or edit Tool records in the **Tools** area, then attach the selected records to a Store's **Tools** field. The model sees each enabled tool's name and description alongside any MCP tools, and decides when to call them.
 
 ## Available tools
 
@@ -104,9 +104,9 @@ Downloads video content from a URL (YouTube, Vimeo, and other supported platform
 
 ## Enabling tools
 
-Edit the Store and add the tools you want to **Builtin Tools**. Save. All Chat sessions backed by this Store will have the enabled tools available from the next message.
+Create a Tool record for each built-in tool you want to expose, then edit the Store and add those records to **Tools**. Save. All Chat sessions backed by this Store will have the selected tools available from the next message.
 
-For tools that require credentials (e.g., `web_search` with Google, `web_browser` with a proxy), create a **Tool record** under the Tools menu, configure the credentials there, then add the Tool record to the Store's **Tools** field instead of (or in addition to) using Builtin Tools.
+For tools that require credentials (e.g., `web_search` with Google, `web_browser` with a proxy), configure the credentials on the Tool record before attaching it to a Store.
 
 ## Combining with MCP
 

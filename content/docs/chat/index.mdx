@@ -21,7 +21,7 @@ When a user sends a message, OpenAgent runs this sequence:
 
 **4. Call the model.** The assembled context is sent to the LLM. If the model calls a tool, OpenAgent executes the tool, appends the result to the context, and calls the model again. This loop repeats until the model produces a text response.
 
-**5. Stream and save.** Tokens stream to the client in real time. When the response is complete, a Message record is saved containing the text, tool calls, retrieval metadata (if any), token counts, and estimated cost.
+**5. Stream and save.** Tokens stream to the client in real time. The UI also shows generation status while the model retrieves context, calls tools, or waits on provider output. When the response is complete, a Message record is saved containing the text, tool calls, retrieval metadata (if any), token counts, and estimated cost.
 
 ## Chat records
 
@@ -46,6 +46,18 @@ Users can leave feedback on AI responses:
 
 **Regenerate** — users can regenerate an AI response. Both the original and regenerated responses are retained.
 
+## Attachments and multimodal input
+
+The chat input accepts text, uploaded files, pasted files, and pasted images when the Store allows uploads. This is useful for quick analysis workflows where a user wants to paste a screenshot, document, or local file into the current conversation without first adding it to the long-term knowledge base.
+
+Use **Disable File Upload** on the Store when a chat should be text-only.
+
+## Voice and virtual figure
+
+When a Store has Speech-to-Text configured, users can dictate messages from the chat input. OpenAgent appends the transcript to the current draft and leaves the user in control of when to send it. When Text-to-Speech is configured, replies can be played back automatically or manually depending on the Store's chat UI settings.
+
+Deployments can also configure an AI virtual figure for the chat experience. The default static figure asset is embedded in release binaries so the chat UI works in offline single-binary deployments.
+
 ## Follow-up suggestions
 
 If **Suggestion Count** is set on the Store (to a number greater than 0), OpenAgent generates follow-up question suggestions after each AI response. These appear as clickable prompts in the chat UI. The count controls how many suggestions are generated — typically 2–4 works well.
@@ -62,6 +74,12 @@ If a provider doesn't support streaming, OpenAgent falls back to waiting for the
 
 A Store can have **Child Model Providers** as fallbacks. If the primary provider fails (network error, rate limit, API key issue), OpenAgent tries each fallback in order. No conversation is interrupted by a single provider outage.
 
+## OpenAI-compatible API
+
+OpenAgent can expose a Store through a v1 OpenAI-compatible chat completions endpoint. External clients can send chat completion requests, and OpenAgent still records the resulting Chats and Messages for auditing, usage accounting, and troubleshooting.
+
+Use this when you want an existing OpenAI-compatible SDK or tool to talk to an OpenAgent Store while keeping the Store's model provider, system prompt, knowledge retrieval, and tool configuration centralized.
+
 <Callout type="info">
   The **Message** detail view in the admin panel shows the full technical record for each turn. It’s the best place to debug why an agent responded a certain way.
 </Callout>
@@ -74,6 +92,7 @@ If you’re integrating with the API or debugging deeply, Message records includ
 - Tool calls (tool name, arguments, and results)
 - Provider attribution (which model/embedding provider was used)
 - Token and cost accounting
+- Search results and whether web search was enabled for the turn
 
 ## Related
 

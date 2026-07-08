@@ -79,12 +79,13 @@ Before you begin, make sure you have:
     </Tab>
     <Tab value="Source Code">
 
-    Requires Go 1.25+, Node.js 18+, and MySQL 8.0+.
+    Requires Go 1.25.0+, Node.js 20+, Yarn 1.x, and MySQL 8.0+.
 
     ```bash
     git clone https://github.com/the-open-agent/openagent.git
     cd openagent
-    go run main.go
+    go build -o openagent .
+    ./openagent
     # Separate terminal
     cd web && yarn install && yarn start
     ```
@@ -93,6 +94,8 @@ Before you begin, make sure you have:
     </Tabs>
 
     Once the server is running, navigate to **`http://localhost:14000`**.
+
+    The install scripts support `OPENAGENT_VERSION`, `INSTALL_DIR`, and `BIN_DIR` if you need to pin a release or choose custom install paths.
 
   </Step>
   <Step>

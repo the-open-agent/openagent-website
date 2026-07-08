@@ -59,12 +59,13 @@ Before you begin, make sure you have:
     </Tab>
     <Tab value="Development">
 
-    Requires Go 1.25+, Node.js 18+, and MySQL 8.0+.
+    Requires Go 1.25.0+, Node.js 20+, Yarn 1.x, and MySQL 8.0+.
 
     ```bash
     git clone https://github.com/the-open-agent/openagent.git
     cd openagent
-    go run main.go
+    go build -o openagent .
+    ./openagent
     # Separate terminal
     cd web && yarn install && yarn start
     ```

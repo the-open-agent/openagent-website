@@ -26,6 +26,7 @@ You can upload multiple files at once. Each file is processed independently, so 
 | Plain text | `.txt` | Direct ingestion, no parsing |
 | Markdown | `.md`, `.mdx` | Best paired with the `Markdown` Split Provider |
 | PowerPoint | `.pptx` | Slide text and speaker notes |
+| Images | `.png`, `.jpg`, `.jpeg`, `.webp` | Can be indexed as knowledge when an image-capable extraction path is configured |
 
 ## Processing pipeline
 
@@ -60,6 +61,16 @@ The Store's **Split Provider** controls how the extracted text is divided before
 **QA** — splits on `Q:` / `A:` lines. Use for FAQ-format documents. Each question-answer pair becomes its own chunk, so retrieval stays at the QA granularity.
 
 Change the Split Provider on the Store before uploading. Files uploaded with one strategy and then re-uploaded after changing the strategy are re-processed with the new strategy.
+
+## URL and media ingestion
+
+OpenAgent can cache document URL content so repeated ingestion of the same remote resource does not need to fetch and parse it from scratch every time. This is useful for knowledge sources that are referenced by URL from tasks, import flows, or automation.
+
+For image knowledge, use an image-capable model or extraction provider so visual content can be converted into text before embedding. Treat the generated text the same way you would any other extracted document: verify the chunks after processing, then tune the Store's Knowledge Count and prompt if retrieval quality needs adjustment.
+
+## PowerPoint templates
+
+PowerPoint files can be used for more than text extraction. OpenAgent can accept PPTX templates, replace slide images, fill text placeholders, and edit SmartArt text in supported templates. Use this for agents that generate or update presentations as part of an office automation workflow.
 
 ## Viewing file content
 

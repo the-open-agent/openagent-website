@@ -13,7 +13,7 @@ import { Card, Cards } from 'fumadocs-ui/components/card';
 
 # Add a Knowledge Base
 
-Transform a standard chat assistant into a **Knowledge Assistant**. By indexing your documents (PDFs, Markdown, etc.), your agent retrieves relevant passages at query time to provide grounded, accurate answers. This technique is known as **RAG (Retrieval-Augmented Generation)**.
+Transform a standard chat assistant into a **Knowledge Assistant**. By indexing your documents (PDFs, Markdown, PowerPoint files, images, and more), your agent retrieves relevant passages at query time to provide grounded, accurate answers. This technique is known as **RAG (Retrieval-Augmented Generation)**.
 
 ## How RAG Works
 
@@ -51,7 +51,7 @@ Transform a standard chat assistant into a **Knowledge Assistant**. By indexing 
     ### Upload and Index Documents
 
     Go to **Files → Upload**.
-    1. Select your files (PDF, Docx, MD, etc.).
+    1. Select your files (PDF, DOCX, XLSX, PPTX, Markdown, images, etc.).
     2. Assign them to your Store.
     3. Click **Upload**.
 
@@ -72,6 +72,7 @@ If the agent is missing information or giving vague answers, try these adjustmen
 
 - **Increase Knowledge Count**: Try raising it to `5` or `7` to give the model more context.
 - **Adjust Split Strategy**: If your files are highly structured (like FAQs), switch the Store's **Split Provider** to `QA` and re-upload.
+- **Review extracted chunks**: Open a finished File and inspect its Vectors, especially for scanned PDFs, images, spreadsheets, and slide decks.
 - **Refine System Prompt**: Tell the agent explicitly: _"Always prioritize information from the knowledge base. If the answer is not in the documents, say you don't know."_
 
 ## Next Steps

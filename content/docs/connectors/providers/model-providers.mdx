@@ -32,16 +32,17 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 | **StepFun** | Step-1, Step-2. |
 | **Yi (01.AI)** | Yi-Large, Yi-34B. |
 | **ChatGLM** | GLM-4, GLM-4V. |
-| **MiniMax** | MiniMax-Text-01, abab6.5. |
+| **MiniMax** | MiniMax-M3, MiniMax-M2.7, MiniMax-M2.5, MiniMax-M2.1, MiniMax-M2. |
 | **OpenRouter** | Access to 200+ models via a single API key. |
 | **Silicon Flow** | High-performance inference for open-weight models. |
 | **GitHub Models** | Models via GitHub's serverless inference. |
 | **Hugging Face** | Models via the HF Inference API. |
 | **Azure OpenAI** | OpenAI models deployed on Azure infrastructure. |
 | **Amazon Bedrock**| Claude, Llama, and Titan models via AWS. |
-| **Ollama** | Local LLM execution (Llama, Mistral, Gemma, etc.). |
+| **Ollama** | Local LLM execution and chat completions (Llama, Mistral, Gemma, etc.). |
 | **Local** | Any OpenAI-compatible API (vLLM, llama.cpp, LM Studio) with `compatibleProvider` field. |
 | **OpenAI Compatible** | Any OpenAI-compatible API with a custom endpoint URL (no `compatibleProvider` needed). |
+| **OpenCode** | Coding-agent provider integration for OpenCode-compatible workflows. |
 | **Writer** | Writer AI platform models. |
 | **Cohere** | Command R+, Command R. |
 
@@ -55,11 +56,13 @@ OpenAgent provides a unified form to connect these services. While most provider
 
 <Tabs items={['Standard APIs', 'Azure OpenAI', 'Amazon Bedrock', 'Ollama / Local', 'OpenAI Compatible']}>
   <Tab value="Standard APIs">
-    Most providers (OpenAI, Claude, DeepSeek, OpenRouter) follow this pattern:
+    Most providers (OpenAI, Claude, DeepSeek, OpenRouter, MiniMax) follow this pattern:
     
     - **Type**: Select the provider name.
     - **Sub Type**: The specific model ID (e.g., `gpt-4o`, `deepseek-chat`).
     - **API Key**: Your secret token.
+
+    Some providers use provider-specific credential labels. For MiniMax, use the MiniMax group ID and API key fields exposed in the Provider form.
   </Tab>
   
   <Tab value="Azure OpenAI">
@@ -107,6 +110,12 @@ OpenAgent provides a unified form to connect these services. While most provider
   </Tab>
 </Tabs>
 
+## Quick setup
+
+The Provider form includes quick setup entries for common model providers and popular models. Use these presets to fill the Type and Sub Type fields, then add your credentials and test the provider before attaching it to a Store.
+
+Quick setup is especially useful for providers with fast-moving model lists, including MiniMax, local/Ollama deployments, OpenAI-compatible services, and multimodal providers.
+
 ---
 
 ## Key Platform Features
@@ -121,6 +130,7 @@ To ensure high availability, OpenAgent allows you to configure **Child Model Pro
 ### 2. Context Logic Abstraction
 OpenAgent handles the "dirty work" of different model families:
 - **Thinking Mode**: Native support for reasoning models (o1, DeepSeek-R1).
+- **Multimodal Models**: Vision-capable model families such as Qwen-VL can process image inputs when the selected provider and Store workflow support them.
 - **Prompt Unification**: Automatically formats system, user, and tool-call roles based on the provider's specific requirements.
 
 ### 3. Cost & Usage Tracking

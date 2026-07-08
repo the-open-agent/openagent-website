@@ -13,7 +13,7 @@ import { Card, Cards } from 'fumadocs-ui/components/card';
 
 # Tools & Automation
 
-A standard LLM is limited to text generation. By adding **Tools**, you give your agent the ability to interact with the world: search the internet, browse live websites, execute code, or call external APIs.
+A standard LLM is limited to text generation. By adding **Tools**, you give your agent the ability to interact with the world: search the internet, browse live websites, execute code, work with Office files, or call external APIs.
 
 OpenAgent supports two primary ways to extend an agent's capabilities.
 
@@ -24,7 +24,7 @@ The fastest way to add capabilities. These tools are pre-packaged with OpenAgent
 <Steps>
   <Step>Edit your **Store**.</Step>
   <Step>Go to the **Builtin Tools** field.</Step>
-  <Step>Add tools like `Web Search`, `Browser`, or `Shell`.</Step>
+  <Step>Add tools like `Web Search`, `Browser`, `Shell`, `Office`, or `Local File`.</Step>
   <Step>Save and test in Chat.</Step>
 </Steps>
 
@@ -48,7 +48,7 @@ OpenAgent supports [MCP](/docs/connectors/tools/mcp), an open standard for conne
 
 | Method | Best for | Setup Effort |
 |--------|----------|--------------|
-| **Built-in** | General web search, simple browsing, or shell tasks | Low |
+| **Built-in** | General web search, image search, browser tasks, shell tasks, local files, or Office automation | Low |
 | **MCP** | Connecting your own proprietary APIs or databases | Medium |
 
 ## Next Steps

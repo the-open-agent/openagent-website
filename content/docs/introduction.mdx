@@ -6,7 +6,7 @@ description: The open-source infrastructure for production AI agents and knowled
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Card, Cards } from 'fumadocs-ui/components/card';
-import { MessageSquare, Library, Construction, ShieldCheck, Cpu, Zap } from 'lucide-react';
+import { MessageSquare, Library, Construction, ShieldCheck, Cpu, Zap, GitFork } from 'lucide-react';
 
 # Introduction
 
@@ -27,8 +27,9 @@ import { MessageSquare, Library, Construction, ShieldCheck, Cpu, Zap } from 'luc
 OpenAgent is a **self-hosted AI agent platform** that connects your data, tools, and models into a production-ready system. Unlike simple chat interfaces, OpenAgent provides:
 
 - **Managed RAG**: Turn PDFs and wikis into grounded context with automatic parsing and semantic search.
-- **Model Orchestration**: Switch between 28+ providers with standardized abstractions for models, embeddings, and storage.
+- **Model Orchestration**: Switch between 30+ providers with standardized abstractions for models, embeddings, and storage.
 - **Tool Integration**: Extend agents with MCP servers and built-in automation.
+- **Agent Hub**: Publish, inspect, fork, star, watch, discuss, and measure reusable agents.
 - **Privacy & Access Control**: Role-based access control (RBAC), SSO integration, and comprehensive audit logs.
 
 **Who is it for?** Developers and teams who want a private, self-hosted AI assistant that can reason over their own data — without relying on hosted APIs.
@@ -38,13 +39,15 @@ OpenAgent is a **self-hosted AI agent platform** that connects your data, tools,
 - **Single Binary**: Ships as one executable — download and double-click to run. No installation wizard, no dependencies to manage.
 - **Self-hosted**: Runs on your own infrastructure. Full control, no vendor lock-in.
 - **Provider Agnostic**: Standardized abstraction for models, embeddings, and storage.
-- **Scalable Workflows**: Connect agents to external tools, data, and automation through a consistent provider model.
+- **Scalable Workflows**: Connect agents to browser automation, shell execution, Office files, MCP servers, and scheduled workflows.
+- **Open Collaboration**: Use Agent Hub pages, issues, comments, stars, watches, forks, and insight dashboards to evolve agents as shared projects.
 - **Audit Ready**: Track every token, record every tool call, and monitor agent performance at scale.
 
 <Cards>
-  <Card icon={<MessageSquare className="text-purple-500" />} title="Model Orchestration" description="Seamlessly switch between 28+ providers. Configure fallback models for high availability." href="/docs/build-a-chat-assistant" />
+  <Card icon={<MessageSquare className="text-purple-500" />} title="Model Orchestration" description="Seamlessly switch between 30+ providers. Configure fallback models for high availability." href="/docs/build-a-chat-assistant" />
   <Card icon={<Library className="text-orange-500" />} title="Managed RAG" description="Professional document indexing and retrieval. Turn PDFs and wikis into grounded context." href="/docs/add-a-knowledge-base" />
   <Card icon={<Cpu className="text-red-500" />} title="Tool Integration" description="Extend agents with MCP servers and built-in automation tools." href="/docs/tools-and-automation" />
+  <Card icon={<GitFork className="text-green-500" />} title="Agent Hub" description="Publish reusable agents, collect feedback, fork variants, and monitor adoption." href="/docs/agent-hub" />
   <Card icon={<ShieldCheck className="text-cyan-500" />} title="Privacy & Access Control" description="Role-based access control (RBAC), SSO integration, and comprehensive audit logs." href="/docs/admin/enterprise-sso" />
 </Cards>
 

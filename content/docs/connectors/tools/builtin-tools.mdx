@@ -17,7 +17,7 @@ Searches the web and returns a list of results. The model receives result titles
 
 Useful for: current events, topics not in the knowledge base, information that changes frequently.
 
-Supported search engines: **DuckDuckGo** (default, no key required), **Bing**, **Google** (requires API key and Search Engine ID), **Baidu** (requires API key). Configure the engine in the Tool record's **Sub Type** field.
+Supported search engines: **DuckDuckGo** (default, no key required), **Bing**, **Google** (requires API key and Search Engine ID), and **Baidu** (requires API key). Configure the engine in the Tool record's **Sub Type** field. Image search is also supported where the configured provider exposes image results.
 
 When `web_search` is used, the search results are saved in the Message's `searchResults` field. The `webSearchEnabled` flag on the Message is set to `true`.
 
@@ -25,7 +25,7 @@ When `web_search` is used, the search results are saved in the Message's `search
 
 Fetches the full text content of a given URL. Returns the page's text after stripping HTML. Use after `web_search` when you want the model to read the full content of a specific page, not just the snippet.
 
-Limitation: cannot handle JavaScript-rendered pages or pages that require authentication. Use `web_browser` for those.
+If a site blocks direct HTTP fetches with a `403` response, OpenAgent can fall back to the browser-based path where available. Use `web_browser` directly for JavaScript-rendered pages, login flows, and pages that require interaction.
 
 ### web_browser
 
@@ -73,6 +73,8 @@ Example: "What happened in the news today?" — the model can call `time` first 
 ### office
 
 Reads and processes office document formats (DOCX, XLSX, PPTX). Useful when a user attaches a document to the chat and asks the agent to analyze it, without going through the Files/Vectors pipeline.
+
+OpenAgent's Office automation can also work with PowerPoint templates: upload PPTX templates, replace images, fill text placeholders, and edit supported SmartArt text when building presentation-generation workflows.
 
 ### local_file
 

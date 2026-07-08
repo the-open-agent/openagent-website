@@ -1,0 +1,70 @@
+---
+title: Agent Hub
+description: Publish, collaborate on, and measure reusable OpenAgent Stores.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Agent Hub
+
+Agent Hub turns Stores into shareable agent projects. A published agent gets a detail page where users can review its profile, start a chat, follow updates, discuss issues, and fork the agent into their own workspace.
+
+## Publishing flow
+
+An agent must pass the Store's publish-state and permission checks before it can appear in the Hub. Keep the public profile complete:
+
+| Field | Why it matters |
+|-------|----------------|
+| **Display Name and Avatar** | Shown on Hub cards, profile hover cards, chat, comments, and issue pages. |
+| **Title and Description** | Explain what the agent does before a user opens the detail page. |
+| **Subject and Grade** | Structured selectors that make education-oriented agents easier to browse and filter. |
+| **Tags** | Help users find related agents and compare alternatives. |
+| **Security status** | Summarizes the agent's configuration risk on the detail page. |
+
+External agents open in a new tab from the Hub. Local agents open their own detail page so the route can preserve tabs and issue views across refreshes.
+
+## Detail page
+
+The Hub detail page is organized into tabs:
+
+| Tab | What users do there |
+|-----|---------------------|
+| **Overview** | Read the agent profile, owner information, affiliation, tags, and public metadata. |
+| **Chat** | Try the agent directly from the detail page without leaving the Hub context. |
+| **Settings** | Edit the underlying Store inline when the user has permission. |
+| **Security** | Review the agent's security posture and configuration warnings. |
+| **Issues** | Open discussion threads, report problems, and track work on the agent. |
+| **Insights** | Understand adoption, engagement, contributors, cost, and traffic patterns. |
+
+Usernames render with display names, avatars, and profile hover cards across Hub pages, comments, and issue activity.
+
+## Collaboration
+
+Hub agents support familiar project signals:
+
+- **Star** agents to bookmark or endorse them.
+- **Watch** agents to follow activity and updates.
+- **Fork** agents to create editable variants in your own workspace.
+- **Comment** on agent pages and issues with the rich editor.
+- **Open issues** for bugs, improvements, prompt changes, or knowledge updates.
+
+Star, watch, fork, chat, and message counts appear on Hub cards and can be used for sorting. Counts are scoped to each Store's own Hub database so mirrored or forked agents keep their metrics separate.
+
+## Insights
+
+The Insights area tracks how an agent is used over time:
+
+| Insight | What it shows |
+|---------|---------------|
+| **Pulse** | Recent activity and high-level engagement. |
+| **Contributors** | Users participating in agent changes and discussions. |
+| **Traffic** | Page-view tracking for the Hub detail page. |
+| **Word Cloud** | Common terms from selected activity windows. |
+| **Cost** | Usage and spend trends tied to model calls. |
+| **Stargazers, Watchers, Forks** | Lists of users who starred, watched, or forked the agent. |
+
+Use the time-period selector to scope Insight views. Word cloud data follows the selected time period so short-term trends and long-term themes can be compared.
+
+<Callout type="info">
+  Hub collaboration features are built on top of Stores. If a Store's model, tools, files, or permissions change, the Hub page reflects the updated agent behavior.
+</Callout>

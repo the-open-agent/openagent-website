@@ -15,16 +15,16 @@ import { Card, Cards } from 'fumadocs-ui/components/card';
 
 A standard LLM is limited to text generation. By adding **Tools**, you give your agent the ability to interact with the world: search the internet, browse live websites, execute code, or call external APIs.
 
-OpenAgent supports two primary ways to extend an agent's capabilities.
+OpenAgent supports three primary ways to extend an agent's capabilities.
 
-## Built-in Tools (Fastest)
+## Built-in Tools
 
-The fastest way to add capabilities. These tools are pre-packaged with OpenAgent and require zero configuration.
+Built-in tool implementations are pre-packaged with OpenAgent. Create Tool records for the capabilities you want, configure any credentials on those records, then attach the records to a Store.
 
 <Steps>
-  <Step>Edit your **Store**.</Step>
-  <Step>Go to the **Builtin Tools** field.</Step>
-  <Step>Add tools like `Web Search`, `Browser`, or `Shell`.</Step>
+  <Step>Go to **Tools → Add Tool**.</Step>
+  <Step>Select a built-in tool type such as `web_search`, `web_browser`, or `shell`.</Step>
+  <Step>Edit your Store and add the Tool record to **Tools**.</Step>
   <Step>Save and test in Chat.</Step>
 </Steps>
 
@@ -44,12 +44,17 @@ OpenAgent supports [MCP](/docs/connectors/tools/mcp), an open standard for conne
   <Step>Edit the **Store** and set **MCP Server** to this server.</Step>
 </Steps>
 
+## Skills and Marketplace
+
+Skills are reusable instruction packages that teach an agent how to perform a specific task or operate a tool. OpenAgent loads skills from the local skills folder during startup and can install skills from the Skill Marketplace. After a skill is available, attach it to a Store through the Store's **Skills** field.
+
 ## Which one should I choose?
 
 | Method | Best for | Setup Effort |
 |--------|----------|--------------|
-| **Built-in** | General web search, simple browsing, or shell tasks | Low |
+| **Built-in Tools** | General web search, simple browsing, or shell tasks | Low |
 | **MCP** | Connecting your own proprietary APIs or databases | Medium |
+| **Skills** | Reusable task instructions and workflows | Low |
 
 ## Next Steps
 

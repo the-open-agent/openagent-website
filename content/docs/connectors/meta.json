@@ -3,6 +3,7 @@
   "pages": [
     "providers",
     "tools",
+    "pipes",
     "mcp-servers"
   ]
 }

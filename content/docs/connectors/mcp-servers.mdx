@@ -118,7 +118,7 @@ Use this to restrict a server to only the tools relevant to a particular Store's
 
 ## Combining MCP with built-in tools
 
-An MCP Server and the Store's **Builtin Tools** can coexist. The model sees all tools in one unified list and decides which to call. OpenAgent routes each call to the appropriate backend — MCP server or built-in implementation — transparently.
+An MCP Server and Tool records for built-in tools can coexist on the same Store. The model sees all tools in one unified list and decides which to call. OpenAgent routes each call to the appropriate backend — MCP server or built-in implementation — transparently.
 
 A Store can only have one MCP Server at a time. If you need tools from multiple MCP servers, either:
 - Combine the tools into a single MCP server

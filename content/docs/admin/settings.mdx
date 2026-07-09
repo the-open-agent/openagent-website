@@ -21,6 +21,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 | **Footer HTML** | Custom HTML for the page footer. |
 | **Static Base URL** | Base URL for serving static assets from a CDN or custom domain. |
 | **Nav Items** | List of navigation items to show in the site sidebar. Controls which product areas are visible. |
+| **Endpoint** | Public HTTPS base URL for this OpenAgent site. Hub cards use it when linking to Stores hosted by another OpenAgent database. If the built-in site has no public endpoint, OpenAgent can auto-fill it from the first public request host. |
 
 Custom **Navbar HTML** is rendered in the management shell after settings are loaded, so branding and navigation snippets can be updated from the site record without rebuilding the frontend.
 
@@ -45,8 +46,15 @@ Custom **Navbar HTML** is rendered in the management shell after settings are lo
 |-------|-------------|
 | **IP Parsing Mode** | How client IPs are extracted from requests. Options: `""` (direct), `"X-Forwarded-For"`, `"X-Real-IP"`. Set appropriately when running behind a reverse proxy. |
 | **Parent DB Name** | Database name for a parent OpenAgent instance. Use it when this site should read or sync shared parent-instance data in a multi-instance deployment. |
+| **Hub DB Names** | Comma-separated database names whose published Stores should also appear in this site's Hub. Each remote database should have a public **Endpoint** configured on its built-in site record. |
 | **Socks5 Proxy** | SOCKS5 proxy address (e.g. `127.0.0.1:1080`) for outbound requests. Used by tools that make external HTTP calls (web_search, web_fetch, etc.) when **Enable Proxy** is set on the Tool record. |
 | **Log Config** | Logging configuration string (BeeGo log config format). |
+
+### Hub Federation
+
+Use **Hub DB Names** when one OpenAgent site should act as a catalog for Stores published by multiple OpenAgent databases. The field accepts database names separated by commas. OpenAgent reads Stores whose **Publish State** is **Published** from each listed database and merges them into the Hub response.
+
+Each contributing site should have a public **Endpoint** on its built-in site record. Remote Hub cards use that endpoint to build the chat link, so users land on the OpenAgent instance that actually hosts the Store. When **Endpoint** is empty or points to a non-public host, OpenAgent can auto-fill it from the first public request host and stores it as an HTTPS URL.
 
 ## Feature Flags
 

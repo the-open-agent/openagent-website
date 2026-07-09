@@ -31,6 +31,7 @@ Each Chat belongs to a Store and a user. It records:
 - **Message Count** — total turns in the conversation
 - **Token Count** — cumulative tokens across all messages
 - **Price** — cumulative estimated cost (if pricing is configured on the model provider)
+- **Is Generating / Is Unread** — status flags used by the chat list. OpenAgent marks a chat as generating while a response is running, polls active chats for status updates, and clears the unread state when a completed chat is opened.
 - **Is Hidden / Is Deleted** — soft-delete flags; admins can hide or delete chats without permanent removal
 
 Admins can browse all Chats across all users from **Chat** in the admin panel. Opening a Chat shows the full conversation history with Message detail.

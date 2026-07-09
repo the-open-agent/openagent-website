@@ -24,9 +24,33 @@ Every conversation in OpenAgent is scoped to a Store. By configuring different S
 | **Is Default** | If true, new chats will use this Store by default. |
 | **Publish State** | Controls whether the Store is private, pending review, published, or rejected for the Hub. Published Stores appear on the Hub and can be opened from there. |
 
+## Agent Profile
+
+The **Agent Profile** fields enrich Store listings, especially in the Hub:
+
+| Field | Description |
+|-------|-------------|
+| **Author** | Name shown on the Hub card. If blank, OpenAgent falls back to the Store owner. |
+| **Tutor** | Optional mentor or tutor attribution for the agent. |
+| **Subject** | Academic subject or domain tag. |
+| **Grade** | Target grade level or audience. |
+| **Topic** | Focus topic shown as a Hub tag. |
+| **Brief** | One-sentence introduction shown on the Hub card. |
+| **Description** | Longer introduction for the agent. |
+
 ## Hub Publishing
 
-Store owners can submit a Store for review from the Store edit page. Admins can set **Publish State** to **Private**, **Pending Review**, **Published**, or **Rejected**. The Hub lists only Stores whose publish state is **Published**, and each Hub card opens a chat with that Store.
+Store owners can submit a Store for review from the Store edit page. Admins can set **Publish State** to **Private**, **Pending Review**, **Published**, or **Rejected**. The Hub lists only Stores whose publish state is **Published**, using profile fields such as **Author**, **Subject**, **Grade**, **Topic**, and **Brief** on the card.
+
+For a single OpenAgent deployment, no extra Hub configuration is required: published Stores from the current database appear in **Hub**, and clicking a card opens that Store's chat page.
+
+For a multi-instance Hub, configure the source sites first:
+
+1. On each OpenAgent site that should contribute Stores, set the site **Endpoint** to its public HTTPS base URL, such as `https://agents.example.com`.
+2. On the Hub site, set **Hub DB Names** to a comma-separated list of additional OpenAgent database names to include.
+3. Publish the Stores that should appear by setting their **Publish State** to **Published**.
+
+The Hub combines local published Stores with published Stores from the listed databases. Local cards open chat pages on the current site; remote cards use the source site's **Endpoint** so users are sent to the correct OpenAgent instance.
 
 ---
 

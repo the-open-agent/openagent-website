@@ -50,7 +50,9 @@ Then edit the Store and set **Storage Provider** to the provider you created.
 
 ## Setting a default
 
-If you have only one storage provider configured, all new Stores will default to it. If you have multiple providers, select the one you want in the **Storage Provider** field on each Store individually.
+If you have only one storage provider configured, all new Stores will default to it. If you have multiple providers, mark one active Storage Provider as **Is Default**. OpenAgent looks for that default provider first and falls back to an active Storage Provider only when no explicit default is set.
+
+If a deployment uses a separate provider database, OpenAgent checks that provider database as part of the default lookup. This keeps Store file uploads working consistently across standard and split-provider deployments.
 
 ## Changing the storage provider on an existing Store
 

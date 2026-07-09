@@ -15,6 +15,8 @@ Go to **Files → Upload**. Select one or more files and assign them to a Store.
 
 You can upload multiple files at once. Each file is processed independently, so one failed file doesn't affect others.
 
+The Files list also supports direct uploads from the table toolbar. Uploaded files are stored through the Store's Storage Provider, saved as File records, and queued for vector generation automatically. Image files show a small preview in the list; for other files, use the file URL or the related Vectors view to inspect processed content.
+
 ## Supported formats
 
 | Format | Extension | Notes |
@@ -65,7 +67,7 @@ Change the Split Provider on the Store before uploading. Files uploaded with one
 
 ## Viewing file content
 
-Navigate to **Files** and click a finished File to browse its Vector chunks. You can see the exact text of each chunk alongside its position in the document. This is useful for verifying that chunking produced sensible results — if chunks are cut in awkward places, try a different Split Provider.
+Navigate to **Files** and open the related Vectors for a finished File to browse its indexed chunks. You can see the exact text of each chunk alongside its position in the document. This is useful for verifying that chunking produced sensible results — if chunks are cut in awkward places, try a different Split Provider.
 
 ## Updating a file
 

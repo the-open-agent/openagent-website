@@ -58,6 +58,10 @@ Responses stream token by token. The frontend renders each token as it arrives. 
 
 If a provider doesn't support streaming, OpenAgent falls back to waiting for the full response. Streaming is the default for all providers that support it.
 
+During long-running tool calls, OpenAgent sends SSE keepalive comments so browsers and proxies are less likely to close an otherwise quiet stream.
+
+Message generation is tracked independently from a single browser connection. If the tab refreshes or the SSE connection drops, reconnecting to the same message can replay the generated stream while the job is still retained. Closing the stream alone does not cancel the model call; use the chat cancel action to explicitly stop a running answer.
+
 ## Multi-provider fallback
 
 A Store can have **Child Model Providers** as fallbacks. If the primary provider fails (network error, rate limit, API key issue), OpenAgent tries each fallback in order. No conversation is interrupted by a single provider outage.

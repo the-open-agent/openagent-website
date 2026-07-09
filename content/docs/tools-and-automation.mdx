@@ -48,6 +48,10 @@ OpenAgent supports [MCP](/docs/connectors/tools/mcp), an open standard for conne
 
 Skills are reusable instruction packages that teach an agent how to perform a specific task or operate a tool. OpenAgent loads skills from the local skills folder during startup and can install skills from the Skill Marketplace. After a skill is available, attach it to a Store through the Store's **Skills** field.
 
+Enabled Skills are exposed to the agent as a catalog plus a `load_skill` tool. This lets the agent load full Skill instructions only when a task needs them, instead of injecting every Skill into every prompt.
+
+Stores can also enable **Experience Review** to learn from completed tool-heavy tasks. When a task produces a reusable workflow, OpenAgent can create a new Skill or update an existing one for future runs.
+
 ## Which one should I choose?
 
 | Method | Best for | Setup Effort |

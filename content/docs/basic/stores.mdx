@@ -76,6 +76,12 @@ Reusable skill instructions attached to this Store. Skills can be loaded from th
 
 Select `All` to include every available Skill for the Store's organization. This is useful for broad internal assistants, but targeted agents should usually use a smaller skill set.
 
+OpenAgent exposes enabled Skills through a `load_skill` tool. The agent sees a catalog first and loads the full Skill content only when the user request or Skill name makes it relevant.
+
+**Enable Experience Review**
+
+When enabled, OpenAgent can review completed tool-heavy tasks in the background and create or update reusable Skills from durable procedures. The review runs after tasks that use `browser_use` or at least three tool calls, and it is designed to save stable workflows rather than private reasoning, secrets, personal data, or one-off task narratives.
+
 ---
 
 ## Voice & Multimodal

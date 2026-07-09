@@ -27,6 +27,8 @@ You can upload multiple files at once. Each file is processed independently, so 
 | Markdown | `.md`, `.mdx` | Best paired with the `Markdown` Split Provider |
 | PowerPoint | `.pptx` | Slide text and speaker notes |
 
+Scanned PDFs may need OCR before their text can be read. For agent-side reading of scanned local PDFs, enable the `local_file` Tool and use `local_pdf_ocr_read`; see [Built-in Tools](/docs/connectors/tools/builtin-tools#local_file) for the OCR endpoint configuration.
+
 ## Processing pipeline
 
 After upload, each file moves through:

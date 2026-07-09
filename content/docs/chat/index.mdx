@@ -27,6 +27,7 @@ When a user sends a message, OpenAgent runs this sequence:
 
 Each Chat belongs to a Store and a user. It records:
 
+- **Display Name** — the chat title shown in the sidebar. OpenAgent prefers the generated title from the model and falls back to a short version of the first user message when no title is returned.
 - **Message Count** — total turns in the conversation
 - **Token Count** — cumulative tokens across all messages
 - **Price** — cumulative estimated cost (if pricing is configured on the model provider)

@@ -60,6 +60,8 @@ Executes shell commands on the server running OpenAgent and returns the output. 
 
 **PTY mode** (`pty: true`): allocates a pseudo-terminal for interactive CLI programs (vim, python REPL, npm interactive prompts, etc.).
 
+When a foreground or PTY command times out, OpenAgent terminates the command's process group so child processes do not keep running after the parent shell exits. Stopping a background session follows the same cleanup path after sending the requested interrupt or stop signal.
+
 <Callout type="warn">
   `shell` gives the agent arbitrary command execution on the server. Only enable it in deployments where you control who can access the Store and you trust the model's judgment. Do not expose a Store with `shell` enabled to untrusted users.
 </Callout>

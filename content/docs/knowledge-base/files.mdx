@@ -59,6 +59,8 @@ The Store's **Split Provider** controls how the extracted text is divided before
 
 **Basic** — simpler line-based chunking, max ~210 tokens. Use for short, uniform content where paragraph detection isn't needed.
 
+For the Default and Basic split providers, oversized single lines are split by words before embedding. This prevents one unusually long line from exceeding the embedding model's context limit.
+
 **Markdown** — heading-aware. Splits at heading boundaries and keeps content under each heading together. Use this when uploading Markdown documentation — retrieval will correctly associate content with its section heading.
 
 **QA** — splits on `Q:` / `A:` lines. Use for FAQ-format documents. Each question-answer pair becomes its own chunk, so retrieval stays at the QA granularity.

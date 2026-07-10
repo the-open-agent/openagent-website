@@ -16,6 +16,12 @@ For most teams, the main workflow still starts with:
 
 Use Resources as the broader bucket for knowledge-related supporting objects shown in the admin UI.
 
+## Generated resources
+
+When an agent creates a file with `word_write`, `excel_write`, `pptx_write`, or `local_file_write`, OpenAgent archives the generated output as a Resource. The chat response shows a download card for the generated file, and the same object appears in **Resources** for later access.
+
+Resources are user-scoped for non-admin users: regular users see and delete their own generated files, while admins can browse resources across users. This keeps generated deliverables such as decks, spreadsheets, documents, and written local files available after the chat turn finishes.
+
 <Callout type="info">
   If you're just getting started with RAG, you usually do not need to begin here. Start with [Add a Knowledge Base](/docs/add-a-knowledge-base), then come back as needed.
 </Callout>

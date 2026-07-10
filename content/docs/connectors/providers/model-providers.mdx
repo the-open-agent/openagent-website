@@ -25,7 +25,7 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 | **Alibaba Cloud** | Qwen-Max, Qwen-Plus, Qwen-Turbo. |
 | **Baidu Cloud** | ERNIE 4.0, ERNIE 3.5. |
 | **Tencent Cloud** | Hunyuan-Pro, Hunyuan-Standard. |
-| **Volcano Engine**| Doubao-Pro, Doubao-Lite. |
+| **Volcano Engine**| Doubao-Pro, Doubao-Lite. Supports streamed thinking content when the provider has thinking enabled. |
 | **Moonshot** | Moonshot-v1 (Kimi), including `kimi-for-coding`. |
 | **iFlytek** | Spark-4.0 Ultra, Spark-3.5 Max. |
 | **Baichuan** | Baichuan2-Turbo. |
@@ -123,6 +123,8 @@ To ensure high availability, OpenAgent allows you to configure **Child Model Pro
 OpenAgent handles the "dirty work" of different model families:
 - **Thinking Mode**: Native support for reasoning models (o1, DeepSeek-R1, DeepSeek V4 Flash).
 - **Prompt Unification**: Automatically formats system, user, and tool-call roles based on the provider's specific requirements.
+
+Volcano Engine providers can stream reasoning content when **Enable Thinking** is turned on for the Provider. This reasoning is stored with the message detail and follows the Store's **Hide Thinking** display setting.
 
 ### 3. Cost & Usage Tracking
 By filling in the pricing fields in the Provider configuration, OpenAgent tracks expenditures at the organization level:

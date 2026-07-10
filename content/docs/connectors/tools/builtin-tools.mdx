@@ -76,6 +76,10 @@ Example: "What happened in the news today?" — the model can call `time` first 
 
 Reads and processes office document formats (DOCX, XLSX, PPTX). Useful when a user attaches a document to the chat and asks the agent to analyze it, without going through the Files/Vectors pipeline.
 
+Available office sub-tools include Word read/write, Excel read/write, `pptx_read`, and `pptx_write`. The PowerPoint writer creates editable `.pptx` files by running a local PptxGenJS `.mjs` build script. The script exports `build(pptx, ctx)`, adds slides through PptxGenJS, and can receive optional JSON `data` plus an `assets_dir` for images or icons.
+
+`pptx_write` requires Node.js on the OpenAgent host. Source deployments use the bundled worker under `tool/pptx-worker`; if dependencies are missing, OpenAgent can run `npm ci` in that worker directory before generating the deck.
+
 ### local_file
 
 Provides access to files on the local filesystem of the server running OpenAgent. Enabling this tool type exposes **six** sub-tools:

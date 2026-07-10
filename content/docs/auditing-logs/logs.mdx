@@ -37,6 +37,23 @@ Records are your audit trail for configuration changes:
 
 Records do **not** capture conversation activity (chat messages, tool calls) — that data is in the Chat and Message records.
 
+## Snapshots
+
+**Snapshots** track file changes made by local file tools so admins can inspect and roll back tool-driven filesystem edits. They appear under the operational logs area alongside Records and Sessions.
+
+Each Snapshot records:
+
+| Field | Description |
+|-------|-------------|
+| `tool` | Tool that produced the filesystem change, currently `local_file`. |
+| `action` | Operation type, such as write, move, or delete. |
+| `path` / `source` / `target` | Affected path, or source and target for move operations. |
+| `fileCount` | Number of files captured in the snapshot. |
+| `state` | `Active` or `RolledBack`. |
+| `errorText` | Rollback error, if one occurred. |
+
+Open a Snapshot to review its file list and diff summary. Rolling back a Snapshot restores the captured before-state when the current files still match either the before or after state; if the files have changed independently, OpenAgent reports a conflict instead of overwriting unexpected changes.
+
 ### logPostOnly
 
 By default, Records focus on **changes** (writes) rather than read traffic. This keeps the audit trail useful instead of noisy.

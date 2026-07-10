@@ -16,8 +16,8 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 
 | Provider | Notable Models / Notes |
 | :--- | :--- |
-| **OpenAI** | GPT-5 / 5.2 / 5.1, GPT-4.1, GPT-4o, o4, o3, o1 series. |
-| **Claude** | Claude 4 (Opus 4.5 / 4.1, Sonnet 4), Claude 3.x (Sonnet / Haiku). |
+| **OpenAI** | GPT-5.5 / 5.2 / 5.1, GPT-4.1, GPT-4o, o4, o3, o1 series. |
+| **Claude** | Claude Opus 4.7 / 4.5 / 4.1, Claude 3.x (Sonnet / Haiku). |
 | **Gemini** | Gemini 3.1 Pro/Flash, Gemini 2.5 Pro/Flash. |
 | **DeepSeek** | DeepSeek V4 (Pro/Flash), DeepSeek-R1. `deepseek-v4-flash` is handled as a thinking-capable model. |
 | **Mistral** | Mistral Large, Mixtral, Codestral. |
@@ -26,7 +26,7 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 | **Baidu Cloud** | ERNIE 4.0, ERNIE 3.5. |
 | **Tencent Cloud** | Hunyuan-Pro, Hunyuan-Standard. |
 | **Volcano Engine**| Doubao-Pro, Doubao-Lite. |
-| **Moonshot** | Moonshot-v1 (Kimi). |
+| **Moonshot** | Moonshot-v1 (Kimi), including `kimi-for-coding`. |
 | **iFlytek** | Spark-4.0 Ultra, Spark-3.5 Max. |
 | **Baichuan** | Baichuan2-Turbo. |
 | **StepFun** | Step-1, Step-2. |
@@ -60,6 +60,7 @@ OpenAgent provides a unified form to connect these services. While most provider
     - **Type**: Select the provider name.
     - **Sub Type**: The specific model ID (e.g., `gpt-4o`, `deepseek-chat`).
     - **API Key**: Your secret token.
+    - **Fetch models**: For supported providers, use the sync button beside **Sub Type** to load the current model list from the provider API.
   </Tab>
   
   <Tab value="Azure OpenAI">
@@ -127,6 +128,8 @@ OpenAgent handles the "dirty work" of different model families:
 By filling in the pricing fields in the Provider configuration, OpenAgent tracks expenditures at the organization level:
 - **Input/Output Price**: Tracks cost per 1k tokens.
 - **Message Auditing**: Every message stores the actual provider used and the calculated cost in the database for billing or reporting.
+
+Unknown OpenAI-compatible model names no longer block message completion because of missing built-in pricing; OpenAgent records `0` cost unless custom input/output pricing is configured on the Provider.
 
 ---
 

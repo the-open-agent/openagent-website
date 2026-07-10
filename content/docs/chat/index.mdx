@@ -64,6 +64,10 @@ During long-running tool calls, OpenAgent sends SSE keepalive comments so browse
 
 Message generation is tracked independently from a single browser connection. If the tab refreshes or the SSE connection drops, reconnecting to the same message can replay the generated stream while the job is still retained. Closing the stream alone does not cancel the model call; use the chat cancel action to explicitly stop a running answer.
 
+If generation finishes while the browser was interrupted, the chat UI refreshes the latest messages when it detects the chat is no longer generating. Tool call arguments can also stream incrementally, so users can inspect long tool inputs before the tool result is complete.
+
+When a tool creates a downloadable file, OpenAgent can show generated Resource cards directly under the assistant message.
+
 ## Multi-provider fallback
 
 A Store can have **Child Model Providers** as fallbacks. If the primary provider fails (network error, rate limit, API key issue), OpenAgent tries each fallback in order. No conversation is interrupted by a single provider outage.

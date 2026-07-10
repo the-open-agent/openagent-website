@@ -21,6 +21,8 @@ When a user sends a message, OpenAgent runs this sequence:
 
 **4. Call the model.** The assembled context is sent to the LLM. If the model calls a tool, OpenAgent executes the tool, appends the result to the context, and calls the model again. This loop repeats until the model produces a text response.
 
+If a tool call fails, OpenAgent marks the tool result as an error and gives the model a recovery turn. The model can retry with corrected arguments, choose a different approach, or explain why the task is blocked.
+
 **5. Stream and save.** Tokens stream to the client in real time. When the response is complete, a Message record is saved containing the text, tool calls, retrieval metadata (if any), token counts, and estimated cost.
 
 ## Chat records
@@ -57,6 +59,8 @@ Setting Suggestion Count to 0 disables the feature entirely.
 ## Streaming
 
 Responses stream token by token. The frontend renders each token as it arrives. Tool calls appear inline as they happen — the user can see what tool was called, with what arguments, and what it returned, before the final response is generated.
+
+Failed tool calls are shown as error tool results in the stream, which makes retries and blocked actions easier to diagnose from the chat transcript.
 
 If a provider doesn't support streaming, OpenAgent falls back to waiting for the full response. Streaming is the default for all providers that support it.
 

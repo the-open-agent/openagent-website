@@ -22,7 +22,7 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 | **DeepSeek** | DeepSeek V4 (Pro/Flash), DeepSeek-R1. `deepseek-v4-flash` is handled as a thinking-capable model. |
 | **Mistral** | Mistral Large, Mixtral, Codestral. |
 | **Grok** | Grok-3, Grok-3-mini, Grok-2. |
-| **Alibaba Cloud** | Qwen-Max, Qwen-Plus, Qwen-Turbo. |
+| **Alibaba Cloud** | Qwen-Max, Qwen-Plus, Qwen-Turbo, Qwen3.6, and Qwen-VL/QVQ multimodal models. |
 | **Baidu Cloud** | ERNIE 4.0, ERNIE 3.5. |
 | **Tencent Cloud** | Hunyuan-Pro, Hunyuan-Standard. |
 | **Volcano Engine**| Doubao-Pro, Doubao-Lite. Supports streamed thinking content when the provider has thinking enabled. |
@@ -41,6 +41,7 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 | **Amazon Bedrock**| Claude, Llama, and Titan models via AWS. |
 | **Ollama** | Local LLM execution (Llama, Mistral, Gemma, etc.). |
 | **Local** | Any OpenAI-compatible API (vLLM, llama.cpp, LM Studio) with `compatibleProvider` field. |
+| **OpenCode** | Delegate coding work to a local OpenCode agent server. |
 | **OpenAI Compatible** | Any OpenAI-compatible API with a custom endpoint URL (no `compatibleProvider` needed). |
 | **Writer** | Writer AI platform models. |
 | **Cohere** | Command R+, Command R. |
@@ -53,7 +54,7 @@ OpenAgent provides a unified form to connect these services. While most provider
 
 ### Provider-Specific Settings
 
-<Tabs items={['Standard APIs', 'Azure OpenAI', 'Amazon Bedrock', 'Ollama / Local', 'OpenAI Compatible']}>
+<Tabs items={['Standard APIs', 'Azure OpenAI', 'Amazon Bedrock', 'Ollama / Local', 'OpenCode', 'OpenAI Compatible']}>
   <Tab value="Standard APIs">
     Most providers (OpenAI, Claude, DeepSeek, OpenRouter) follow this pattern:
     
@@ -88,12 +89,23 @@ OpenAgent provides a unified form to connect these services. While most provider
     - **Type**: `Ollama`
     - **Provider URL**: The address of your Ollama server (e.g., `http://localhost:11434`).
     - **Sub Type**: The model name as it appears in `ollama list` (e.g., `llama3.2`).
+    - OpenAgent sends chat requests through Ollama's OpenAI-compatible `/v1` chat completions endpoint, so the base server URL is enough.
     
     **Local (with compatible provider):**
     - **Type**: `Local`
     - **Provider URL**: Base URL of your local inference server.
     - **Sub Type**: The model ID.
     - **Compatible Provider**: Specify which API format it mimics (e.g., `gpt-3.5-turbo`) — used for correct message formatting.
+  </Tab>
+
+  <Tab value="OpenCode">
+    OpenCode lets OpenAgent hand coding tasks to an OpenCode agent process:
+
+    - **Type**: `OpenCode`
+    - **Provider URL**: Your OpenCode server URL, usually `http://localhost:4096`.
+    - **API Key**: Optional.
+
+    OpenCode executes its own coding workflow and tool use internally. OpenAgent sends the conversation to OpenCode and streams the final response back; OpenAgent-side Store tools are not mapped into OpenCode tool calls.
   </Tab>
   
   <Tab value="OpenAI Compatible">
@@ -125,6 +137,8 @@ OpenAgent handles the "dirty work" of different model families:
 - **Prompt Unification**: Automatically formats system, user, and tool-call roles based on the provider's specific requirements.
 
 Volcano Engine providers can stream reasoning content when **Enable Thinking** is turned on for the Provider. This reasoning is stored with the message detail and follows the Store's **Hide Thinking** display setting.
+
+Alibaba Cloud Qwen-VL and QVQ models are treated as multimodal models, so image inputs and text tool outputs can be combined in vision-capable conversations.
 
 ### 3. Cost & Usage Tracking
 By filling in the pricing fields in the Provider configuration, OpenAgent tracks expenditures at the organization level:

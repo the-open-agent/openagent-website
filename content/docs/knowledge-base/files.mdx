@@ -15,7 +15,9 @@ Go to **Files → Upload**. Select one or more files and assign them to a Store.
 
 You can upload multiple files at once. Each file is processed independently, so one failed file doesn't affect others.
 
-The Files list also supports direct uploads from the table toolbar. Uploaded files are stored through the Store's Storage Provider, saved as File records, and queued for vector generation automatically. Image files show a small preview in the list; for other files, use the file URL or the related Vectors view to inspect processed content.
+The Files list also supports direct uploads from the table toolbar. Uploaded files are stored through the default Storage Provider, attached to the user's default Store, and saved as File records. Filenames are stored under a generated object path so two uploads with the same filename do not overwrite each other.
+
+The table shows the file owner, Store, Storage Provider, created time, size, token count, and Vector count. You can filter the list by Store, click the Vector count or vector action to inspect generated Vectors, and use the refresh action to regenerate Vectors for a File. Image files show a small preview in the list; for other files, use the file URL or the related Vectors view to inspect processed content.
 
 ## Supported formats
 
@@ -93,5 +95,6 @@ Deleting a File removes it and all its Vector records from the database permanen
 | `storageProvider` | Which Storage Provider holds the raw file data |
 | `url` | URL to access or download the raw file |
 | `tokenCount` | Total tokens across all Vectors generated from this File |
+| `vectorCount` | Number of Vector records generated for this File, shown in the Files list |
 | `status` | `Pending`, `Processing`, `Finished`, or `Error` |
 | `errorText` | Error message if status is `Error` |

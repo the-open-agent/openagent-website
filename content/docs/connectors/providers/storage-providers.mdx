@@ -32,6 +32,7 @@ Files are uploaded to Alibaba Cloud Object Storage Service (OSS).
 - **Best for**: deployments on Alibaba Cloud infrastructure, or when you need scalable cloud object storage
 - **API Key required**: your Alibaba Cloud Access Key ID and Access Key Secret
 - **Region and bucket**: configure the OSS region, bucket name, and endpoint
+- **CDN domain**: optional custom domain used when OpenAgent builds public file URLs. If the value does not include a protocol, OpenAgent serves it as `https://`.
 
 The original file bytes are stored in OSS. Processing (text extraction, chunking, embedding) still happens within OpenAgent — the storage provider only determines where the file bytes land.
 
@@ -43,7 +44,7 @@ When no storage provider is explicitly configured on a Store, OpenAgent falls ba
 
 1. **Providers → Add Provider**, category **Storage**
 2. Choose **Local File System** or **Alibaba Cloud OSS**
-3. For Alibaba Cloud OSS, enter your **Access Key ID** (Client ID), **Access Key Secret** (Client Secret), **Region**, and **Bucket**
+3. For Alibaba Cloud OSS, enter your **Access Key ID** (Client ID), **Access Key Secret** (Client Secret), **Region**, **Bucket**, endpoint, and optional **CDN domain**
 4. Save
 
 Then edit the Store and set **Storage Provider** to the provider you created.
@@ -51,6 +52,8 @@ Then edit the Store and set **Storage Provider** to the provider you created.
 ## Setting a default
 
 If you have only one storage provider configured, all new Stores will default to it. If you have multiple providers, mark one active Storage Provider as **Is Default**. OpenAgent looks for that default provider first and falls back to an active Storage Provider only when no explicit default is set.
+
+Global uploads from the Files list use the default Storage Provider. A user must also have a default Store because the uploaded File record is still attached to a Store for later vector processing.
 
 If a deployment uses a separate provider database, OpenAgent checks that provider database as part of the default lookup. This keeps Store file uploads working consistently across standard and split-provider deployments.
 

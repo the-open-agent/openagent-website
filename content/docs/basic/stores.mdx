@@ -54,6 +54,8 @@ On the Hub page, users can search published Stores by name, author, owner, or af
 
 For a single OpenAgent deployment, no extra Hub configuration is required: published Stores from the current database appear in **Hub**, and clicking a card opens that Store's chat page.
 
+Published Store cards also link to a Store view page that shows the Store profile, file tree, description, and a **Start Chat** action. Use it as a read-only landing page for users who want to inspect an agent before starting a conversation.
+
 For a multi-instance Hub, configure the source sites first:
 
 1. On each OpenAgent site that should contribute Stores, set the site **Endpoint** to its public HTTPS base URL, such as `https://agents.example.com`.
@@ -99,6 +101,9 @@ Professional chunking strategies to optimize retrieval accuracy:
 **Search Provider**  
 - **Default**: Standard vector similarity search.
 - **Hierarchy**: Advanced recursive retrieval; performs a high-level scan of document sections before drilling down into specific chunks. Best for massive libraries.
+
+**Image Provider**
+Storage provider used for image assets generated or handled by this Store. OpenAgent resolves a local Provider record first and falls back to Casdoor storage when available.
 
 ---
 
@@ -148,6 +153,8 @@ When enabled, chain-of-thought reasoning (from models like DeepSeek-R1 or Claude
 ## Chat UI
 
 The selected Store is persisted in the browser, so refreshing the page or returning to Chat keeps the last Store selection instead of resetting to the default Store.
+
+The **Analysis** page summarizes Stores that already have message history and shows word clouds built from user messages. It is useful for spotting common topics and prompt patterns across Store conversations.
 
 **Welcome Title / Welcome Text**  
 Greeting shown on the empty-state chat screen before the user's first message.

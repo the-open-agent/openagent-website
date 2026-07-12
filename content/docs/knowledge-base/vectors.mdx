@@ -28,6 +28,7 @@ The similarity score is computed on the fly and appears in the Message's `vector
 | `file` | The source File |
 | `index` | Position within the File, used to reconstruct document order |
 | `text` | The raw chunk text |
+| `imageUrl` | Original image URL for Vectors generated from image files |
 | `provider` | Which Embedding Provider generated this Vector |
 | `tokenCount` | Token count for this chunk |
 | `data` | The embedding coordinates — a float array, dimension varies by model |
@@ -35,7 +36,7 @@ The similarity score is computed on the fly and appears in the Message's `vector
 
 ## Browsing Vectors
 
-Go to **Vectors** in the admin panel. Filter by Store or File. The list shows the chunk text, source file, position, and token count.
+Go to **Vectors** in the admin panel. Filter by Store or File. The list shows the chunk text, source file, position, and token count. For image files, the chunk text is the generated caption and `imageUrl` points back to the original image.
 
 Reading chunk text directly is often the fastest way to debug retrieval issues. If the agent is pulling irrelevant chunks, look at what text those Vectors actually contain — the problem is usually in how the document was split, not in the retrieval algorithm itself.
 

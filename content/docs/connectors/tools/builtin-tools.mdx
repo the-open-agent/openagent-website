@@ -19,6 +19,8 @@ Useful for: current events, topics not in the knowledge base, information that c
 
 Supported search engines: **DuckDuckGo** (default, no key required), **Bing**, **Google** (requires API key and Search Engine ID), **Baidu** (requires API key). Configure the engine in the Tool record's **Sub Type** field.
 
+A `web_search` Tool record exposes both `web_search` and `image_search`. `image_search` returns image URLs, source pages, dimensions, and thumbnails for vision-capable models; if the selected model cannot accept images, the tool returns an error telling the model to continue with text-based tools.
+
 When `web_search` is used, the search results are saved in the Message's `searchResults` field. The `webSearchEnabled` flag on the Message is set to `true`.
 
 ### web_fetch
@@ -78,7 +80,7 @@ Reads and processes office document formats (DOCX, XLSX, PPTX). Useful when a us
 
 Available office sub-tools include Word read/write, Excel read/write, `pptx_read`, `pptx_write`, `pptx_template_analyze`, and `pptx_template_fill`. The PowerPoint writer creates editable `.pptx` files from an inline PptxGenJS script passed in the tool call. The script exports `build(pptx, ctx)`, adds slides through PptxGenJS, and can receive optional JSON `data` plus an `assets_dir` for images or icons.
 
-For template-based PowerPoint generation, call `pptx_template_analyze` on a local `.pptx` file or chat attachment URL first. It returns slide, text slot, table, chart, and capacity metadata. Then call `pptx_template_fill` with a plan that selects, repeats, reorders, and fills template slides. Template filling validates missing targets, chart data, and new object collisions before writing the output file.
+For template-based PowerPoint generation, call `pptx_template_analyze` on a local `.pptx` file or chat attachment URL first. It returns slide, text slot, image, table, chart, SmartArt, and capacity metadata. Then call `pptx_template_fill` with a plan that selects, repeats, reorders, and fills template slides. Template filling can replace PNG/JPEG images while preserving the template picture frame, edit SmartArt node text, and resize supported SmartArt layouts. It validates missing targets, chart data, unsupported image formats, and new object collisions before writing the output file.
 
 `pptx_write` requires Node.js on the OpenAgent host. Source deployments use the bundled worker under `tool/pptx-worker`; if dependencies are missing, OpenAgent can run `npm ci` in that worker directory before generating the deck.
 

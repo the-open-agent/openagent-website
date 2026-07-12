@@ -54,7 +54,7 @@ On the Hub page, users can search published Stores by name, author, owner, or af
 
 For a single OpenAgent deployment, no extra Hub configuration is required: published Stores from the current database appear in **Hub**, and clicking a card opens that Store's chat page.
 
-Published Store cards also link to a Store view page that shows the Store profile, file tree, description, and a **Start Chat** action. Use it as a read-only landing page for users who want to inspect an agent before starting a conversation.
+Published Store cards also link to an Agent detail page that shows the Store profile, file tree, description, comments, and **Start Chat** action. Users can fork an agent from this page to create their own Store copy, including the Store configuration and file tree. Use the detail page as a read-only landing page for users who want to inspect an agent before starting a conversation.
 
 For a multi-instance Hub, configure the source sites first:
 
@@ -149,6 +149,18 @@ Stores can show an AI virtual figure in the chat UI. Users can resize, move, col
 | **Enable virtual figure** | Turns the virtual figure on for this Store's chat UI. |
 | **Virtual figure URL** | Image URL for the figure. If left blank, the built-in default figure asset is used. |
 | **Default mode** | Whether the figure starts **Expanded** or **Collapsed** when the chat opens. |
+
+---
+
+## Insights
+
+The Store page includes an **Insights** area for understanding how an agent is used. The page supports 24-hour, 7-day, and 30-day windows where applicable, plus a manual refresh action.
+
+- **Pulse** summarizes active users, chats, messages, files added, vectors added, and top active users.
+- **Contributors** shows message activity by user over time.
+- **Traffic** tracks Store detail page views, unique visitors, referrers, and top paths.
+- **Word Cloud** aggregates common terms from Store messages. It is not period-scoped and includes a minimum-frequency filter.
+- **Cost** charts token usage and estimated cost, including average cost per message and peak usage.
 
 ---
 

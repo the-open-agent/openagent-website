@@ -29,6 +29,7 @@ Stores are scoped to their owner. In the management list, each user sees only th
 | **Title** | A short tagline shown under the agent's name. |
 | **Is Default** | If true, new chats will use this Store by default. |
 | **Publish State** | Controls whether the Store is private, pending review, published, or rejected for the Hub. Published Stores appear on the Hub and can be opened from there. |
+| **API Key** | Store-scoped key for the OpenAI-compatible chat completions API. Keys are generated automatically for new Stores and masked after saving. |
 
 ## Agent Profile
 
@@ -60,6 +61,8 @@ For a multi-instance Hub, configure the source sites first:
 3. Publish the Stores that should appear by setting their **Publish State** to **Published**.
 
 The Hub combines local published Stores with published Stores from the listed databases. Local cards open chat pages on the current site; remote cards are labeled as external and use the source site's **Endpoint** for both the visible chat link and the **Start Chat** action, so users are sent to the correct OpenAgent instance.
+
+If a child OpenAgent database leaves **Hub DB Names** empty, it inherits the parent database's Hub list when the site is configured with a parent database name. This lets a hub topology share the same source list without repeating it in every child site.
 
 ---
 
@@ -144,6 +147,8 @@ When enabled, chain-of-thought reasoning (from models like DeepSeek-R1 or Claude
 
 ## Chat UI
 
+The selected Store is persisted in the browser, so refreshing the page or returning to Chat keeps the last Store selection instead of resetting to the default Store.
+
 **Welcome Title / Welcome Text**  
 Greeting shown on the empty-state chat screen before the user's first message.
 
@@ -158,6 +163,17 @@ Exposes an auto-read toggle in the chat UI so users can enable hands-free TTS pl
 
 **Disable File Upload**  
 Hides the file upload button in the chat UI, preventing users from attaching files mid-conversation.
+
+---
+
+## API Access
+
+OpenAgent exposes an OpenAI-compatible `POST /api/chat/completions` endpoint. Use `Authorization: Bearer <key>` with either:
+
+- a Store **API Key**, which routes the request through that Store's model provider and records the API conversation as Chat and Message records with user `api`
+- a Model Provider key, which calls that provider directly without creating Store chat history
+
+Store-key requests include the OpenAI-style message history and system prompt. If the request includes a system message, it overrides the Store prompt for that API call.
 
 ---
 

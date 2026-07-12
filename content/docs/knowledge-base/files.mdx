@@ -31,6 +31,8 @@ The table shows the file owner, Store, Storage Provider, created time, size, tok
 | Markdown | `.md`, `.mdx` | Best paired with the `Markdown` Split Provider |
 | PowerPoint | `.pptx` | Slide text and speaker notes |
 
+Legacy Office formats such as `.doc`, `.xls`, and `.ppt` are rejected. Convert them to `.docx`, `.xlsx`, or `.pptx` before uploading.
+
 Scanned PDFs may need OCR before their text can be read. For agent-side reading of scanned local PDFs, enable the `local_file` Tool and use `local_pdf_ocr_read`; see [Built-in Tools](/docs/connectors/tools/builtin-tools#local_file) for the OCR endpoint configuration.
 
 ## Processing pipeline

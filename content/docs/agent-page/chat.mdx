@@ -5,6 +5,8 @@ description: Start a conversation with an agent without leaving its page.
 
 # Chat
 
-The **Chat** tab embeds the full chat experience directly in the [Agent page](/docs/agent-page), so users can try the agent without navigating away. It behaves exactly like the standalone chat page — streaming responses, inline tool calls, attachments, and follow-up suggestions all work the same way.
+The **Chat** tab embeds the full chat experience directly in the [Agent page](/docs/agent-page), so users can try the agent without navigating away. It sits right after **Overview** in the tab bar and behaves exactly like the standalone chat page — streaming responses, inline tool calls, attachments, and follow-up suggestions all work the same way.
+
+Unlike the standalone page, the embedded chat stays put: auto-selecting or starting a chat updates the conversation in place without changing the page URL or leaving the Chat tab. The tab itself is still deep-linkable at `/agents/{owner}/{storeName}/chat`.
 
 For the full request lifecycle and chat features, see the [Chat reference](/docs/chat).

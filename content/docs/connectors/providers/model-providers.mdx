@@ -48,6 +48,16 @@ OpenAgent is designed for maximum flexibility, supporting a wide range of cloud-
 
 ---
 
+## Quick Setup
+
+New deployments can configure their first model provider from the **Quick Setup** onboarding page instead of the full provider form. It presents the common providers as one-click cards; picking one pre-fills sensible defaults (a default model / **Sub Type**) so you only need to supply the credential.
+
+Quick Setup covers most supported providers, including OpenAI, Claude, Gemini, DeepSeek, Grok, Mistral, MiniMax, OpenRouter, Alibaba Cloud, Moonshot, Silicon Flow, Volcano Engine, Baidu Cloud, Tencent Cloud, iFlytek, ChatGLM, Baichuan, StepFun, Yi, Cohere, Writer, Hugging Face, GitHub Models, Amazon Bedrock, Azure, Ollama, Local, OpenCode, and OpenAI Compatible.
+
+Each card indicates what it needs — most only require an **API Key**, while local or self-hosted options (Ollama, Local, OpenAI Compatible, OpenCode) ask for a **Provider URL** instead, and enterprise types (Azure, Amazon Bedrock, Tencent Cloud) request their extra endpoint or region fields. For anything not listed, or to fine-tune advanced settings, use the full provider form described below.
+
+---
+
 ## Configuration
 
 OpenAgent provides a unified form to connect these services. While most providers only require an **API Key**, some enterprise and local types have additional field mappings.

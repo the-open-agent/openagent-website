@@ -1,0 +1,29 @@
+---
+title: WhatsApp
+description: Connect the WhatsApp Cloud API to an OpenAgent Store.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# WhatsApp
+
+The **WhatsApp** Pipe connects a WhatsApp Cloud API number to a Store through Meta's webhook platform.
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `WhatsApp` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your WhatsApp Cloud API access token. |
+| **Phone Number ID** | The Cloud API **Phone Number ID** that outgoing replies are sent from. |
+| **Domain** | Your public base URL. |
+
+## Webhook
+
+In the Meta Developer Console, configure the WhatsApp webhook with:
+
+- **Callback URL**: `https://<your-domain>/api/chat-webhook/whatsapp/<pipe-name>`
+- **Verify token**: the Pipe's **ID** (its `name`).
+
+Meta sends a GET challenge when you save the webhook; OpenAgent responds to it using the verify token so the subscription is confirmed.

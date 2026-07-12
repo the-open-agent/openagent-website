@@ -1,0 +1,34 @@
+---
+title: Discord
+description: Connect a Discord bot to an OpenAgent Store.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Discord
+
+The **Discord** Pipe answers Discord interactions (such as slash-command or mention events) with an OpenAgent agent.
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `Discord` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your bot token from the Discord Developer Portal. |
+| **Public Key** | The application's **Public Key**, used to verify Discord's request signatures. |
+| **Domain** | Your public base URL. |
+
+## Webhook
+
+In the Discord Developer Portal, set the application's **Interactions Endpoint URL** to:
+
+```
+https://<your-domain>/api/chat-webhook/discord/<pipe-name>
+```
+
+OpenAgent verifies each request's Ed25519 signature against the **Public Key** before processing it, and answers Discord's endpoint validation handshake automatically.
+
+## Streaming
+
+Discord supports [streaming replies](/docs/connectors/pipes#streaming-replies). OpenAgent acknowledges the interaction, then edits the original deferred response as the model streams tokens.

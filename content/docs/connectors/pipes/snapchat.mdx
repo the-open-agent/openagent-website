@@ -1,0 +1,28 @@
+---
+title: Snapchat
+description: Connect a Snapchat bot to an OpenAgent Store.
+---
+
+# Snapchat
+
+The **Snapchat** Pipe connects a Snapchat bot to a Store through the Snap webhook.
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `Snapchat` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your Snapchat OAuth access token. |
+| **App Secret** | Your app's **App Secret**, used to verify incoming webhook requests. |
+| **Domain** | Your public base URL. |
+
+## Webhook
+
+The Snapchat webhook URL cannot be registered programmatically, so set it manually. In the Snap Developer Portal, open your bot's **Webhook** settings and set the URL to:
+
+```
+https://<your-domain>/api/chat-webhook/snapchat/<pipe-name>
+```
+
+OpenAgent verifies incoming requests against the **App Secret** before answering, and replies through the Snap API.

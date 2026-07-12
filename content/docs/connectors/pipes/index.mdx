@@ -1,0 +1,67 @@
+---
+title: Pipes
+description: Connect external messaging channels to OpenAgent agents.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Pipes
+
+Pipes connect external messaging channels to OpenAgent Stores. A Pipe receives messages from a channel, sends them through the selected agent, and returns the agent's reply to the same channel.
+
+## Available Channels
+
+<Cards>
+  <Card title="Telegram" href="/docs/connectors/pipes/telegram" description="Bot token; webhook registered automatically. Supports streaming." />
+  <Card title="Discord" href="/docs/connectors/pipes/discord" description="Bot with an Interactions Endpoint and signature verification. Supports streaming." />
+  <Card title="Slack" href="/docs/connectors/pipes/slack" description="Slack app with Event Subscriptions and a signing secret. Supports streaming." />
+  <Card title="WhatsApp" href="/docs/connectors/pipes/whatsapp" description="WhatsApp Cloud API via Meta webhooks." />
+  <Card title="Facebook Messenger" href="/docs/connectors/pipes/facebook-messenger" description="Messenger Platform via Meta webhooks." />
+  <Card title="Threads" href="/docs/connectors/pipes/threads" description="Threads replies and mentions via Meta webhooks." />
+  <Card title="WeChat" href="/docs/connectors/pipes/wechat" description="Official Account via the WeChat message callback." />
+  <Card title="Weixin Claw" href="/docs/connectors/pipes/weixin-claw" description="Personal WeChat account via QR-code login." />
+  <Card title="Snapchat" href="/docs/connectors/pipes/snapchat" description="Snapchat bot via the Snap webhook." />
+  <Card title="X Direct Messages" href="/docs/connectors/pipes/x-direct-messages" description="X (Twitter) DMs via the Account Activity API." />
+</Cards>
+
+## How a Pipe is configured
+
+Every Pipe shares a common set of fields on its edit page:
+
+| Field | Purpose |
+| :--- | :--- |
+| **ID / Display name** | The Pipe's identifier and human-readable name. The **ID** doubles as the webhook verify token on several platforms (see each channel's page). |
+| **Type** | The channel this Pipe connects to. |
+| **Store** | The [Store](/docs/basic/stores) whose agent answers incoming messages. |
+| **Token** | The channel's bot/access token. (Not used by [Weixin Claw](/docs/connectors/pipes/weixin-claw), which logs in by QR code.) |
+| **Secret** | A per-channel secret used to verify requests — its label changes by channel (App Secret, Signing Secret, Public Key, Consumer Secret, Phone Number ID). Only administrators can edit this field. |
+| **Domain** | Your public base URL. Setting it lets OpenAgent show the full webhook URL to paste into the channel's console. |
+| **Is default** | Marks this Pipe as the default for its channel. |
+| **State** | `Active` or `Inactive` — inactive Pipes stop receiving and answering messages. |
+
+### Webhook URL convention
+
+Most channels deliver messages to OpenAgent through a webhook. OpenAgent exposes one URL per Pipe following this pattern:
+
+```
+https://<your-domain>/api/chat-webhook/<channel>/<pipe-name>
+```
+
+For example, a Slack Pipe named `support` is reachable at `https://<your-domain>/api/chat-webhook/slack/support`. Set the **Domain** field so the edit page can render the exact URL for you. Telegram registers its webhook automatically, and Weixin Claw uses QR login instead of a webhook.
+
+## Streaming Replies
+
+Discord, Slack, and Telegram Pipes support streaming replies. When the selected model streams tokens, OpenAgent can update the channel response as text is generated instead of waiting for the full answer to finish.
+
+For Discord interactions, OpenAgent edits the original deferred interaction response during streaming. For gateway messages, Slack messages, and Telegram chats, OpenAgent creates or updates the channel message through the channel API.
+
+If a channel or provider does not support streaming for a specific request, OpenAgent falls back to sending the completed response.
+
+## Store Selection
+
+Each Pipe routes incoming messages to a Store. Review the Store's model, tools, skills, file upload settings, and access controls before connecting it to a public messaging channel.
+
+<Callout type="warn">
+  Pipes expose an agent outside the OpenAgent web UI. Treat channel credentials and webhook URLs as secrets, and only connect Stores that are intended for that audience.
+</Callout>

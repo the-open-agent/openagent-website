@@ -1,0 +1,28 @@
+---
+title: X Direct Messages
+description: Connect X (Twitter) Direct Messages to an OpenAgent Store.
+---
+
+# X Direct Messages
+
+The **X Direct Messages** Pipe answers X (Twitter) DMs with an OpenAgent agent through the X Account Activity API.
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `X Direct Messages` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your X access token. |
+| **Consumer Secret** | Your app's **Consumer Secret** (API Secret Key), used for CRC webhook validation. |
+| **Domain** | Your public base URL. |
+
+## Webhook
+
+The X Account Activity API webhook cannot be registered programmatically, so set it manually in your X developer app. Use:
+
+```
+https://<your-domain>/api/chat-webhook/x-dm/<pipe-name>
+```
+
+When X issues its **CRC (Challenge-Response Check)**, OpenAgent answers it using the **Consumer Secret** so the webhook can be registered and stays subscribed. Incoming DMs are routed to the Store's agent and the reply is sent back in the same conversation.

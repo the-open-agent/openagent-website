@@ -1,0 +1,29 @@
+---
+title: Threads
+description: Connect Meta Threads to an OpenAgent Store.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Threads
+
+The **Threads** Pipe answers replies and mentions on Meta Threads with an OpenAgent agent.
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `Threads` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your Threads access token. |
+| **App Secret** | Your Meta app's **App Secret**. |
+| **Domain** | Your public base URL. |
+
+## Webhook
+
+In the Meta Developer Console, configure the Threads webhook with:
+
+- **Callback URL**: `https://<your-domain>/api/chat-webhook/threads/<pipe-name>`
+- **Verify token**: the Pipe's **ID** (its `name`).
+
+Meta sends the `hub.challenge` verification handshake when you save the webhook; OpenAgent completes it automatically. Each incoming reply or mention is routed to the Store's agent, and the response is posted back to the same thread.

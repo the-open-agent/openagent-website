@@ -1,0 +1,52 @@
+---
+title: Notifications
+description: The in-app notification inbox that keeps users updated on the Stores they watch.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Notifications
+
+The **notification inbox** keeps users informed about activity on the Stores they follow, without having to poll each agent page. Notifications are generated automatically when something happens on a **published** Store that a user is **watching**.
+
+## Opening the inbox
+
+A bell/inbox icon sits in the top navigation bar. It shows a **badge with the number of unread notifications**, and the count refreshes automatically about every 30 seconds. Clicking the icon opens your personal inbox at `/user-notifications`.
+
+In the inbox you can:
+
+- **Filter** between **All** and **Unread** notifications.
+- **Mark one** notification as read (a notification is also marked read when you open its linked item).
+- **Mark all as read** in a single action.
+- **Page** through your notification history.
+
+Each entry shows an event icon, the title, a short preview of the content, the actor who triggered it, and the related Store. Selecting a notification takes you to the item it refers to (for example, the issue or comment).
+
+## What triggers a notification
+
+Notifications are created for watchers of a **published** Store when one of these events occurs:
+
+| Event | When it fires |
+| :--- | :--- |
+| `store-updated` | The Store's configuration or content is updated. |
+| `issue-created` | A new issue is opened on the Store. |
+| `issue-updated` | An existing issue is updated. |
+| `comment-added` | A comment is added to an issue on the Store. |
+
+To start receiving notifications for a Store, set it to **Watching** from the [Store hub](/docs/basic/stores) or [Issues](/docs/agent-page/issues) view. You are never notified about your own actions — the user who triggers an event is excluded from that event's recipients.
+
+<Callout type="info">
+  Only **Published** Stores generate notifications. Drafts and unpublished Stores do not notify their watchers.
+</Callout>
+
+## Delivery and lifecycle
+
+Every notification is stored so it appears in the inbox, and it is also handed to OpenAgent's outbound notification channel for external delivery (such as the notification providers configured for your deployment). Each record moves through a simple lifecycle:
+
+- **Pending** → **Sending** → **Sent**, or **Failed** if delivery does not succeed.
+- Failed sends are retried automatically, up to a fixed retry limit.
+- A background worker scans for pending and stale items on a short interval, and old notifications are cleaned up after a retention window (90 days by default).
+
+## Administrator view
+
+Global administrators have an additional **Notifications** page (at `/notifications`) that lists notification records across all users and Stores, which is useful for auditing delivery and troubleshooting failures. Regular users only see their own inbox at `/user-notifications`.

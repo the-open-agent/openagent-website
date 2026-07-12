@@ -1,0 +1,29 @@
+---
+title: Telegram
+description: Connect a Telegram bot to an OpenAgent Store.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Telegram
+
+The **Telegram** Pipe connects a Telegram bot to a Store. Messages sent to the bot are answered by the agent in the same chat.
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `Telegram` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your bot token from [@BotFather](https://t.me/BotFather). |
+| **Domain** | Your public base URL (used to register the webhook). |
+
+Telegram does not use a separate secret field.
+
+## Webhook
+
+Unlike the other channels, you do **not** register the webhook manually. When you save an active Telegram Pipe, OpenAgent calls Telegram's `setWebhook` for you, pointing it at `https://<your-domain>/api/chat-webhook/telegram/<pipe-name>`. Make sure the **Domain** is set to a URL Telegram can reach.
+
+## Streaming
+
+Telegram supports [streaming replies](/docs/connectors/pipes#streaming-replies): OpenAgent edits the bot's message as the model produces tokens.

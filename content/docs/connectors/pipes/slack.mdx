@@ -1,0 +1,34 @@
+---
+title: Slack
+description: Connect a Slack app to an OpenAgent Store.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Slack
+
+The **Slack** Pipe connects a Slack app to a Store so the agent can reply to events (such as messages and mentions) in your workspace.
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `Slack` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your Slack **Bot User OAuth Token** (`xoxb-...`). |
+| **Signing Secret** | Your app's **Signing Secret**, used to validate that requests come from Slack. |
+| **Domain** | Your public base URL. |
+
+## Webhook
+
+Slack does not accept a programmatically registered webhook, so set it manually. In the Slack API portal, open your app's **Event Subscriptions** and set the Request URL to:
+
+```
+https://<your-domain>/api/chat-webhook/slack/<pipe-name>
+```
+
+OpenAgent answers Slack's URL verification challenge automatically when you save the subscription.
+
+## Streaming
+
+Slack supports [streaming replies](/docs/connectors/pipes#streaming-replies): OpenAgent posts a message and updates it through the Slack API as the model produces tokens.

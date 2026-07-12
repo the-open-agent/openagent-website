@@ -1,0 +1,40 @@
+---
+title: Weixin Claw
+description: Connect a personal WeChat account to an OpenAgent Store by scanning a QR code.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Weixin Claw
+
+The **Weixin Claw** Pipe connects a **personal WeChat account** to a Store, so messages sent to that account are answered by the agent. Unlike the other channel Pipes (which use official platform APIs and webhooks), Weixin Claw authorizes a personal account by **scanning a QR code**, then listens for incoming messages in the background.
+
+<Callout type="info">
+  For a WeChat **Official Account**, use the [WeChat](/docs/connectors/pipes/wechat) Pipe instead.
+</Callout>
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `Weixin Claw` |
+| **Store** | The Store whose agent should reply. |
+
+Weixin Claw does not use the **Token**, secret, or webhook fields — the account is bound through QR login instead.
+
+## Connecting an account
+
+1. Create a Pipe of type **Weixin Claw** and select the Store that should answer messages.
+2. On the Pipe edit page, choose **Login with Weixin QR**. OpenAgent starts a login session and displays a QR code.
+3. **Scan the QR code with WeChat** and confirm on your phone. The status updates live as you scan and confirm (waiting → scanned → confirmed).
+4. Once confirmed, the account is bound to the Pipe and OpenAgent begins monitoring it for new messages.
+
+If the QR code expires before you confirm, start the login again to get a fresh code. Login state (the bound account token) is stored per-Pipe, so you normally only need to scan once.
+
+## How it works
+
+After login, a background monitor polls for new incoming messages, sends each one through the selected Store's agent, and replies in the same WeChat conversation. If the connection drops, the monitor retries automatically. Deleting the Pipe clears its stored login state.
+
+<Callout type="warn">
+  Weixin Claw drives a **personal** WeChat account rather than an official account. Use it only where that is acceptable, and only connect Stores that are appropriate for the people who can message that account.
+</Callout>

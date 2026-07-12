@@ -1,0 +1,33 @@
+---
+title: WeChat
+description: Connect a WeChat Official Account to an OpenAgent Store.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# WeChat
+
+The **WeChat** Pipe connects a WeChat **Official Account** to a Store through the WeChat message callback. Messages that followers send to the Official Account are answered by the agent.
+
+<Callout type="info">
+  This Pipe is for **Official Accounts**. To drive a **personal** WeChat account instead, use [Weixin Claw](/docs/connectors/pipes/weixin-claw).
+</Callout>
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `WeChat` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your Official Account token. |
+| **App Secret** | Your Official Account **App Secret**. |
+| **Domain** | Your public base URL. |
+
+## Webhook
+
+In the WeChat Official Account platform, set the server (message callback) configuration:
+
+- **URL**: `https://<your-domain>/api/chat-webhook/wechat/<pipe-name>`
+- **Token**: the Pipe's **ID** (its `name`), used for the signature verification handshake.
+
+WeChat sends a GET challenge to validate the server URL; OpenAgent answers it automatically. Incoming messages arrive as XML, and OpenAgent replies to the platform so the follower receives the agent's answer.

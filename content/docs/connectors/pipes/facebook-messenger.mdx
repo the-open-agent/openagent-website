@@ -1,0 +1,29 @@
+---
+title: Facebook Messenger
+description: Connect Facebook Messenger to an OpenAgent Store.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Facebook Messenger
+
+The **Facebook Messenger** Pipe connects a Facebook Page's Messenger inbox to a Store through Meta's Messenger Platform.
+
+## Configuration
+
+| Field | Value |
+| :--- | :--- |
+| **Type** | `Facebook Messenger` |
+| **Store** | The Store whose agent should reply. |
+| **Token** | Your Page access token. |
+| **App Secret** | Your Meta app's **App Secret**. |
+| **Domain** | Your public base URL. |
+
+## Webhook
+
+In the Meta Developer Console, configure the Messenger webhook with:
+
+- **Callback URL**: `https://<your-domain>/api/chat-webhook/facebook-messenger/<pipe-name>`
+- **Verify token**: the Pipe's **ID** (its `name`).
+
+Meta sends a GET challenge when you save the webhook; OpenAgent responds using the verify token to confirm the subscription. Subscribe to the messaging events for your Page so incoming messages reach the Pipe.

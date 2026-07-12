@@ -1,0 +1,16 @@
+{
+  "title": "Pipes",
+  "pages": [
+    "index",
+    "telegram",
+    "discord",
+    "slack",
+    "whatsapp",
+    "facebook-messenger",
+    "threads",
+    "wechat",
+    "weixin-claw",
+    "snapchat",
+    "x-direct-messages"
+  ]
+}

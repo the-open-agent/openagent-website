@@ -3,6 +3,7 @@
   "pages": [
     "stores",
     "chats",
-    "messages"
+    "messages",
+    "notifications"
   ]
 }

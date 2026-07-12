@@ -54,6 +54,8 @@ On the Hub page, users can search published Stores by name, author, owner, or af
 
 For a single OpenAgent deployment, no extra Hub configuration is required: published Stores from the current database appear in **Hub**, and clicking a card opens that Store's chat page.
 
+Published Store cards also link to a Store view page that shows the Store profile, file tree, description, and a **Start Chat** action. Use it as a read-only landing page for users who want to inspect an agent before starting a conversation.
+
 For a multi-instance Hub, configure the source sites first:
 
 1. On each OpenAgent site that should contribute Stores, set the site **Endpoint** to its public HTTPS base URL, such as `https://agents.example.com`.
@@ -100,6 +102,9 @@ Professional chunking strategies to optimize retrieval accuracy:
 - **Default**: Standard vector similarity search.
 - **Hierarchy**: Advanced recursive retrieval; performs a high-level scan of document sections before drilling down into specific chunks. Best for massive libraries.
 
+**Image Provider**
+Storage provider used for image assets generated or handled by this Store. OpenAgent resolves a local Provider record first and falls back to Casdoor storage when available.
+
 ---
 
 ## Tools & Automation
@@ -131,7 +136,7 @@ When enabled, OpenAgent can review completed tool-heavy tasks in the background 
 When set, the assistant's replies are read aloud using this provider. Enable **TTS Streaming** to stream audio as it is generated rather than waiting for the full reply.
 
 **Speech-to-Text Provider**  
-When set, users can send voice messages. The audio is transcribed before being passed to the model.
+When set, a microphone button appears in the chat input so users can dictate messages. Set it to `Browser Built-In` to transcribe in the browser at no cost, or to a cloud STT Provider to stream audio to the server for higher accuracy. See [Voice Input](/docs/chat/voice-input) for the two modes and silence auto-stop behavior.
 
 ---
 
@@ -148,6 +153,8 @@ When enabled, chain-of-thought reasoning (from models like DeepSeek-R1 or Claude
 ## Chat UI
 
 The selected Store is persisted in the browser, so refreshing the page or returning to Chat keeps the last Store selection instead of resetting to the default Store.
+
+The **Analysis** page summarizes Stores that already have message history and shows word clouds built from user messages. It is useful for spotting common topics and prompt patterns across Store conversations.
 
 **Welcome Title / Welcome Text**  
 Greeting shown on the empty-state chat screen before the user's first message.

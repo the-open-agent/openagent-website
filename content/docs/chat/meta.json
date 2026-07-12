@@ -2,6 +2,7 @@
   "title": "Chat",
   "pages": [
     "index",
-    "agent-configuration"
+    "agent-configuration",
+    "voice-input"
   ]
 }

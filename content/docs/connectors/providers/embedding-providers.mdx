@@ -122,11 +122,12 @@ Any server that implements the OpenAI embeddings API format works:
 - **Type**: Local
 - **Provider URL**: base URL of your server (e.g. `http://localhost:8080`)
 - **Sub Type**: model identifier your server expects
+- **Compatible Provider**: optional model ID to send when **Sub Type** is `custom-embedding`
 - **API Key**: leave empty or set to `none`
 
 Compatible servers: [Infinity](https://github.com/michaelfeil/infinity), [TEI (Text Embeddings Inference)](https://github.com/huggingface/text-embeddings-inference), LM Studio (embedding mode).
 
-This is the fully offline option that doesn't depend on Ollama — useful if you already have an embedding inference stack.
+This is the fully offline option that doesn't depend on Ollama — useful if you already have an embedding inference stack. For custom OpenAI-compatible embedding servers, set **Compatible Provider** to the actual embedding model name expected by the server and configure custom pricing if the model is not one of OpenAgent's built-in embedding price entries.
 
 </Tab>
 </Tabs>

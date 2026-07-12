@@ -1,0 +1,53 @@
+---
+title: Voice Input
+description: How users dictate messages by voice in OpenAgent — browser built-in recognition, cloud streaming STT, and silence auto-stop.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Voice Input
+
+When a Store has a **Speech-to-Text Provider** configured, a microphone button appears next to the chat input. Users tap it to dictate a message instead of typing. The transcript is inserted into the input box — it is **not** sent automatically, so the user can review or edit it before pressing send.
+
+Voice input is the inbound counterpart to [text-to-speech playback](/docs/chat/agent-configuration): speech-to-text turns the user's voice into text, text-to-speech reads the assistant's replies aloud. The two are configured independently on the Store.
+
+## Choosing a mode
+
+The **Speech-to-Text Provider** field on the Store selects one of two transcription paths:
+
+| Provider setting | Mode | Where audio is processed |
+| --- | --- | --- |
+| Empty or `Browser Built-In` | Browser recognition | Entirely in the user's browser |
+| A configured STT Provider (e.g. Alibaba Cloud) | Cloud streaming | Streamed to the OpenAgent server |
+
+### Browser built-in recognition
+
+The default mode uses the browser's built-in Web Speech API. It runs entirely client-side, so there is no provider cost and no audio leaves the user's device. Recognition is continuous and shows interim results as the user speaks, so several sentences can be strung together in one session.
+
+<Callout type="info">
+  Browser recognition depends on the Web Speech API, which is available in Chrome, Edge, and Safari but not all browsers. If the browser doesn't support it, the user sees a "Speech recognition not supported in this browser" message and should switch to a cloud Speech-to-Text Provider.
+</Callout>
+
+### Cloud streaming recognition
+
+When a cloud Speech-to-Text Provider is set, OpenAgent opens a WebSocket to the server and streams microphone audio end to end. The browser captures the mic with echo cancellation, noise suppression, and auto gain control, downsamples it to 16 kHz mono PCM, and ships it to the server, which returns interim and final transcripts live as the user talks. This gives higher accuracy than browser recognition and works consistently across browsers, at the cost of running through the configured provider.
+
+Streaming requires a browser with `AudioWorklet` and microphone access; if those aren't available the user sees a "Streaming speech recognition is not supported in this browser" message.
+
+## Silence auto-stop
+
+In both modes the recording session ends on its own after a short period of silence, so the microphone button always resets instead of staying stuck in the "recording" state. A session also ends automatically when the browser stops recognition for its own reasons — a network drop, switching tabs, or the roughly 60-second cap that mobile Safari imposes. Users can always stop a session manually by tapping the microphone button again.
+
+When a session ends — whether by silence, manual stop, or a server-side completion — the mic button returns to its idle state and the cursor is placed at the end of the transcribed text, ready for the user to keep editing or send.
+
+## Requirements
+
+- The Store must have a **Speech-to-Text Provider** set (`Browser Built-In` or a cloud STT Provider). See [Stores → Voice & Multimodal](/docs/basic/stores).
+- The browser must grant microphone permission on first use.
+- Cloud streaming requires a browser with `AudioWorklet`; browser built-in recognition requires Web Speech API support.
+
+## Related
+
+- [Stores](/docs/basic/stores) — the **Speech-to-Text Provider** and **Text-to-Speech Provider** fields
+- [Agent Configuration](/docs/chat/agent-configuration) — the **Show Auto Read** toggle for text-to-speech playback
+- [Chat](/docs/chat) — the overall request lifecycle

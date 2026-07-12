@@ -15,7 +15,7 @@ Go to **Files → Upload**. Select one or more files and assign them to a Store.
 
 You can upload multiple files at once. Each file is processed independently, so one failed file doesn't affect others.
 
-The Files list also supports direct uploads from the table toolbar. Uploaded files are stored through the default Storage Provider, attached to the user's default Store, and saved as File records. Filenames are stored under a generated object path so two uploads with the same filename do not overwrite each other.
+The Files list also supports direct uploads from the table toolbar. Uploaded files are stored through the selected Store's Storage Provider when a Store filter is active, or through the default Storage Provider and default Store otherwise. Filenames are stored under a generated object path so two uploads with the same filename do not overwrite each other.
 
 The table shows the file owner, Store, Storage Provider, created time, size, token count, and Vector count. You can filter the list by Store, click the Vector count or vector action to inspect generated Vectors, and use the refresh action to regenerate Vectors for a File. Image files show a small preview in the list; for other files, use the file URL or the related Vectors view to inspect processed content.
 
@@ -30,10 +30,13 @@ The table shows the file owner, Store, Storage Provider, created time, size, tok
 | Plain text | `.txt` | Direct ingestion, no parsing |
 | Markdown | `.md`, `.mdx` | Best paired with the `Markdown` Split Provider |
 | PowerPoint | `.pptx` | Slide text and speaker notes |
+| Images | `.jpg`, `.jpeg`, `.png`, `.gif`, `.webp` | Captioned by the Store's vision-capable model provider, then embedded for retrieval |
 
 Legacy Office formats such as `.doc`, `.xls`, and `.ppt` are rejected. Convert them to `.docx`, `.xlsx`, or `.pptx` before uploading.
 
 Scanned PDFs may need OCR before their text can be read. For agent-side reading of scanned local PDFs, enable the `local_file` Tool and use `local_pdf_ocr_read`; see [Built-in Tools](/docs/connectors/tools/builtin-tools#local_file) for the OCR endpoint configuration.
+
+Image files require the Store's Model Provider to be vision-capable so OpenAgent can generate a caption before embedding. OpenAgent stores the generated caption as vector text and keeps the original image URL on the Vector, so retrieved image knowledge can be shown back to the model and rendered in chat responses.
 
 ## Processing pipeline
 

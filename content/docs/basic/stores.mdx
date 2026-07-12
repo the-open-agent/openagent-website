@@ -29,7 +29,7 @@ Stores are scoped to their owner. In the management list, each user sees only th
 | **Title** | A short tagline shown under the agent's name. |
 | **Is Default** | If true, new chats will use this Store by default. |
 | **Publish State** | Controls whether the Store is private, pending review, published, or rejected for the Hub. Published Stores appear on the Hub and can be opened from there. |
-| **API Key** | Store-scoped key for the OpenAI-compatible chat completions API. Keys are generated automatically for new Stores and masked after saving. |
+| **External API Key** | Store-scoped key for the OpenAI-compatible chat completions API. Keys are generated automatically for new Stores and masked after saving. |
 
 ## Agent Profile
 
@@ -140,6 +140,12 @@ When set, a microphone button appears in the chat input so users can dictate mes
 
 ---
 
+## Virtual Figure
+
+Stores can show an AI virtual figure in the chat UI. The Store fields control whether the figure is enabled, which image URL it uses, and whether it starts expanded or collapsed. Users can resize, move, collapse, or disable the figure from its chat menu; the figure status follows the chat state, such as typing, thinking, replying, error, or done.
+
+---
+
 ## Memory & Context
 
 **Memory Limit**  
@@ -175,9 +181,11 @@ Hides the file upload button in the chat UI, preventing users from attaching fil
 
 ## API Access
 
-OpenAgent exposes an OpenAI-compatible `POST /api/chat/completions` endpoint. Use `Authorization: Bearer <key>` with either:
+OpenAgent exposes OpenAI-compatible chat completion endpoints at `POST /api/chat/completions` and `POST /api/v1/chat/completions`. The Store edit page shows copyable **Base URL** and **Chat completions endpoint** values for external clients.
 
-- a Store **API Key**, which routes the request through that Store's model provider and records the API conversation as Chat and Message records with user `api`
+Use `Authorization: Bearer <key>` with either:
+
+- a Store **External API Key**, which routes the request through that Store's model provider, attached MCP server, and built-in tools, then records the API conversation as Chat and Message records with user `api`
 - a Model Provider key, which calls that provider directly without creating Store chat history
 
 Store-key requests include the OpenAI-style message history and system prompt. If the request includes a system message, it overrides the Store prompt for that API call.

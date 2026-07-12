@@ -91,6 +91,8 @@ Use the Chat filter to narrow by:
 
 Click into any Chat to see its full message history. Click into any Message to see the full detail view (retrieval results, tool calls, web search results, token/cost accounting).
 
+API chat sessions created through a Store's OpenAI-compatible external API key are marked as API chats. Their Chat and Message records are visible for audit and cost tracking, but are read-only in the admin UI so external-client history cannot be edited after the fact.
+
 ## Usage
 
 **Usage** aggregates token consumption over time. Each row represents one day's activity for one Store or provider:

@@ -54,18 +54,7 @@ On the Hub page, users can search published Stores by name, author, owner, or af
 
 For a single OpenAgent deployment, no extra Hub configuration is required: published Stores from the current database appear in **Hub**, and clicking a card opens that Store's chat page.
 
-Published Store cards also link to an **Agent detail page** organized into tabs — **Overview**, **Files**, **Insights**, **Issues**, **Comments**, and, for the agent's owner, **Settings**. Each tab and each Insights sub-tab has its own URL, so a specific view can be bookmarked or shared as a direct link. Use the page as a read-only landing page for users who want to inspect an agent before starting a conversation.
-
-The detail page header exposes four actions:
-
-- **Star** marks the agent as a favorite and increments its public star count. Starred agents appear under the Hub's **Starred** view.
-- **Watch** follows the agent and increments its public watch count. Watched agents appear under the Hub's **Watching** view.
-- **Fork** creates your own copy of the agent's Store configuration. Forking duplicates only the Store configuration; the file tree is not copied and usage counters (chats, messages, vectors) start from zero. A forked Store shows a **Forked from** tag that links back to the original. You cannot fork your own agent, and you can fork any given agent only once.
-- **Start Chat** opens the agent's chat page.
-
-The **Issues** tab is a lightweight, GitHub-style discussion board scoped to the agent. Any signed-in user can open an issue with a title and an optional description; issues can be filtered by **Open**, **Closed**, or **All**, and each issue collects threaded replies. The agent's owner can edit, close, reopen, or delete issues.
-
-On the **Comments** tab, signed-in users can leave rich-text comments. The comment editor supports emoji and inline images — uploaded from the toolbar, pasted from the clipboard, or dragged in as PNG, JPEG, GIF, or WebP — enforces a character limit, and sanitizes submitted HTML so links open safely in a new tab. Issue replies reuse the same editor. Comments left on Agent detail pages can be moderated from the **Comments** page under **Admin**. It lists every comment with its target, author, content, and created time, and lets admins edit or delete individual comments.
+Published Store cards also link to a public **[Agent page](/docs/agent-page)** — a read-only landing page for inspecting an agent before starting a conversation. It offers Star, Watch, and Fork actions and is organized into tabs for the agent's [Overview](/docs/agent-page/overview), [Chat](/docs/agent-page/chat), [Files](/docs/agent-page/files), [Issues](/docs/agent-page/issues), [Security](/docs/agent-page/security), [Insights](/docs/agent-page/insights), and owner-only [Settings](/docs/agent-page/settings). See the [Agent Page](/docs/agent-page) reference for the full breakdown.
 
 For a multi-instance Hub, configure the source sites first:
 
@@ -163,17 +152,9 @@ Stores can show an AI virtual figure in the chat UI. Users can resize, move, col
 
 ---
 
-## Insights
+## Insights & Security
 
-The Store page includes an **Insights** area for understanding how an agent is used. The page supports 24-hour, 7-day, and 30-day windows where applicable, plus a manual refresh action.
-
-- **Pulse** summarizes active users, chats, messages, files added, vectors added, and top active users.
-- **Contributors** shows message activity by user over time.
-- **Traffic** tracks Store detail page views, unique visitors, referrers, and top paths.
-- **Word Cloud** aggregates common terms from Store messages. It is not period-scoped and includes a minimum-frequency filter.
-- **Cost** charts token usage and estimated cost, including average cost per message and peak usage.
-
-Each of these sub-tabs has its own URL, so a specific Insights view can be linked to directly.
+A published agent's usage analytics and its automated security audit live on the [Agent page](/docs/agent-page), under the [Insights](/docs/agent-page/insights) and [Security](/docs/agent-page/security) tabs.
 
 ---
 

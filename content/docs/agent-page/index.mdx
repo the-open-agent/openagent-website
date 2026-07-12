@@ -1,0 +1,39 @@
+---
+title: Agent Page
+description: The public detail page for a published agent — header actions, tabs, and deep-linking.
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Agent Page
+
+Every published Store has a public **Agent page** at `/agents/{owner}/{storeName}`. Users reach it by selecting a card on the [Hub](/docs/basic/stores#hub-publishing). It is a read-only landing page for inspecting an agent — its profile, files, activity, and community — before starting a conversation.
+
+## Header actions
+
+The page header shows the agent's avatar, display name, and author. A forked agent also shows a **Forked from** tag linking back to the original. The header exposes four actions:
+
+- **Star** marks the agent as a favorite and increments its public star count. Starred agents appear under the Hub's **Starred** view.
+- **Watch** follows the agent and increments its public watch count. Watched agents appear under the Hub's **Watching** view.
+- **Fork** creates your own copy of the agent's Store configuration. Forking duplicates only the Store configuration; the file tree is not copied and usage counters (chats, messages, vectors) start from zero. You cannot fork your own agent, and you can fork any given agent only once.
+- **Start Chat** opens the agent's chat page.
+
+## Tabs
+
+The page is organized into tabs, each documented on its own page:
+
+- [Overview](/docs/agent-page/overview) — files, description, and comments at a glance.
+- [Chat](/docs/agent-page/chat) — start a conversation without leaving the page.
+- [Files](/docs/agent-page/files) — browse the agent's knowledge base files.
+- [Issues](/docs/agent-page/issues) — a GitHub-style discussion board.
+- [Security](/docs/agent-page/security) — a configuration and activity security audit.
+- [Insights](/docs/agent-page/insights) — usage analytics.
+- [Settings](/docs/agent-page/settings) — full configuration, visible to the agent's owner only.
+
+## Deep-linking
+
+Each tab has its own URL — for example `/agents/{owner}/{storeName}/issues` — and the [Insights](/docs/agent-page/insights) sub-tabs are addressable too, such as `/agents/{owner}/{storeName}/insights/traffic`. Any tab or Insights view can therefore be bookmarked or shared as a direct link.
+
+<Callout type="info">
+  Some tabs depend on the agent being published. Comments and other community features are unavailable for external (remote-Hub) agents and for agents whose publish state is not **Published**.
+</Callout>

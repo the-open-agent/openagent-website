@@ -1,0 +1,26 @@
+---
+title: Security
+description: A configuration and activity security audit for an agent.
+---
+
+# Security
+
+The **Security** tab runs an automated security audit of the agent and grades the result, helping owners spot risky configuration and abusive activity. A period selector (**24h**, **7d**, **30d**), a manual **Refresh** action, and a **Data as of** timestamp control the activity portion of the report.
+
+## Score and grade
+
+The report summarizes an overall **security score** and letter **grade**, with counts of checks that **Passed**, raised a **Warning**, or **Failed**. Address failed and warned checks to improve the score.
+
+## Configuration checks
+
+- **Secrets in agent definition** — scans the prompt and description for hard-coded credentials (private keys, API keys, AWS/Slack/GitHub tokens, JWTs, and credential assignments).
+- **API key exposure** — flags when the Store's external API key appears in a client-readable text field.
+- **Content moderation list** — checks whether forbidden words are configured for input filtering.
+- **File upload policy** — flags public agents that allow file uploads.
+- **Public exposure** — notes whether the agent is published and reachable in the public Hub.
+- **Tool & capability surface** — reports the number of enabled tools, skills, and MCP servers that expand the attack surface.
+- **Co-owner access control** — reports how many owners have write access to the agent.
+
+## Activity checks
+
+For the selected period, the report scans recent messages and visits, surfacing **forbidden-word violations**, **error replies**, and **visit** counts (guest vs. signed-in). Flagged messages are listed so owners can act on the users involved.

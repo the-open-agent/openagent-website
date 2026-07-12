@@ -1,0 +1,13 @@
+{
+  "title": "Agent Page",
+  "pages": [
+    "index",
+    "overview",
+    "chat",
+    "files",
+    "issues",
+    "security",
+    "insights",
+    "settings"
+  ]
+}

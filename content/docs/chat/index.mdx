@@ -56,6 +56,10 @@ If **Suggestion Count** is set on the Store (to a number greater than 0), OpenAg
 
 Setting Suggestion Count to 0 disables the feature entirely.
 
+## Attachments
+
+Users can attach files from the chat input. Image files can also be pasted directly from the clipboard into the input area, which adds them to the pending attachments before the message is sent.
+
 ## Streaming
 
 Responses stream token by token. The frontend renders each token as it arrives. Tool calls appear inline as they happen — the user can see what tool was called, with what arguments, and what it returned, before the final response is generated.
@@ -65,6 +69,8 @@ Failed tool calls are shown as error tool results in the stream, which makes ret
 If a provider doesn't support streaming, OpenAgent falls back to waiting for the full response. Streaming is the default for all providers that support it.
 
 During long-running tool calls, OpenAgent sends SSE keepalive comments so browsers and proxies are less likely to close an otherwise quiet stream.
+
+While a response is running, OpenAgent can stream generation status events into the chat UI. The message shows a compact progress strip for stages such as preparing context, retrieving knowledge, calling tools, or waiting for the model, so users can see that work is still moving even before new answer text appears.
 
 Message generation is tracked independently from a single browser connection. If the tab refreshes or the SSE connection drops, reconnecting to the same message can replay the generated stream while the job is still retained. Closing the stream alone does not cancel the model call; use the chat cancel action to explicitly stop a running answer.
 

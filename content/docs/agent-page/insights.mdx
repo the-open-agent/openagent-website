@@ -12,8 +12,8 @@ The **Insights** tab is an analytics area for understanding how an agent is used
 - **Pulse** summarizes active users, chats, messages, files added, vectors added, and top active users.
 - **Contributors** shows message activity by user over time.
 - **Traffic** tracks Agent page views, unique visitors, referrers, and top paths.
-- **Word Cloud** aggregates common terms from the agent's messages. It is not period-scoped and includes a minimum-frequency filter.
+- **Word Cloud** aggregates common terms from the agent's messages. It respects the selected **24h**, **7d**, or **30d** window (and falls back to all messages when no window is set), and includes a minimum-frequency filter.
 - **Cost** charts token usage and estimated cost, including average cost per message and peak usage.
-- **Stargazers** lists the users who starred the agent.
-- **Watchers** lists the users who watch the agent.
-- **Forks** lists the agents forked from this one.
+- **Stargazers** shows a total count plus a grid of the users who starred the agent, each with their display name, avatar, and the time they starred.
+- **Watchers** shows the users who watch the agent, in the same count-plus-user-grid layout.
+- **Forks** lists the agents forked from this one and links through to each fork.

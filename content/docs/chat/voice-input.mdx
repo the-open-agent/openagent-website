@@ -34,11 +34,13 @@ When a cloud Speech-to-Text Provider is set, OpenAgent opens a WebSocket to the 
 
 Streaming requires a browser with `AudioWorklet` and microphone access; if those aren't available the user sees a "Streaming speech recognition is not supported in this browser" message.
 
+Alibaba Cloud Speech-to-Text providers include realtime options such as `fun-asr-realtime`, `fun-asr-flash-8k-realtime`, and `paraformer-realtime-v2`. Provider edit pages include a microphone test widget for Speech-to-Text providers, so admins can record a short sample and verify transcription before attaching the provider to a Store.
+
 ## Silence auto-stop
 
 In both modes the recording session ends on its own after a short period of silence, so the microphone button always resets instead of staying stuck in the "recording" state. A session also ends automatically when the browser stops recognition for its own reasons — a network drop, switching tabs, or the roughly 60-second cap that mobile Safari imposes. Users can always stop a session manually by tapping the microphone button again.
 
-When a session ends — whether by silence, manual stop, or a server-side completion — the mic button returns to its idle state and the cursor is placed at the end of the transcribed text, ready for the user to keep editing or send.
+When a session ends — whether by silence, manual stop, or a server-side completion — the mic button returns to its idle state and the cursor is placed at the end of the transcribed text, ready for the user to keep editing or send. New transcript text is appended to the existing input instead of replacing it, and OpenAgent does not auto-send the transcript when recording stops.
 
 ## Requirements
 

@@ -151,6 +151,9 @@ By filling in the pricing fields in the Provider configuration, OpenAgent tracks
 
 Unknown OpenAI-compatible model names no longer block message completion because of missing built-in pricing; OpenAgent records `0` cost unless custom input/output pricing is configured on the Provider.
 
+### 4. OpenAI-Compatible API Access
+Each Model Provider edit page shows an OpenAI-compatible API panel with copyable **Base URL** and **Chat completions endpoint** values. External clients can call these endpoints with `Authorization: Bearer <provider key>` to reach that provider directly, without creating Store chat history. See [API Access](/docs/basic/stores#api-access) for the full request semantics and the Store-key alternative.
+
 ---
 
 ## Sampling Parameters

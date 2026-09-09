@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { InstallTerminal } from './install-terminal';
+import { Sponsors } from './sponsors';
 import {
   BotIcon,
   BrainIcon,
@@ -503,6 +504,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ══ SPONSORS ══════════════════════════════════════════════════════════ */}
+      <Sponsors />
 
       {/* ══ FEATURES ══════════════════════════════════════════════════════════ */}
       <section className="border-b border-fd-border px-4 py-24">

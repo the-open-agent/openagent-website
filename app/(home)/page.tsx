@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { InstallTerminal } from './install-terminal';
@@ -20,6 +21,12 @@ import {
   ExternalLinkIcon,
   GlobeIcon,
 } from 'lucide-react';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 /* ── Inline SVGs for non-standard icons ─────────────────────────────────────── */
 

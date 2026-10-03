@@ -3,6 +3,8 @@ import './global.css';
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
+import Script from 'next/script';
+import { googleAnalyticsId, siteUrl } from '@/lib/shared';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -11,6 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'OpenAgent — The Open Agent Platform',
     template: '%s · OpenAgent',
@@ -46,6 +49,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <body className="flex flex-col min-h-screen font-[var(--font-inter)] antialiased">
         <RootProvider>{children}</RootProvider>
         <Analytics />
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`} strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${googleAnalyticsId}');`}
+        </Script>
       </body>
     </html>
   );

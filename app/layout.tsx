@@ -4,7 +4,8 @@ import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import Script from 'next/script';
-import { googleAnalyticsId, siteUrl } from '@/lib/shared';
+import { baiduTongjiId, googleAnalyticsId, siteUrl } from '@/lib/shared';
+import { BaiduTongjiPageview } from '@/components/baidu-tongji';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -56,6 +57,8 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', '${googleAnalyticsId}');`}
         </Script>
+        <Script src={`https://hm.baidu.com/hm.js?${baiduTongjiId}`} strategy="afterInteractive" />
+        <BaiduTongjiPageview />
       </body>
     </html>
   );

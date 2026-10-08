@@ -24,7 +24,10 @@ export function Sponsors() {
             Backed by our sponsors
           </h2>
           <p className="mx-auto max-w-xl text-fd-muted-foreground">
-            OpenAgent is free and open source. These companies help keep it that way.
+            OpenAgent is free and open source. These companies help keep it that way.{' '}
+            <a href="mailto:admin@casibase.org" className="text-fd-foreground underline underline-offset-4 transition-colors hover:text-fd-primary">
+              Want to appear here?
+            </a>
           </p>
         </div>
 

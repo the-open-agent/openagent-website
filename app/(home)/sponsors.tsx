@@ -1,16 +1,14 @@
 import Image from 'next/image';
 import { ArrowRightIcon } from 'lucide-react';
 
-const sponsors = [
-  {
-    name: 'APIMart',
-    url: 'https://go.apimart.ai/gh-openagent',
-    logo: 'https://cdn.openagentai.org/img/sponsor_apimart.png',
-    logoWidth: 2172,
-    logoHeight: 724,
-    body: 'APIMart is a low-cost API platform for AI image & video generation — GPT-Image-2 from $0.006/image, 160+ images per dollar. One async API covers both image and video: submit a task, get an ID, fetch results via polling or callback. Batch tens of thousands of images without timeouts, switch models without changing code. Pay-as-you-go with no monthly fee.',
-  },
-];
+const sponsors: {
+  name: string;
+  url: string;
+  logo: string;
+  logoWidth: number;
+  logoHeight: number;
+  body: string;
+}[] = [];
 
 export function Sponsors() {
   return (
@@ -24,7 +22,7 @@ export function Sponsors() {
             Backed by our sponsors
           </h2>
           <p className="mx-auto max-w-xl text-fd-muted-foreground">
-            OpenAgent is free and open source. These companies help keep it that way.{' '}
+            OpenAgent is free and open source. Sponsor the project and reach our community.{' '}
             <a href="mailto:admin@casibase.org" className="text-fd-foreground underline underline-offset-4 transition-colors hover:text-fd-primary">
               Want to appear here?
             </a>

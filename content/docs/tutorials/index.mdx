@@ -1,0 +1,20 @@
+---
+title: Hands-on OpenAgent Tutorials
+description: Build a self-hosted AI assistant, answer questions from your documents, and connect an MCP order lookup tool with working examples and screenshots.
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+## Build something you can verify
+
+Each tutorial includes the setup, sample inputs, expected results, real OpenAgent screenshots, and troubleshooting. Start with a chat assistant, then reuse that model connection for document retrieval or MCP tools.
+
+<Cards>
+  <Card title="Self-host an AI assistant" description="Run OpenAgent locally, connect a model, and verify your first answer and conversation history." href="/docs/tutorials/self-hosted-ai-assistant" />
+  <Card title="Chat with an employee handbook" description="Download a sample handbook, index it, and check both cited answers and questions it cannot answer." href="/docs/tutorials/document-knowledge-base" />
+  <Card title="Connect an MCP order lookup" description="Run a small Python MCP server and inspect a real tool call, arguments, and shipping result." href="/docs/tutorials/mcp-order-lookup" />
+</Cards>
+
+The screenshots use a local Windows instance built from OpenAgent source on October 31, 2026. The model is Qwen through an OpenAI-compatible endpoint; the document example uses Alibaba Cloud `text-embedding-v3`. You can use another supported model with the capabilities each tutorial requires. Generated wording may differ; use the listed checks to verify the result.
+
+All employee policies and orders in these examples are fictional. Self-hosting OpenAgent keeps the application and its database on your machine; a cloud model or embedding service still receives the text sent to it. Choose local providers when the whole inference pipeline must stay local.

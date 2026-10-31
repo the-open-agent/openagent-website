@@ -33,6 +33,11 @@ export function baseOptions(): BaseLayoutProps {
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
     links: [
       {
+        text: 'Tutorials',
+        url: '/docs/tutorials',
+        active: 'nested-url',
+      },
+      {
         text: 'Docs',
         url: '/docs',
         active: 'nested-url',

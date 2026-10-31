@@ -715,6 +715,7 @@ export default function HomePage() {
               <ul className="space-y-3 text-sm text-fd-muted-foreground">
                 <li><Link href="/docs/introduction" className="transition-colors hover:text-fd-foreground">Introduction</Link></li>
                 <li><Link href="/docs/install" className="transition-colors hover:text-fd-foreground">Installation</Link></li>
+                <li><Link href="/docs/tutorials" className="transition-colors hover:text-fd-foreground">Hands-on Tutorials</Link></li>
                 <li><Link href="/docs/build-a-chat-assistant" className="transition-colors hover:text-fd-foreground">Quick Start</Link></li>
                 <li><Link href="/docs/add-a-knowledge-base" className="transition-colors hover:text-fd-foreground">Knowledge Base</Link></li>
                 <li><Link href="/docs/tools-and-automation" className="transition-colors hover:text-fd-foreground">Tools & Automation</Link></li>
